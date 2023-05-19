@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'KIMM_Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/KIMM_Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+:root, [data-theme] {
+    background-color: rgba(66, 188, 245, 0.5);
+}
+
+html > body {
+	font-family: 'KIMM_Bold', sans-serif;
+	text-underline-position: under;
+}
+
+.top-bar {
+	position: fixed;
+}
+
+.top-bar > .menu-box > ul > li > .topbar-text-link {
+	position: relative;
+	color: rgba(0, 0, 0, 0.4);
+	transition: color .3s;
+}
+
+.top-bar > .menu-box > ul > li:hover > .topbar-text-link {
+	color: rgba(0, 0, 0, 1);
+}
+
+.top-bar > .menu-box > ul > li > .topbar-text-link::after {
+	content:"";
+	background-color: rgba(0, 0, 0, 1);
+	position: absolute;
+	bottom: 0;;
+	left: 0;
+	width: 0px;
+	height: 3px;
+	transition: width .3s;
+}
+
+.top-bar > .menu-box > ul > li:hover > .topbar-text-link::after {
+	width: 100%;
+}
+
+.top-bar > .menu-box > ul > li > .light-dark {
+	cursor: pointer;
+	position: relative;
+}
+
+.top-bar > .menu-box > ul > li > .light-dark > .light-dark-msg {
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 100%;
+}
+
+.top-bar > .menu-box > ul > li > .light-dark:hover > .light-dark-msg {
+	display: block;
+}

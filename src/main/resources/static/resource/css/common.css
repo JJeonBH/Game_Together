@@ -17,6 +17,7 @@ html > body {
 }
 
 .top-bar {
+	z-index: 9999;
 	position: fixed;
 }
 
@@ -68,4 +69,16 @@ html > body {
 
 .btn-text-color:hover {
 	color: black;
+}
+
+.dropdown-content {
+	left: 0;
+	top: 100%;
+	color: black;
+	font-size: 1.2rem;
+}
+
+a:hover > .main-image {
+	cursor: pointer;
+	opacity: 0.5;
 }

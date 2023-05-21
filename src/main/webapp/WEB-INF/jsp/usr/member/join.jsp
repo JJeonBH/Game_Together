@@ -17,19 +17,21 @@
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 <!-- 폰트어썸 불러오기 -->
 <script src="https://kit.fontawesome.com/c186b4187f.js" crossorigin="anonymous"></script>
+<!-- CSS 파일 불러오기 -->
 <link rel="stylesheet" href="/resource/css/common.css" />
 <link rel="stylesheet" href="/resource/css/join.css" />
-<script src="/resource/js/common.js"></script>
+<!-- JS 파일 불러오기 -->
+<script src="/resource/js/join.js"></script>
 </head>
 <body>
 	<section class="text-lg my-20">
 		<h1 class="logo flex justify-center">
 			<a href="/">
-				<img src="/resource/images/logo1.png" alt="같이 할래?" width="350px">
+				<img src="/resource/images/logo.png" alt="같이 할래?" width="350px">
 			</a>
 		</h1>
 		<div class="mt-10 flex justify-center">
-			<form action="doJoin" method="POST">
+			<form action="doJoin" method="POST" onsubmit="submitJoinForm(this); return false;">
 				<div>
 					<label class="cursor-pointer">
 						아이디
@@ -60,6 +62,13 @@
 				</div>
 				<div class="mt-8">
 					<label class="cursor-pointer">
+						닉네임
+						<br>
+						<input class="cursor-pointer mt-2 input input-bordered input-info w-96" type="text" name="nickname" placeholder="닉네임을 입력해주세요"/>
+					</label>
+				</div>
+				<div class="mt-8">
+					<label class="cursor-pointer">
 						생년월일
 						<br>
 						<input class="cursor-pointer mt-2 input input-bordered input-info w-96" type="date" name="birthday"/>
@@ -70,7 +79,7 @@
 						성별
 						<br>
 						<select class="cursor-pointer mt-2 select select-bordered select-info w-96" name="gender">
-							<option disabled selected>성별</option>
+							<option selected value="">성별</option>
 							<option value="male">남자</option>
 							<option value="female">여자</option>
 						</select>

@@ -17,7 +17,9 @@
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 <!-- 폰트어썸 불러오기 -->
 <script src="https://kit.fontawesome.com/c186b4187f.js" crossorigin="anonymous"></script>
+<!-- CSS 파일 불러오기 -->
 <link rel="stylesheet" href="/resource/css/common.css" />
+<!-- JS 파일 불러오기 -->
 <script src="/resource/js/common.js"></script>
 </head>
 <body>
@@ -25,7 +27,7 @@
 		<div class="top-bar flex container mx-auto bg-indigo-100 text-2xl">
 			<h1 class="logo ml-4">
 				<a href="/">
-					<img src="/resource/images/logo1.png" alt="같이 할래?" width="150px">
+					<img src="/resource/images/logo.png" alt="같이 할래?" width="150px">
 				</a>
 			</h1>
 			<nav class="menu-box w-full flex justify-between ml-8 mr-4">
@@ -34,7 +36,13 @@
 						<a href="/" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>홈</span></a>
 					</li>
 					<li>
-						<a href="#" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>커뮤니티</span></a>
+						<div class="dropdown dropdown-hover topbar-text-link h-full flex items-center px-3 mx-1 cursor-pointer">
+							<label tabindex="0" class="cursor-pointer">커뮤니티</label>
+							<ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-60">
+								<li><a href="/">리그오브레전드</a></li>
+								<li><a href="/">배틀그라운드</a></li>
+							</ul>
+						</div>
 					</li>
 				</ul>
 				<ul class="h-full flex">

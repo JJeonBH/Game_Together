@@ -4,22 +4,17 @@
 <c:set var="pageTitle" value="같이 할래?"></c:set>
 <%@ include file="../common/head.jsp" %>
 	<section class="my-2 text-lg">
-		<div class="px-20">
-			<h1>${pageTitle }</h1>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing eliddddt. Aperiam facere rerum optio sequi ut ipsa ullam laboriosam nihil dolore iusto debitis eaque. Consequatur quam veritatis velit ullam deserunt. Ut sequi.</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing eliddddt. Aperiam facere rerum optio sequi ut ipsa ullam laboriosam nihil dolore iusto debitis eaque. Consequatur quam veritatis velit ullam deserunt. Ut sequi.</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing eliddddt. Aperiam facere rerum optio sequi ut ipsa ullam laboriosam nihil dolore iusto debitis eaque. Consequatur quam veritatis velit ullam deserunt. Ut sequi.</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing eliddddt. Aperiam facere rerum optio sequi ut ipsa ullam laboriosam nihil dolore iusto debitis eaque. Consequatur quam veritatis velit ullam deserunt. Ut sequi.</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing eliddddt. Aperiam facere rerum optio sequi ut ipsa ullam laboriosam nihil dolore iusto debitis eaque. Consequatur quam veritatis velit ullam deserunt. Ut sequi.</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing eliddddt. Aperiam facere rerum optio sequi ut ipsa ullam laboriosam nihil dolore iusto debitis eaque. Consequatur quam veritatis velit ullam deserunt. Ut sequi.</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing eliddddt. Aperiam facere rerum optio sequi ut ipsa ullam laboriosam nihil dolore iusto debitis eaque. Consequatur quam veritatis velit ullam deserunt. Ut sequi.</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing eliddddt. Aperiam facere rerum optio sequi ut ipsa ullam laboriosam nihil dolore iusto debitis eaque. Consequatur quam veritatis velit ullam deserunt. Ut sequi.</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing eliddddt. Aperiam facere rerum optio sequi ut ipsa ullam laboriosam nihil dolore iusto debitis eaque. Consequatur quam veritatis velit ullam deserunt. Ut sequi.</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing eliddddt. Aperiam facere rerum optio sequi ut ipsa ullam laboriosam nihil dolore iusto debitis eaque. Consequatur quam veritatis velit ullam deserunt. Ut sequi.</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing eliddddt. Aperiam facere rerum optio sequi ut ipsa ullam laboriosam nihil dolore iusto debitis eaque. Consequatur quam veritatis velit ullam deserunt. Ut sequi.</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing eliddddt. Aperiam facere rerum optio sequi ut ipsa ullam laboriosam nihil dolore iusto debitis eaque. Consequatur quam veritatis velit ullam deserunt. Ut sequi.</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing eliddddt. Aperiam facere rerum optio sequi ut ipsa ullam laboriosam nihil dolore iusto debitis eaque. Consequatur quam veritatis velit ullam deserunt. Ut sequi.</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing eliddddt. Aperiam facere rerum optio sequi ut ipsa ullam laboriosam nihil dolore iusto debitis eaque. Consequatur quam veritatis velit ullam deserunt. Ut sequi.</p>
+		<div class="px-20 flex">
+			<a href="/" class="w-1/2"><img class="main-image w-full" src="/resource/images/리그오브레전드.jpg" alt="리그오브레전드 이미지"></a>
+			<a href="/" class="ml-4 w-1/2"><img class="main-image w-full" src="/resource/images/배틀그라운드.jpg" alt="배틀그라운드 이미지"></a>
+		</div>
+		<div class="mt-4 px-20 flex">
+			<a href="/" class="w-1/2"><img class="main-image w-full" src="/resource/images/리그오브레전드.jpg" alt="리그오브레전드 이미지"></a>
+			<a href="/" class="ml-4 w-1/2"><img class="main-image w-full" src="/resource/images/배틀그라운드.jpg" alt="배틀그라운드 이미지"></a>
+		</div>
+		<div class="mt-4 px-20 flex">
+			<a href="/" class="w-1/2"><img class="main-image w-full" src="/resource/images/리그오브레전드.jpg" alt="리그오브레전드 이미지"></a>
+			<a href="/" class="ml-4 w-1/2"><img class="main-image w-full" src="/resource/images/배틀그라운드.jpg" alt="배틀그라운드 이미지"></a>
 		</div>
 	</section>
 <%@ include file="../common/foot.jsp" %>

@@ -1,0 +1,71 @@
+# DB 삭제/생성/사용
+DROP DATABASE IF EXISTS GT;
+CREATE DATABASE GT;
+USE GT;
+
+# member 테이블 생성
+CREATE TABLE `member`(
+	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	loginId VARCHAR(20) NOT NULL UNIQUE,
+	loginPw VARCHAR(100) NOT NULL,
+	`authLevel` SMALLINT UNSIGNED NOT NULL DEFAULT 3 COMMENT '권한 레벨 (일반 = 3, 관리자 = 7)',
+	`name` VARCHAR(20) NOT NULL,
+	nickname VARCHAR(20) NOT NULL,
+    birthday VARCHAR(20) NOT NULL COMMENT '생년월일',
+    gender VARCHAR(10) NOT NULL COMMENT '성별 (남자 = male, 여자 = female)',
+	email VARCHAR(50) NOT NULL,
+	cellphoneNum VARCHAR(20) NOT NULL,
+	delStatus TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴여부 (탈퇴 전 = 0, 탈퇴 후 = 1)',
+	delDate DATETIME COMMENT '탈퇴 날짜'
+);
+
+# member 테스트 데이터
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'admin',
+loginPw = 'admin',
+`authLevel` = 7,
+`name` = '전병호',
+nickname = '관리자',
+birthday = '1991-10-10',
+gender = 'male',
+email = 'admin@naver.com',
+cellphoneNum = '010-1111-1111';
+
+# member 테스트 데이터
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test1',
+loginPw = 'test1',
+`name` = '홍길동',
+nickname = '유저1',
+birthday = '1992-10-10',
+gender = 'male',
+email = 'test1@naver.com',
+cellphoneNum = '010-1112-1112';
+
+# member 테스트 데이터
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test2',
+loginPw = 'test2',
+`name` = '홍길순',
+nickname = '유저2',
+birthday = '1993-10-10',
+gender = 'female',
+email = 'test2@naver.com',
+cellphoneNum = '010-1113-1113';
+
+
+# member 테이블 구조
+DESC `member`;
+
+# member 테이블 조회
+SELECT * FROM `member`;
+
+SELECT LAST_INSERT_ID();

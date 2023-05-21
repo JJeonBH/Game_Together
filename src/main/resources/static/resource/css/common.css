@@ -60,3 +60,12 @@ html > body {
 .top-bar > .menu-box > ul > li > .light-dark:hover > .light-dark-msg {
 	display: block;
 }
+
+.btn-text-color {
+	color: white;
+	font-size: 1.2rem;
+}
+
+.btn-text-color:hover {
+	color: black;
+}

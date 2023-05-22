@@ -7,9 +7,9 @@
     font-style: normal;
 }
 
-:root, [data-theme] {
-    background-color: rgba(66, 188, 245, 0.5);
-}
+/* :root, [data-theme] { */
+/*     background-color: rgba(66, 188, 245, 0.5); */
+/* } */
 
 html > body {
 	font-family: 'KIMM_Bold', sans-serif;
@@ -79,6 +79,5 @@ html > body {
 }
 
 a:hover > .main-image {
-	cursor: pointer;
 	opacity: 0.5;
 }

@@ -36,45 +36,46 @@
 					<label class="cursor-pointer">
 						아이디
 						<br>
-						<input class="cursor-pointer mt-2 input input-bordered input-info w-96" type="text" name="loginId" placeholder="아이디를 입력해주세요"/>
+						<input class="cursor-pointer mt-2 input input-bordered input-info w-96" type="text" name="loginId" placeholder="아이디를 입력해주세요" onblur="loginIdDupCheck(this);"/>
 					</label>
+					<div id="loginIdDupCheckMsg" class="mt-2 h-5 text-sm text-red-400"></div>
 				</div>
-				<div class="mt-8">
+				<div class="mt-4">
 					<label class="cursor-pointer">
 						비밀번호
 						<br>
 						<input class="cursor-pointer mt-2 input input-bordered input-info w-96" type="text" name="loginPw" placeholder="비밀번호를 입력해주세요"/>
 					</label>
 				</div>
-				<div class="mt-8">
+				<div class="mt-4">
 					<label class="cursor-pointer">
 						비밀번호 재확인
 						<br>
 						<input class="cursor-pointer mt-2 input input-bordered input-info w-96" type="text" name="loginPwChk" placeholder="비밀번호 재확인을 입력해주세요"/>
 					</label>
 				</div>
-				<div class="mt-8">
+				<div class="mt-4">
 					<label class="cursor-pointer">
 						이름
 						<br>
 						<input class="cursor-pointer mt-2 input input-bordered input-info w-96" type="text" name="name" placeholder="이름을 입력해주세요"/>
 					</label>
 				</div>
-				<div class="mt-8">
+				<div class="mt-4">
 					<label class="cursor-pointer">
 						닉네임
 						<br>
 						<input class="cursor-pointer mt-2 input input-bordered input-info w-96" type="text" name="nickname" placeholder="닉네임을 입력해주세요"/>
 					</label>
 				</div>
-				<div class="mt-8">
+				<div class="mt-4">
 					<label class="cursor-pointer">
 						생년월일
 						<br>
 						<input class="cursor-pointer mt-2 input input-bordered input-info w-96" type="date" name="birthday"/>
 					</label>
 				</div>
-				<div class="mt-8">
+				<div class="mt-4">
 					<label class="cursor-pointer">
 						성별
 						<br>
@@ -85,21 +86,21 @@
 						</select>
 					</label>
 				</div>
-				<div class="mt-8">
+				<div class="mt-4">
 					<label class="cursor-pointer">
 						이메일
 						<br>
 						<input class="cursor-pointer mt-2 input input-bordered input-info w-96" type="email" name="email" placeholder="이메일을 입력해주세요"/>
 					</label>
 				</div>
-				<div class="mt-8">
+				<div class="mt-4">
 					<label class="cursor-pointer">
 						휴대전화
 						<br>
 						<input class="cursor-pointer mt-2 input input-bordered input-info w-96" type="tel" name="cellphoneNum" placeholder="휴대전화 번호를 입력해주세요"/>
 					</label>
 				</div>
-				<div class="mt-8">
+				<div class="mt-4">
 					<button class="btn-text-color btn btn-info w-96">가입하기</button>
 				</div>
 			</form>

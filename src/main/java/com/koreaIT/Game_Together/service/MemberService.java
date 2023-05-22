@@ -14,43 +14,33 @@ public class MemberService {
 
 	@Autowired
 	public MemberService(MemberRepository memberRepository) {
-
 		this.memberRepository = memberRepository;
-
 	}
 
-	public ResultData doJoin(String loginId, String loginPw, String name, String nickname, String birthday, String gender, String email, String cellphoneNum) {
+	public ResultData<Integer> doJoin(String loginId, String loginPw, String name, String nickname, String birthday, String gender, String email, String cellphoneNum) {
 
 		Member member = getMemberByLoginId(loginId);
 
 		if (member != null) {
-
 			return ResultData.resultFrom("F-1", String.format("이미 사용중인 아이디(%s)입니다", loginId));
-
 		}
 		
 		member = getMemberByNickname(nickname);
 		
 		if (member != null) {
-
 			return ResultData.resultFrom("F-2", String.format("이미 사용중인 닉네임(%s)입니다", nickname));
-
 		}
 		
 		member = getMemberByEmail(email);
 		
 		if (member != null) {
-			
 			return ResultData.resultFrom("F-3", String.format("이미 사용중인 이메일(%s)입니다", email));
-			
 		}
 		
 		member = getMemberByCellphoneNum(cellphoneNum);
 		
 		if (member != null) {
-			
 			return ResultData.resultFrom("F-4", String.format("이미 사용중인 휴대전화 번호(%s)입니다", cellphoneNum));
-			
 		}
 		
 		memberRepository.doJoin(loginId, loginPw, name, nickname, birthday, gender, email, cellphoneNum);
@@ -59,28 +49,20 @@ public class MemberService {
 
 	}
 
-	private Member getMemberByLoginId(String loginId) {
-
+	public Member getMemberByLoginId(String loginId) {
 		return memberRepository.getMemberByLoginId(loginId);
-
 	}
 
 	private Member getMemberByNickname(String nickname) {
-		
 		return memberRepository.getMemberByNickname(nickname);
-		
 	}
 	
 	private Member getMemberByEmail(String email) {
-		
 		return memberRepository.getMemberByEmail(email);
-		
 	}
 	
 	private Member getMemberByCellphoneNum(String cellphoneNum) {
-		
 		return memberRepository.getMemberByCellphoneNum(cellphoneNum);
-		
 	}
 	
 }

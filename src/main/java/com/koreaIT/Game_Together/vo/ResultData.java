@@ -13,9 +13,7 @@ public class ResultData<DT> {
 	private Object data2;
 	
 	public static <DT> ResultData<DT> resultFrom(String resultCode, String msg) {
-		
 		return resultFrom(resultCode, msg, null, null);
-		
 	}
 	
 	public static <DT> ResultData<DT> resultFrom(String resultCode, String msg, String data1Name, DT data1) {
@@ -32,22 +30,16 @@ public class ResultData<DT> {
 	}
 	
 	public boolean isSuccess() {
-		
 		return this.resultCode.startsWith("S");
-		
 	}
 	
 	public boolean isFail() {
-		
 		return this.resultCode.startsWith("F");
-		
 	}
 	
 	public void setData2(String data2Name, Object data2) {
-		
 		this.data2Name = data2Name;
 		this.data2 = data2;
-		
 	}
 	
 }

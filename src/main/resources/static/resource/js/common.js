@@ -12,7 +12,7 @@ function lightDark(lD) {
 		lightDark.removeClass('dark');
 		lightDark.addClass('light');
 		lightDark.html('<i class="fa-solid fa-sun"></i><span class="light-dark-msg text-xs text-center bg-black text-white">Light mode</span>');
-		$('html').css('background', 'rgba(66, 188, 245, 0.5)');
+		$('html').css('background', 'white');
 		$('html').css('color', 'black');
 	}
 	

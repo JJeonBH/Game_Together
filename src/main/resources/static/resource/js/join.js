@@ -1,8 +1,17 @@
+let validLoginId = '';
+
 function submitJoinForm(form) {
 		
 		form.loginId.value = form.loginId.value.trim();
 		if (form.loginId.value.length == 0) {
 			alert('아이디를 입력해주세요');
+			form.loginId.focus();
+			return;
+		}
+		
+		if (form.loginId.value != validLoginId) {
+			alert(form.loginId.value + '은(는) 이미 사용중이거나 탈퇴한 아이디입니다');
+			form.loginId.value = '';
 			form.loginId.focus();
 			return;
 		}
@@ -73,4 +82,37 @@ function submitJoinForm(form) {
 		
 		form.submit();
 		
+}
+
+function loginIdDupCheck(input) {
+	
+	let loginIdDupCheckMsg = $('#loginIdDupCheckMsg');
+	
+	loginIdDupCheckMsg.empty();
+	
+	input.value = input.value.trim();
+	
+	if (input.value.length == 0) {
+		loginIdDupCheckMsg.removeClass('text-green-400');
+		loginIdDupCheckMsg.addClass('text-red-400');
+		loginIdDupCheckMsg.html('<span>필수 정보입니다</span>');
+		return;
+	}
+	
+	$.get('loginIdDupCheck', {
+		loginId : input.value
+	}, function(data) {
+		if(data.success) {
+			loginIdDupCheckMsg.removeClass('text-red-400');
+			loginIdDupCheckMsg.addClass('text-green-400');
+			loginIdDupCheckMsg.html(`<span>${data.msg}</span>`);
+			validLoginId = data.data1;
+		} else {
+			loginIdDupCheckMsg.removeClass('text-green-400');
+			loginIdDupCheckMsg.addClass('text-red-400');
+			loginIdDupCheckMsg.html(`<span>${data.msg}</span>`);
+			validLoginId = '';
+		}
+	}, 'json');
+	
 }

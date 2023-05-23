@@ -16,6 +16,18 @@ html > body {
 	text-underline-position: under;
 }
 
+.w-112 {
+	width: 28rem;
+}
+
+.min-w-900 {
+	min-width: 900px;
+}
+
+.min-w-1000 {
+	min-width: 1000px;
+}
+
 .top-bar {
 	z-index: 9999;
 	position: fixed;
@@ -47,8 +59,11 @@ html > body {
 }
 
 .top-bar > .menu-box > ul > li > .light-dark {
-	cursor: pointer;
 	position: relative;
+}
+
+.top-bar > .menu-box > ul > li > .light-dark > .light-dark-icon {
+	cursor: pointer;
 }
 
 .top-bar > .menu-box > ul > li > .light-dark > .light-dark-msg {

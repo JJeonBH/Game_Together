@@ -75,14 +75,18 @@ public class MemberController {
 	@ResponseBody
 	public ResultData<String> loginIdDupCheck(String loginId) {
 		
-		if (Util.empty(loginId)) {
-			return ResultData.resultFrom("F-1", "필수 정보입니다");
-		}
+//		if (Util.empty(loginId)) {
+//			return ResultData.resultFrom("F-1", "필수 정보입니다");
+//		}
+		
+//		if (!loginId.matches("^[a-z]{1}[a-z0-9_-]{4,19}$")) {
+//			return ResultData.resultFrom("F-2", "5~20자의 영문 소문자(로 시작), 숫자와 특수기호(_),(-)만 사용 가능합니다");
+//		}
 		
 		Member member = memberService.getMemberByLoginId(loginId);
 		
 		if (member != null) {
-			return ResultData.resultFrom("F-2", "이미 사용중이거나 탈퇴한 아이디입니다", "loginId", loginId);
+			return ResultData.resultFrom("F-3", "이미 사용중이거나 탈퇴한 아이디입니다", "loginId", loginId);
 		}
 		
 		return ResultData.resultFrom("S-1", "사용 가능한 아이디입니다", "loginId", loginId);

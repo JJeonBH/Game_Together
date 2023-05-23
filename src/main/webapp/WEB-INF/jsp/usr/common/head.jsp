@@ -24,7 +24,7 @@
 </head>
 <body>
 	<section class="h-14">
-		<div class="top-bar flex container mx-auto bg-indigo-100 text-2xl">
+		<div class="top-bar flex w-screen min-w-900 bg-indigo-100 text-2xl">
 			<h1 class="logo ml-4">
 				<a href="/">
 					<img src="/resource/images/logo.png" alt="같이 할래?" width="150px">
@@ -47,9 +47,9 @@
 				</ul>
 				<ul class="h-full flex">
 					<li>
-						<div class="light-dark h-full flex items-center px-3 mx-1 light" onclick="lightDark(this);">
-							<i class="fa-solid fa-sun"></i>
-							<span class="light-dark-msg text-xs text-center bg-black text-white">Day mode</span>
+						<div class="light-dark h-full flex items-center px-3 mx-1">
+							<i class="light-dark-icon fa-solid fa-sun text-black light" onclick="lightDark(this);"></i>
+							<span class="light-dark-msg text-xs text-center bg-black text-white">Light mode</span>
 						</div>
 					</li>
 					<li>

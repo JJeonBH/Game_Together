@@ -2,19 +2,24 @@ let validLoginId = '';
 
 function submitJoinForm(form) {
 		
-		form.loginId.value = form.loginId.value.trim();
-		if (form.loginId.value.length == 0) {
-			alert('아이디를 입력해주세요');
+		if (validLoginId == '') {
 			form.loginId.focus();
 			return;
 		}
 		
-		if (form.loginId.value != validLoginId) {
-			alert(form.loginId.value + '은(는) 이미 사용중이거나 탈퇴한 아이디입니다');
-			form.loginId.value = '';
-			form.loginId.focus();
-			return;
-		}
+//		form.loginId.value = form.loginId.value.trim();
+//		if (form.loginId.value.length == 0) {
+//			alert('아이디를 입력해주세요');
+//			form.loginId.focus();
+//			return;
+//		}
+		
+//		if (form.loginId.value != validLoginId) {
+//			alert(form.loginId.value + '은(는) 사용할 수 없는 아이디입니다');
+//			form.loginId.value = '';
+//			form.loginId.focus();
+//			return;
+//		}
 		
 		form.loginPw.value = form.loginPw.value.trim();
 		if (form.loginPw.value.length == 0) {
@@ -86,6 +91,8 @@ function submitJoinForm(form) {
 
 function loginIdDupCheck(input) {
 	
+	validLoginId = '';
+	
 	let loginIdDupCheckMsg = $('#loginIdDupCheckMsg');
 	
 	loginIdDupCheckMsg.empty();
@@ -96,6 +103,15 @@ function loginIdDupCheck(input) {
 		loginIdDupCheckMsg.removeClass('text-green-400');
 		loginIdDupCheckMsg.addClass('text-red-400');
 		loginIdDupCheckMsg.html('<span>필수 정보입니다</span>');
+		return;
+	}
+	
+	const regex = /^[a-z]{1}[a-z0-9_-]{4,19}$/;
+	
+	if(!regex.test(input.value)) {
+		loginIdDupCheckMsg.removeClass('text-green-400');
+		loginIdDupCheckMsg.addClass('text-red-400');
+		loginIdDupCheckMsg.html('<span>5~20자의 영문 소문자(로 시작), 숫자와 특수기호(_),(-)만 사용 가능합니다</span>');
 		return;
 	}
 	

@@ -27,7 +27,7 @@
 	<section class="text-lg my-20">
 		<h1 class="logo flex justify-center">
 			<a href="/">
-				<img src="/resource/images/logo.png" alt="같이 할래?" width="350px">
+				<img src="/resource/images/logo.png" alt="같이 할래?" width="380px">
 			</a>
 		</h1>
 		<div class="mt-10 flex justify-center">
@@ -36,50 +36,50 @@
 					<label class="cursor-pointer">
 						아이디
 						<br>
-						<input class="cursor-pointer mt-2 input input-bordered input-info w-96" type="text" name="loginId" placeholder="아이디를 입력해주세요" onblur="loginIdDupCheck(this);"/>
+						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="loginId" placeholder="아이디를 입력해주세요" onblur="loginIdDupCheck(this);"/>
 					</label>
-					<div id="loginIdDupCheckMsg" class="mt-2 h-5 text-sm text-red-400"></div>
+					<div id="loginIdDupCheckMsg" class="mt-2 h-5 text-xs text-red-400"></div>
 				</div>
 				<div class="mt-4">
 					<label class="cursor-pointer">
 						비밀번호
 						<br>
-						<input class="cursor-pointer mt-2 input input-bordered input-info w-96" type="text" name="loginPw" placeholder="비밀번호를 입력해주세요"/>
+						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="loginPw" placeholder="비밀번호를 입력해주세요"/>
 					</label>
 				</div>
 				<div class="mt-4">
 					<label class="cursor-pointer">
 						비밀번호 재확인
 						<br>
-						<input class="cursor-pointer mt-2 input input-bordered input-info w-96" type="text" name="loginPwChk" placeholder="비밀번호 재확인을 입력해주세요"/>
+						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="loginPwChk" placeholder="비밀번호 재확인을 입력해주세요"/>
 					</label>
 				</div>
 				<div class="mt-4">
 					<label class="cursor-pointer">
 						이름
 						<br>
-						<input class="cursor-pointer mt-2 input input-bordered input-info w-96" type="text" name="name" placeholder="이름을 입력해주세요"/>
+						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="name" placeholder="이름을 입력해주세요"/>
 					</label>
 				</div>
 				<div class="mt-4">
 					<label class="cursor-pointer">
 						닉네임
 						<br>
-						<input class="cursor-pointer mt-2 input input-bordered input-info w-96" type="text" name="nickname" placeholder="닉네임을 입력해주세요"/>
+						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="nickname" placeholder="닉네임을 입력해주세요"/>
 					</label>
 				</div>
 				<div class="mt-4">
 					<label class="cursor-pointer">
 						생년월일
 						<br>
-						<input class="cursor-pointer mt-2 input input-bordered input-info w-96" type="date" name="birthday"/>
+						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="date" name="birthday"/>
 					</label>
 				</div>
 				<div class="mt-4">
 					<label class="cursor-pointer">
 						성별
 						<br>
-						<select class="cursor-pointer mt-2 select select-bordered select-info w-96" name="gender">
+						<select class="cursor-pointer mt-2 select select-bordered select-info w-112" name="gender">
 							<option selected value="">성별</option>
 							<option value="male">남자</option>
 							<option value="female">여자</option>
@@ -90,23 +90,23 @@
 					<label class="cursor-pointer">
 						이메일
 						<br>
-						<input class="cursor-pointer mt-2 input input-bordered input-info w-96" type="email" name="email" placeholder="이메일을 입력해주세요"/>
+						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="email" name="email" placeholder="이메일을 입력해주세요"/>
 					</label>
 				</div>
 				<div class="mt-4">
 					<label class="cursor-pointer">
 						휴대전화
 						<br>
-						<input class="cursor-pointer mt-2 input input-bordered input-info w-96" type="tel" name="cellphoneNum" placeholder="휴대전화 번호를 입력해주세요"/>
+						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="tel" name="cellphoneNum" placeholder="휴대전화 번호를 입력해주세요"/>
 					</label>
 				</div>
 				<div class="mt-4">
-					<button class="btn-text-color btn btn-info w-96">가입하기</button>
+					<button class="btn-text-color btn btn-info w-112">가입하기</button>
 				</div>
 			</form>
 		</div>
 		<div class="mt-3 flex justify-center">
-			<button class="btn-text-color btn btn-info w-96" onclick="history.back();">뒤로가기</button>
+			<button class="btn-text-color btn btn-info w-112" onclick="history.back();">뒤로가기</button>
 		</div>
 	</section>
 </body>

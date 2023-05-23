@@ -1,19 +1,22 @@
-function lightDark(lD) {
+function lightDark(i) {
 	
-	let lightDark = $(lD);
+	let lightDarkIcon = $(i);
+	let lightDarkMsg = $('.light-dark-msg');
 	
-	if(lightDark.hasClass('light')) {
-		lightDark.removeClass('light');
-		lightDark.addClass('dark');
-		lightDark.html('<i class="fa-solid fa-moon text-black"></i><span class="light-dark-msg text-xs text-center bg-black text-white">Dark mode</span>');
+	if(lightDarkIcon.hasClass('light')) {
+		lightDarkIcon.removeClass('light fa-sun');
+		lightDarkIcon.addClass('dark fa-moon');
+		lightDarkMsg.empty();
+		lightDarkMsg.append('Dark mode')
 		$('html').css('background', 'rgba(0, 0, 0, 0.7)');
-		$('html').css('color', 'white');
+		$('body').css('color', 'white');
 	} else {
-		lightDark.removeClass('dark');
-		lightDark.addClass('light');
-		lightDark.html('<i class="fa-solid fa-sun"></i><span class="light-dark-msg text-xs text-center bg-black text-white">Light mode</span>');
+		lightDarkIcon.removeClass('dark fa-moon');
+		lightDarkIcon.addClass('light fa-sun');
+		lightDarkMsg.empty();
+		lightDarkMsg.append('Light mode')
 		$('html').css('background', 'white');
-		$('html').css('color', 'black');
+		$('body').css('color', 'black');
 	}
 	
 }

@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="같이 할래?"></c:set>
 <%@ include file="../common/head.jsp" %>
-	<section class="my-2 text-lg">
+	<section class="mt-5 mb-20 text-lg min-w-1000">
 		<div class="px-20 flex">
 			<div class="w-1/2 h-80 border border-indigo-400">공지사항</div>
 			<div class="ml-4 w-1/2 h-80 border border-indigo-400">인기글</div>

@@ -61,7 +61,7 @@ public class MemberController {
 			return Util.jsHistoryBack("휴대전화 번호를 입력해주세요");
 		}
 
-		ResultData<Integer> doJoinRd = memberService.doJoin(loginId, loginPw, name, nickname, birthday, gender, email, cellphoneNum);
+		ResultData<Integer> doJoinRd = memberService.doJoin(loginId, Util.sha256(loginPw), name, nickname, birthday, gender, email, cellphoneNum);
 		
 		if (doJoinRd.isFail()) {
 			return Util.jsHistoryBack(doJoinRd.getMsg());

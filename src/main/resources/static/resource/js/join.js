@@ -127,7 +127,6 @@ function loginIdDupCheck(input) {
 			loginIdDupCheckMsg.removeClass('text-green-400');
 			loginIdDupCheckMsg.addClass('text-red-400');
 			loginIdDupCheckMsg.html(`<span>${data.msg}</span>`);
-			validLoginId = '';
 		}
 	}, 'json');
 	

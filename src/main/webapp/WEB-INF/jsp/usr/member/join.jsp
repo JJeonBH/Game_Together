@@ -46,6 +46,7 @@
 						<br>
 						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="loginPw" placeholder="비밀번호를 입력해주세요"/>
 					</label>
+					<div id="loginPwMsg" class="mt-2 h-5 text-xs text-red-400"></div>
 				</div>
 				<div class="mt-4">
 					<label class="cursor-pointer">
@@ -53,6 +54,7 @@
 						<br>
 						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="loginPwChk" placeholder="비밀번호 재확인을 입력해주세요"/>
 					</label>
+					<div id="loginPwChkMsg" class="mt-2 h-5 text-xs text-red-400"></div>
 				</div>
 				<div class="mt-4">
 					<label class="cursor-pointer">

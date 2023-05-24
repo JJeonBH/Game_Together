@@ -36,7 +36,7 @@
 					<label class="cursor-pointer">
 						아이디
 						<br>
-						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="loginId" placeholder="아이디를 입력해주세요" onblur="loginIdDupCheck(this);"/>
+						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="loginId" placeholder="아이디를 입력해주세요." onblur="loginIdDupCheck(this);"/>
 					</label>
 					<div id="loginIdDupCheckMsg" class="mt-2 h-5 text-xs text-red-400"></div>
 				</div>
@@ -44,7 +44,7 @@
 					<label class="cursor-pointer">
 						비밀번호
 						<br>
-						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="loginPw" placeholder="비밀번호를 입력해주세요"/>
+						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="loginPw" placeholder="비밀번호를 입력해주세요." onblur="pwCheck(this);"/>
 					</label>
 					<div id="loginPwMsg" class="mt-2 h-5 text-xs text-red-400"></div>
 				</div>
@@ -52,7 +52,7 @@
 					<label class="cursor-pointer">
 						비밀번호 재확인
 						<br>
-						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="loginPwChk" placeholder="비밀번호 재확인을 입력해주세요"/>
+						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="loginPwChk" placeholder="비밀번호 재확인을 입력해주세요." onblur="pwCheck(this);"/>
 					</label>
 					<div id="loginPwChkMsg" class="mt-2 h-5 text-xs text-red-400"></div>
 				</div>
@@ -60,15 +60,17 @@
 					<label class="cursor-pointer">
 						이름
 						<br>
-						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="name" placeholder="이름을 입력해주세요"/>
+						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="name" placeholder="이름을 입력해주세요." onblur="nameCheck(this);"/>
 					</label>
+					<div id="nameMsg" class="mt-2 h-5 text-xs text-red-400"></div>
 				</div>
 				<div class="mt-4">
 					<label class="cursor-pointer">
 						닉네임
 						<br>
-						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="nickname" placeholder="닉네임을 입력해주세요"/>
+						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="nickname" placeholder="닉네임을 입력해주세요." onblur="nicknameCheck(this);"/>
 					</label>
+					<div id="nicknameMsg" class="mt-2 h-5 text-xs text-red-400"></div>
 				</div>
 				<div class="mt-4">
 					<label class="cursor-pointer">
@@ -92,14 +94,14 @@
 					<label class="cursor-pointer">
 						이메일
 						<br>
-						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="email" name="email" placeholder="이메일을 입력해주세요"/>
+						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="email" name="email" placeholder="이메일을 입력해주세요."/>
 					</label>
 				</div>
 				<div class="mt-4">
 					<label class="cursor-pointer">
 						휴대전화
 						<br>
-						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="tel" name="cellphoneNum" placeholder="휴대전화 번호를 입력해주세요"/>
+						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="tel" name="cellphoneNum" placeholder="휴대전화 번호를 입력해주세요."/>
 					</label>
 				</div>
 				<div class="mt-4">
@@ -108,7 +110,7 @@
 			</form>
 		</div>
 		<div class="mt-3 flex justify-center">
-			<button class="btn-text-color btn btn-info w-112" onclick="history.back();">뒤로가기</button>
+			<button class="btn-text-color btn btn-info w-112" onclick="if(!confirm('회원가입을 취소하시겠습니까?')){return false}; history.back();">뒤로가기</button>
 		</div>
 	</section>
 </body>

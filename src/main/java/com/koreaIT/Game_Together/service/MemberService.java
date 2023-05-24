@@ -22,30 +22,30 @@ public class MemberService {
 		Member member = getMemberByLoginId(loginId);
 
 		if (member != null) {
-			return ResultData.resultFrom("F-1", String.format("이미 사용중인 아이디(%s)입니다", loginId));
+			return ResultData.resultFrom("F-1", String.format("이미 사용중인 아이디(%s)입니다.", loginId));
 		}
 		
 		member = getMemberByNickname(nickname);
 		
 		if (member != null) {
-			return ResultData.resultFrom("F-2", String.format("이미 사용중인 닉네임(%s)입니다", nickname));
+			return ResultData.resultFrom("F-2", String.format("이미 사용중인 닉네임(%s)입니다.", nickname));
 		}
 		
 		member = getMemberByEmail(email);
 		
 		if (member != null) {
-			return ResultData.resultFrom("F-3", String.format("이미 사용중인 이메일(%s)입니다", email));
+			return ResultData.resultFrom("F-3", String.format("이미 사용중인 이메일(%s)입니다.", email));
 		}
 		
 		member = getMemberByCellphoneNum(cellphoneNum);
 		
 		if (member != null) {
-			return ResultData.resultFrom("F-4", String.format("이미 사용중인 휴대전화 번호(%s)입니다", cellphoneNum));
+			return ResultData.resultFrom("F-4", String.format("이미 사용중인 휴대전화 번호(%s)입니다.", cellphoneNum));
 		}
 		
 		memberRepository.doJoin(loginId, loginPw, name, nickname, birthday, gender, email, cellphoneNum);
 
-		return ResultData.resultFrom("S-1", String.format("%s님 가입을 환영합니다", nickname), "id", memberRepository.getLastInsertId());
+		return ResultData.resultFrom("S-1", String.format("%s님 가입을 환영합니다.", nickname), "id", memberRepository.getLastInsertId());
 
 	}
 
@@ -53,7 +53,7 @@ public class MemberService {
 		return memberRepository.getMemberByLoginId(loginId);
 	}
 
-	private Member getMemberByNickname(String nickname) {
+	public Member getMemberByNickname(String nickname) {
 		return memberRepository.getMemberByNickname(nickname);
 	}
 	

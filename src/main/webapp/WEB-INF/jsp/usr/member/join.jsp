@@ -76,8 +76,9 @@
 					<label class="cursor-pointer">
 						생년월일
 						<br>
-						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="date" name="birthday"/>
+						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="birthday" placeholder="생년월일 8자리를 입력해주세요." onblur="birthdayCheck(this);"/>
 					</label>
+					<div id="birthdayMsg" class="mt-2 h-5 text-xs text-red-400"></div>
 				</div>
 				<div class="mt-4">
 					<label class="cursor-pointer">

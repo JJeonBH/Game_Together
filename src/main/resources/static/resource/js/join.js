@@ -3,6 +3,7 @@ let validLoginId = '';
 let validLoginPw = '';
 let validName = '';
 let validNickname = '';
+let validBirthday = '';
 
 // 비밀번호 일치 여부를 판단하기 위한 변수
 let loginPw = '';
@@ -27,6 +28,11 @@ function submitJoinForm(form) {
 		
 		if (validNickname == '') {
 			form.nickname.focus();
+			return;
+		}
+		
+		if (validBirthday == '') {
+			form.birthday.focus();
 			return;
 		}
 		
@@ -280,5 +286,67 @@ function nicknameCheck(input) {
 			nicknameMsg.html(`<span>${data.data1}(은)는 ${data.msg}</span>`);
 		}
 	}, 'json');
+	
+}
+
+function birthdayCheck(input) {
+	
+	validBirthday = '';
+	
+	input.value = input.value.trim();
+	let value = input.value;
+	let birthdayMsg = $('#birthdayMsg');
+	
+	birthdayMsg.empty();
+	
+	if (value.length == 0) {
+		birthdayMsg.html('<span>필수 정보입니다.</span>');
+		return;
+	}
+	
+//	자리수 체크
+	const numberOfDigits = /^[0-9]{8}$/;
+	
+	if (!numberOfDigits.test(value)) {
+		birthdayMsg.html('<span>생년월일은 8자리 숫자로 입력해 주세요.</span>');
+		return;
+	}
+	
+//	생년월일 제대로 입력했는지 체크
+	const regex = /^(19[0-9][0-9]|20\d{2})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/;
+	
+	if (!regex.test(value)) {
+		birthdayMsg.html('<span>생년월일을 다시 확인해주세요.</span>');
+		return;
+	}
+
+	let date = new Date();
+	
+	let year = date.getFullYear();
+	let month = date.getMonth() +1;
+	let day = date.getDate();
+	
+	let today = year + '.' + month + '.' + day;
+	let age14 = (year-14) + '.' + month + '.' + day;
+	value = value.replace(/(\d{4})(\d{2})(\d{2})/, '$1.$2.$3');
+	
+//	현재 날짜를 millisecond로 변환
+	const date1 = Date.parse(today);
+//	만 14세 되는 날짜를 millisecond로 변환
+	const date2 = Date.parse(age14);
+//	입력 받은 날짜를 millisecond로 변환
+	const date3 = Date.parse(value);
+	
+	if (date3 > date1) {
+		birthdayMsg.html('<span>미래에서 오셨군요. ^^</span>');
+		return;
+	}
+	
+	if (date3 > date2) {
+		birthdayMsg.html('<span>만 14세 미만의 어린이는 보호자의 동의가 필요합니다.</span>');
+		return;
+	}
+	
+	validBirthday = input.value;
 	
 }

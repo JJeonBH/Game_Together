@@ -13,7 +13,9 @@
 				nickname = #{nickname},
 				birthday = #{birthday},
 				gender = #{gender},
-				email = #{email},
+				<if test = "email != null and email != ''">
+					email = #{email},
+				</if>
 				cellphoneNum = #{cellphoneNum};		
 	</insert>
 	

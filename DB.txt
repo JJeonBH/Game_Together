@@ -15,7 +15,7 @@ CREATE TABLE `member`(
 	nickname VARCHAR(20) NOT NULL,
     birthday VARCHAR(20) NOT NULL COMMENT '생년월일',
     gender VARCHAR(10) NOT NULL COMMENT '성별 (남자 = male, 여자 = female)',
-	email VARCHAR(50) NOT NULL,
+	email VARCHAR(50),
 	cellphoneNum VARCHAR(20) NOT NULL,
 	delStatus TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴여부 (탈퇴 전 = 0, 탈퇴 후 = 1)',
 	delDate DATETIME COMMENT '탈퇴 날짜'
@@ -26,40 +26,40 @@ INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'admin',
-loginPw = SHA2('admin', 256),
+loginPw = SHA2('Wjsqudgh0@', 256),
 `authLevel` = 7,
 `name` = '전병호',
 nickname = '관리자',
-birthday = '1991-10-10',
+birthday = '19911010',
 gender = 'male',
 email = 'admin@naver.com',
-cellphoneNum = '010-1111-1111';
+cellphoneNum = '01011111111';
 
 # member 테스트 데이터
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'test1',
-loginPw = SHA2('test1', 256),
+loginPw = SHA2('Wjsqudgh1@', 256),
 `name` = '홍길동',
 nickname = '유저1',
-birthday = '1992-10-10',
+birthday = '19921010',
 gender = 'male',
 email = 'test1@naver.com',
-cellphoneNum = '010-1112-1112';
+cellphoneNum = '01011121112';
 
 # member 테스트 데이터
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'test2',
-loginPw = SHA2('test2', 256),
+loginPw = SHA2('Wjsqudgh2@', 256),
 `name` = '홍길순',
 nickname = '유저2',
-birthday = '1993-10-10',
+birthday = '19931010',
 gender = 'female',
 email = 'test2@naver.com',
-cellphoneNum = '010-1113-1113';
+cellphoneNum = '01011131113';
 
 # member 테이블 구조
 DESC `member`;

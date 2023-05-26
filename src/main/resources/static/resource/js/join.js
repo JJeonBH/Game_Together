@@ -1,9 +1,14 @@
-// 유효한 아이디, 비밀번호, 이름 등을 저장하는 변수
-let validLoginId = '';
-let validLoginPw = '';
-let validName = '';
-let validNickname = '';
-let validBirthday = '';
+// 유효한 아이디, 비밀번호, 이름 등을 체크하기 위한 변수
+// 유효한 값을 입력하면 1, 유효하지 않은 값을 입력하면 0
+// 이메일은 선택적으로 입력하므로 미리 1을 넣어두고 잘못 입력하거나 중복될 때만 0이 됨
+let validLoginId = 0;
+let validLoginPw = 0;
+let validName = 0;
+let validNickname = 0;
+let validBirthday = 0;
+let validGender = 0;
+let validEmail = 1;
+let validCellphoneNum = 0;
 
 // 비밀번호 일치 여부를 판단하기 위한 변수
 let loginPw = '';
@@ -11,105 +16,42 @@ let loginPwChk = '';
 
 function submitJoinForm(form) {
 		
-		if (validLoginId == '') {
+		if (validLoginId == 0) {
 			form.loginId.focus();
 			return;
 		}
 		
-		if (validLoginPw == '') {
+		if (validLoginPw == 0) {
 			form.loginPw.focus();
 			return;
 		}
 		
-		if (validName == '') {
+		if (validName == 0) {
 			form.name.focus();
 			return;
 		}
 		
-		if (validNickname == '') {
+		if (validNickname == 0) {
 			form.nickname.focus();
 			return;
 		}
 		
-		if (validBirthday == '') {
+		if (validBirthday == 0) {
 			form.birthday.focus();
 			return;
 		}
 		
-//		form.loginId.value = form.loginId.value.trim();
-//		if (form.loginId.value.length == 0) {
-//			alert('아이디를 입력해주세요.');
-//			form.loginId.focus();
-//			return;
-//		}
-		
-//		if (form.loginId.value != validLoginId) {
-//			alert(form.loginId.value + '은(는) 사용할 수 없는 아이디입니다.');
-//			form.loginId.value = '';
-//			form.loginId.focus();
-//			return;
-//		}
-		
-//		form.loginPw.value = form.loginPw.value.trim();
-//		if (form.loginPw.value.length == 0) {
-//			alert('비밀번호를 입력해주세요.');
-//			form.loginPw.focus();
-//			return;
-//		}
-		
-//		form.loginPwChk.value = form.loginPwChk.value.trim();
-//		if (form.loginPwChk.value.length == 0) {
-//			alert('비밀번호 재확인을 입력해주세요.');
-//			form.loginPwChk.focus();
-//			return;
-//		}
-		
-//		if (form.loginPw.value != form.loginPwChk.value) {
-//			alert('비밀번호가 일치하지 않습니다.');
-//			form.loginPw.value = '';
-//			form.loginPwChk.value = '';
-//			form.loginPw.focus();
-//			return;
-//		}
-		
-//		form.name.value = form.name.value.trim();
-//		if (form.name.value.length == 0) {
-//			alert('이름을 입력해주세요.');
-//			form.name.focus();
-//			return;
-//		}
-		
-//		form.nickname.value = form.nickname.value.trim();
-//		if (form.nickname.value.length == 0) {
-//			alert('닉네임을 입력해주세요.');
-//			form.nickname.focus();
-//			return;
-//		}
-		
-		form.birthday.value = form.birthday.value.trim();
-		if (form.birthday.value.length == 0) {
-			alert('생년월일을 입력해주세요.');
-			form.birthday.focus();
-			return;
-		}
-		
-		form.gender.value = form.gender.value.trim();
-		if (form.gender.value.length == 0) {
-			alert('성별을 입력해주세요.');
+		if (validGender == 0) {
 			form.gender.focus();
 			return;
 		}
 		
-		form.email.value = form.email.value.trim();
-		if (form.email.value.length == 0) {
-			alert('이메일을 입력해주세요.');
+		if (validEmail == 0) {
 			form.email.focus();
 			return;
 		}
 		
-		form.cellphoneNum.value = form.cellphoneNum.value.trim();
-		if (form.cellphoneNum.value.length == 0) {
-			alert('휴대전화 번호를 입력해주세요.');
+		if (validCellphoneNum == 0) {
 			form.cellphoneNum.focus();
 			return;
 		}
@@ -120,11 +62,11 @@ function submitJoinForm(form) {
 
 function loginIdDupCheck(input) {
 	
-	validLoginId = '';
+	validLoginId = 0;
 	
-	let loginIdDupCheckMsg = $('#loginIdDupCheckMsg');
 	input.value = input.value.trim();
 	let value = input.value;
+	let loginIdDupCheckMsg = $('#loginIdDupCheckMsg');
 	
 	loginIdDupCheckMsg.empty();
 	
@@ -151,7 +93,7 @@ function loginIdDupCheck(input) {
 			loginIdDupCheckMsg.removeClass('text-red-400');
 			loginIdDupCheckMsg.addClass('text-green-400');
 			loginIdDupCheckMsg.html(`<span>${data.msg}</span>`);
-			validLoginId = data.data1;
+			validLoginId = 1;
 		} else {
 			loginIdDupCheckMsg.removeClass('text-green-400');
 			loginIdDupCheckMsg.addClass('text-red-400');
@@ -163,7 +105,7 @@ function loginIdDupCheck(input) {
 
 function pwCheck(input) {
 	
-	validLoginPw = '';
+	validLoginPw = 0;
 	
 	let name = input.getAttribute('name');
 	input.value = input.value.trim();
@@ -201,7 +143,7 @@ function pwCheck(input) {
 		} else {
 			pwMsg.html('');
 			if(loginPw == loginPwChk) {
-				validLoginPw = loginPw;
+				validLoginPw = 1;
 			}
 			return;
 		}
@@ -212,7 +154,7 @@ function pwCheck(input) {
 		return;
 	} else {
 		$('#loginPwChkMsg').html('');
-		validLoginPw = loginPw;
+		validLoginPw = 1;
 		return;
 	}
 	
@@ -220,7 +162,7 @@ function pwCheck(input) {
 
 function nameCheck(input) {
 	
-	validName = '';
+	validName = 0;
 	
 	input.value = input.value.trim();
 	let value = input.value;
@@ -240,7 +182,7 @@ function nameCheck(input) {
 		return;
 	} else {
 		nameMsg.html('');
-		validName = value;
+		validName = 1;
 		return;
 	}
 	
@@ -248,7 +190,7 @@ function nameCheck(input) {
 
 function nicknameCheck(input) {
 	
-	validNickname = '';
+	validNickname = 0;
 	
 	input.value = input.value.trim();
 	let value = input.value;
@@ -279,7 +221,7 @@ function nicknameCheck(input) {
 			nicknameMsg.removeClass('text-red-400');
 			nicknameMsg.addClass('text-green-400');
 			nicknameMsg.html(`<span>${data.data1}(은)는 ${data.msg}</span>`);
-			validNickname = data.data1;
+			validNickname = 1;
 		} else {
 			nicknameMsg.removeClass('text-green-400');
 			nicknameMsg.addClass('text-red-400');
@@ -291,7 +233,7 @@ function nicknameCheck(input) {
 
 function birthdayCheck(input) {
 	
-	validBirthday = '';
+	validBirthday = 0;
 	
 	input.value = input.value.trim();
 	let value = input.value;
@@ -347,6 +289,91 @@ function birthdayCheck(input) {
 		return;
 	}
 	
-	validBirthday = input.value;
+	validBirthday = 1;
+	
+}
+
+function genderCheck(input) {
+	
+	validGender = 0;
+	
+	let genderMsg = $('#genderMsg');
+	
+	genderMsg.empty();
+	
+	if (input.value == '') {
+		genderMsg.html('<span>필수 정보입니다.</span>')
+		return;
+	}
+	
+	validGender = 1;
+	
+}
+
+function emailCheck(input) {
+	
+	validEmail = 0;
+	
+	input.value = input.value.trim();
+	let value = input.value;
+	let emailMsg = $('#emailMsg');
+	
+	emailMsg.empty();
+	
+	if (value.length == 0) {
+		validEmail = 1;
+		return
+	}
+	
+	const regex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+
+	if (!regex.test(value)) {
+		emailMsg.html('<span>이메일 주소를 다시 확인해주세요.</span>');
+		return;
+	}
+	
+	$.get('emailDupCheck', {
+		email : value
+	}, function(data) {
+		if(data.success) {
+			validEmail = 1;
+		} else {
+			emailMsg.html(`<span>${data.data1}(은)는 ${data.msg}</span>`);
+		}
+	}, 'json');
+	
+}
+
+function cellphoneNumCheck(input) {
+	
+	validCellphoneNum = 0;
+	
+	input.value = input.value.trim();
+	let value = input.value;
+	let cellphoneNumMsg = $('#cellphoneNumMsg');
+	
+	cellphoneNumMsg.empty();
+	
+	if (value.length == 0) {
+		cellphoneNumMsg.html('<span>필수 정보입니다.</span>');
+		return;
+	}
+	
+	const regex = /^(010)[0-9]{3,4}[0-9]{4}$/;
+	
+	if(!regex.test(value)) {
+		cellphoneNumMsg.html('<span>형식에 맞지 않는 번호입니다. ( -, 공백 없이 숫자만 )</span>');
+		return;
+	}
+	
+	$.get('cellphoneNumDupCheck', {
+		cellphoneNum : value
+	}, function(data) {
+		if(data.success) {
+			validCellphoneNum = 1;
+		} else {
+			cellphoneNumMsg.html(`<span>${data.data1}(은)는 ${data.msg}</span>`);
+		}
+	}, 'json');
 	
 }

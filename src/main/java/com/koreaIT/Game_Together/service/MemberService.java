@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.koreaIT.Game_Together.repository.MemberRepository;
+import com.koreaIT.Game_Together.util.Util;
 import com.koreaIT.Game_Together.vo.Member;
 import com.koreaIT.Game_Together.vo.ResultData;
 
@@ -19,29 +20,31 @@ public class MemberService {
 
 	public ResultData<Integer> doJoin(String loginId, String loginPw, String name, String nickname, String birthday, String gender, String email, String cellphoneNum) {
 
-		Member member = getMemberByLoginId(loginId);
-
-		if (member != null) {
-			return ResultData.resultFrom("F-1", String.format("이미 사용중인 아이디(%s)입니다.", loginId));
-		}
+//		Member member = getMemberByLoginId(loginId);
+//
+//		if (member != null) {
+//			return ResultData.resultFrom("F-1", String.format("이미 사용중인 아이디(%s)입니다.", loginId));
+//		}
 		
-		member = getMemberByNickname(nickname);
+//		member = getMemberByNickname(nickname);
+//		
+//		if (member != null) {
+//			return ResultData.resultFrom("F-2", String.format("이미 사용중인 닉네임(%s)입니다.", nickname));
+//		}
 		
-		if (member != null) {
-			return ResultData.resultFrom("F-2", String.format("이미 사용중인 닉네임(%s)입니다.", nickname));
-		}
+//		if (!Util.empty(email)) {
+//			member = getMemberByEmail(email);
+//			
+//			if (member != null) {
+//				return ResultData.resultFrom("F-3", String.format("이미 사용중인 이메일(%s)입니다.", email));
+//			}
+//		}
 		
-		member = getMemberByEmail(email);
-		
-		if (member != null) {
-			return ResultData.resultFrom("F-3", String.format("이미 사용중인 이메일(%s)입니다.", email));
-		}
-		
-		member = getMemberByCellphoneNum(cellphoneNum);
-		
-		if (member != null) {
-			return ResultData.resultFrom("F-4", String.format("이미 사용중인 휴대전화 번호(%s)입니다.", cellphoneNum));
-		}
+//		member = getMemberByCellphoneNum(cellphoneNum);
+//		
+//		if (member != null) {
+//			return ResultData.resultFrom("F-4", String.format("이미 사용중인 휴대전화 번호(%s)입니다.", cellphoneNum));
+//		}
 		
 		memberRepository.doJoin(loginId, loginPw, name, nickname, birthday, gender, email, cellphoneNum);
 
@@ -57,11 +60,11 @@ public class MemberService {
 		return memberRepository.getMemberByNickname(nickname);
 	}
 	
-	private Member getMemberByEmail(String email) {
+	public Member getMemberByEmail(String email) {
 		return memberRepository.getMemberByEmail(email);
 	}
 	
-	private Member getMemberByCellphoneNum(String cellphoneNum) {
+	public Member getMemberByCellphoneNum(String cellphoneNum) {
 		return memberRepository.getMemberByCellphoneNum(cellphoneNum);
 	}
 	

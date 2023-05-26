@@ -28,44 +28,44 @@ public class MemberController {
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
 	public String doJoin(String loginId, String loginPw, String name, String nickname, String birthday, String gender, String email, String cellphoneNum) {
+		
+//		if (Util.empty(loginId)) {
+//			return Util.jsHistoryBack("아이디를 입력해주세요.");
+//		}
 
-		if (Util.empty(loginId)) {
-			return Util.jsHistoryBack("아이디를 입력해주세요.");
-		}
+//		if (Util.empty(loginPw)) {
+//			return Util.jsHistoryBack("비밀번호를 입력해주세요.");
+//		}
 
-		if (Util.empty(loginPw)) {
-			return Util.jsHistoryBack("비밀번호를 입력해주세요.");
-		}
+//		if (Util.empty(name)) {
+//			return Util.jsHistoryBack("이름을 입력해주세요.");
+//		}
 
-		if (Util.empty(name)) {
-			return Util.jsHistoryBack("이름을 입력해주세요.");
-		}
+//		if (Util.empty(nickname)) {
+//			return Util.jsHistoryBack("닉네임을 입력해주세요.");
+//		}
 
-		if (Util.empty(nickname)) {
-			return Util.jsHistoryBack("닉네임을 입력해주세요.");
-		}
+//		if (Util.empty(birthday)) {
+//			return Util.jsHistoryBack("생년월일을 입력해주세요.");
+//		}
 
-		if (Util.empty(birthday)) {
-			return Util.jsHistoryBack("생년월일을 입력해주세요.");
-		}
+//		if (Util.empty(gender)) {
+//			return Util.jsHistoryBack("성별을 입력해주세요.");
+//		}
 
-		if (Util.empty(gender)) {
-			return Util.jsHistoryBack("성별을 입력해주세요.");
-		}
+//		if (Util.empty(email)) {
+//			return Util.jsHistoryBack("이메일을 입력해주세요.");
+//		}
 
-		if (Util.empty(email)) {
-			return Util.jsHistoryBack("이메일을 입력해주세요.");
-		}
-
-		if (Util.empty(cellphoneNum)) {
-			return Util.jsHistoryBack("휴대전화 번호를 입력해주세요.");
-		}
+//		if (Util.empty(cellphoneNum)) {
+//			return Util.jsHistoryBack("휴대전화 번호를 입력해주세요.");
+//		}
 
 		ResultData<Integer> doJoinRd = memberService.doJoin(loginId, Util.sha256(loginPw), name, nickname, birthday, gender, email, cellphoneNum);
 		
-		if (doJoinRd.isFail()) {
-			return Util.jsHistoryBack(doJoinRd.getMsg());
-		}
+//		if (doJoinRd.isFail()) {
+//			return Util.jsHistoryBack(doJoinRd.getMsg());
+//		}
 		
 		return Util.jsReplace(doJoinRd.getMsg(), "/");
 		
@@ -104,6 +104,34 @@ public class MemberController {
 		}
 		
 		return ResultData.resultFrom("S-1", "사용 가능한 닉네임입니다.", "nickname", nickname);
+		
+	}
+	
+	@RequestMapping("/usr/member/emailDupCheck")
+	@ResponseBody
+	public ResultData<String> emailDupCheck(String email) {
+		
+		Member member = memberService.getMemberByEmail(email);
+		
+		if (member != null) {
+			return ResultData.resultFrom("F-1", "이미 사용중인 이메일입니다.", "email", email);
+		}
+		
+		return ResultData.resultFrom("S-1", "사용 가능한 이메일입니다.", "email", email);
+		
+	}
+	
+	@RequestMapping("/usr/member/cellphoneNumDupCheck")
+	@ResponseBody
+	public ResultData<String> cellphoneNumDupCheck(String cellphoneNum) {
+		
+		Member member = memberService.getMemberByCellphoneNum(cellphoneNum);
+		
+		if (member != null) {
+			return ResultData.resultFrom("F-1", "이미 사용중인 휴대전화 번호입니다.", "cellphoneNum", cellphoneNum);
+		}
+		
+		return ResultData.resultFrom("S-1", "사용 가능한 휴대전화 번호입니다.", "cellphoneNum", cellphoneNum);
 		
 	}
 	

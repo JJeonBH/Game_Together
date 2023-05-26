@@ -20,7 +20,7 @@
 <!-- CSS 파일 불러오기 -->
 <link rel="stylesheet" href="/resource/css/common.css" />
 <!-- JS 파일 불러오기 -->
-<script src="/resource/js/common.js"></script>
+<script src="/resource/js/common.js" defer="defer"></script>
 </head>
 <body>
 	<section class="h-14">

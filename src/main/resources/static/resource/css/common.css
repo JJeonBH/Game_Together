@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+/* 폰트 불러오기 */
 @font-face {
     font-family: 'KIMM_Bold';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/KIMM_Bold.woff2') format('woff2');
@@ -7,10 +8,7 @@
     font-style: normal;
 }
 
-/* :root, [data-theme] { */
-/*     background-color: rgba(66, 188, 245, 0.5); */
-/* } */
-
+/* 폰트 적용 */
 html > body {
 	font-family: 'KIMM_Bold', sans-serif;
 	text-underline-position: under;
@@ -28,21 +26,25 @@ html > body {
 	min-width: 1000px;
 }
 
+/* 화면에서 탑바 맨앞에 위치, 위치 고정 */
 .top-bar {
 	z-index: 9999;
 	position: fixed;
 }
 
+/* 탑바 메뉴아이템 텍스트 글자색 */
 .top-bar > .menu-box > ul > li > .topbar-text-link {
 	position: relative;
 	color: rgba(0, 0, 0, 0.4);
 	transition: color .3s;
 }
 
+/* 탑바 메뉴아이템 텍스트 글자색, 호버시 변경 */
 .top-bar > .menu-box > ul > li:hover > .topbar-text-link {
 	color: rgba(0, 0, 0, 1);
 }
 
+/* 탑바 메뉴아이템 텍스트 밑에 밑줄 추가, 길이 0 */
 .top-bar > .menu-box > ul > li > .topbar-text-link::after {
 	content:"";
 	background-color: rgba(0, 0, 0, 1);
@@ -54,38 +56,56 @@ html > body {
 	transition: width .3s;
 }
 
+/* 탑바 메뉴아이템 텍스트 밑에 밑줄, 호버시 길이 100% */
 .top-bar > .menu-box > ul > li:hover > .topbar-text-link::after {
 	width: 100%;
 }
 
-.top-bar > .menu-box > ul > li > .light-dark {
+/* light, dark 모드 icon 변경 */
+.top-bar > .menu-box > ul > li.theme-toggle > .theme-toggle-icon .fa-moon {
+	display: none;
+}
+
+/* light, dark 모드 icon 변경 */
+html[data-theme="night"] .top-bar > .menu-box > ul > li.theme-toggle > .theme-toggle-icon .fa-moon {
+	display: inline;
+}
+
+/* light, dark 모드 icon 변경 */
+html[data-theme="night"] .top-bar > .menu-box > ul > li.theme-toggle > .theme-toggle-icon .fa-sun {
+	display: none;
+}
+
+/* light, dark 모드 icon 아래 메시지 */
+.top-bar > .menu-box > ul > li.theme-toggle {
 	position: relative;
 }
 
-.top-bar > .menu-box > ul > li > .light-dark > .light-dark-icon {
-	cursor: pointer;
-}
-
-.top-bar > .menu-box > ul > li > .light-dark > .light-dark-msg {
+/* light, dark 모드 icon 아래 메시지, 숨김 */
+.top-bar > .menu-box > ul > li.theme-toggle > .theme-toggle-msg {
 	display: none;
 	position: absolute;
 	left: 0;
 	top: 100%;
 }
 
-.top-bar > .menu-box > ul > li > .light-dark:hover > .light-dark-msg {
+/* light, dark 모드 icon 아래 메시지, 호버시 보임 */
+.top-bar > .menu-box > ul > li.theme-toggle:hover > .theme-toggle-msg {
 	display: block;
 }
 
+/* 버튼 글자색 */
 .btn-text-color {
 	color: white;
 	font-size: 1.2rem;
 }
 
+/* 버튼 글자색, 호버시 변경 */
 .btn-text-color:hover {
 	color: black;
 }
 
+/* 드랍다운 메뉴아이템 */
 .dropdown-content {
 	left: 0;
 	top: 100%;
@@ -93,6 +113,7 @@ html > body {
 	font-size: 1.2rem;
 }
 
+/* 메인페이지 이미지, 호버시 투명도 변경 */
 a:hover > .main-image {
 	opacity: 0.5;
 }

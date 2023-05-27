@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<html>
+<html data-theme="light">
 <head>
 <meta charset="UTF-8">
 <title>${pageTitle }</title>
@@ -46,11 +46,12 @@
 					</li>
 				</ul>
 				<ul class="h-full flex">
-					<li>
-						<div class="light-dark h-full flex items-center px-3 mx-1">
-							<i class="light-dark-icon fa-solid fa-sun text-black light" onclick="lightDark(this);"></i>
-							<span class="light-dark-msg text-xs text-center bg-black text-white">Light mode</span>
-						</div>
+					<li class="theme-toggle">
+						<a class="theme-toggle-icon h-full flex items-center px-3 mx-2" href="javascript:themeToggle();">
+							<span><i class="fa-solid fa-sun text-black"></i></span>
+							<span><i class="fa-solid fa-moon text-black"></i></span>
+						</a>
+						<div class="theme-toggle-msg text-xs text-center bg-black text-white"></div>
 					</li>
 					<li>
 						<a href="#" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>로그인</span></a>

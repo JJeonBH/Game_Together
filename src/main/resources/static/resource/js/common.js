@@ -1,22 +1,39 @@
-function lightDark(i) {
+function themeToggle() {
 	
-	let lightDarkIcon = $(i);
-	let lightDarkMsg = $('.light-dark-msg');
-	
-	if(lightDarkIcon.hasClass('light')) {
-		lightDarkIcon.removeClass('light fa-sun');
-		lightDarkIcon.addClass('dark fa-moon');
-		lightDarkMsg.empty();
-		lightDarkMsg.append('Dark mode')
-		$('html').css('background', 'rgba(0, 0, 0, 0.7)');
-		$('body').css('color', 'white');
-	} else {
-		lightDarkIcon.removeClass('dark fa-moon');
-		lightDarkIcon.addClass('light fa-sun');
-		lightDarkMsg.empty();
-		lightDarkMsg.append('Light mode')
-		$('html').css('background', 'white');
-		$('body').css('color', 'black');
-	}
-	
+		const theme = localStorage.getItem("theme") ?? "light";
+		
+		if (theme == 'light') {
+			localStorage.setItem("theme", "night");
+		} else {
+			localStorage.setItem("theme", "light");
+		}
+		
+		location.reload();
+		
 }
+
+function themeInit() {
+	
+		const theme = localStorage.getItem("theme") ?? "light";
+		
+		themeApplyTo(theme);
+		
+}
+
+function themeApplyTo(themeName) {
+	
+		$('html').attr('data-theme', themeName);
+		
+		$('.theme-toggle-msg').empty();
+		
+		if (themeName == 'light') {
+			$('.theme-toggle-msg').append('Light mode');
+		} else {
+			$('.theme-toggle-msg').append('Dark mode');
+			$('.dropdown-content').css('background', '#221c75');
+			$('.dropdown-content').css('color', '#ffffff');
+		}
+		
+}
+
+themeInit();

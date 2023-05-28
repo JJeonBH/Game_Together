@@ -54,10 +54,10 @@
 						<div class="theme-toggle-msg text-xs text-center bg-black text-white"></div>
 					</li>
 					<li>
-						<a href="#" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>로그인</span></a>
+						<a href="/usr/member/login" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>로그인</span></a>
 					</li>
 					<li>
-						<a href="../member/join" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>회원가입</span></a>
+						<a href="/usr/member/join" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>회원가입</span></a>
 					</li>
 				</ul>
 			</nav>

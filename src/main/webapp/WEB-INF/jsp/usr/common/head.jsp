@@ -53,12 +53,19 @@
 						</a>
 						<div class="theme-toggle-msg text-xs text-center bg-black text-white"></div>
 					</li>
-					<li>
-						<a href="/usr/member/login" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>로그인</span></a>
-					</li>
-					<li>
-						<a href="/usr/member/join" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>회원가입</span></a>
-					</li>
+					<c:if test="${Request.getLoginedMemberId() == 0 }">
+						<li>
+							<a href="/usr/member/login" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>로그인</span></a>
+						</li>
+						<li>
+							<a href="/usr/member/join" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>회원가입</span></a>
+						</li>
+					</c:if>
+					<c:if test="${Request.getLoginedMemberId() != 0 }">
+						<li>
+							<a href="/usr/member/doLogout" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>로그아웃</span></a>
+						</li>
+					</c:if>
 				</ul>
 			</nav>
 		</div>

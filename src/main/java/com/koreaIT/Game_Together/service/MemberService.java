@@ -25,6 +25,10 @@ public class MemberService {
 		return ResultData.resultFrom("S-1", String.format("%s님 가입을 환영합니다.", nickname));
 
 	}
+	
+	public Member getMemberById(int id) {
+		return memberRepository.getMemberById(id);
+	}
 
 	public Member getMemberByLoginId(String loginId) {
 		return memberRepository.getMemberByLoginId(loginId);

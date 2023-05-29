@@ -8,16 +8,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.koreaIT.Game_Together.service.MemberService;
 import com.koreaIT.Game_Together.util.Util;
 import com.koreaIT.Game_Together.vo.Member;
+import com.koreaIT.Game_Together.vo.Request;
 import com.koreaIT.Game_Together.vo.ResultData;
 
 @Controller
 public class MemberController {
 
 	private MemberService memberService;
+	private Request rq;
 	
 	@Autowired
-	public MemberController(MemberService memberService) {
+	public MemberController(MemberService memberService, Request rq) {
 		this.memberService = memberService;
+		this.rq = rq;
 	}
 
 	@RequestMapping("/usr/member/join")
@@ -31,13 +34,35 @@ public class MemberController {
 
 		ResultData doJoinRd = memberService.doJoin(loginId, Util.sha256(loginPw), name, nickname, birthday, gender, email, cellphoneNum);
 		
-		return Util.jsReplace(doJoinRd.getMsg(), "/");
+		return Util.returnStrJsAlertReplace(doJoinRd.getMsg(), "/");
 		
 	}
 	
 	@RequestMapping("/usr/member/login")
 	public String login() {
 		return "usr/member/login";
+	}
+	
+	@RequestMapping("/usr/member/doLogin")
+	@ResponseBody
+	public String doLogin(String loginId, String loginPw) {
+		
+		Member member = memberService.getMemberByLoginId(loginId);
+		
+		rq.login(member);
+		
+		return Util.returnStrJsAlertReplace("", "/");
+		
+	}
+	
+	@RequestMapping("/usr/member/doLogout")
+	@ResponseBody
+	public String doLogout() {
+		
+		rq.logout();
+		
+		return Util.returnStrJsAlertReplace("로그아웃 되었습니다", "/");
+		
 	}
 
 	@RequestMapping("/usr/member/loginIdDupCheck")

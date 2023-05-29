@@ -37,6 +37,7 @@
 						<br>
 						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="loginId" placeholder="아이디를 입력해주세요."/>
 					</label>
+					<div id="loginIdMsg" class="mt-2 h-5 text-xs text-red-400"></div>
 				</div>
 				<div class="mt-4">
 					<label class="cursor-pointer">
@@ -44,6 +45,7 @@
 						<br>
 						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="loginPw" placeholder="비밀번호를 입력해주세요."/>
 					</label>
+					<div id="loginPwMsg" class="mt-2 h-5 text-xs text-red-400"></div>
 				</div>
 				<div class="mt-4">
 					<button class="btn-text-color btn btn-info w-112">로그인</button>
@@ -51,8 +53,9 @@
 			</form>
 		</div>
 		<div class="mt-4 flex justify-center">
-			<button class="btn-text-color btn btn-info" onclick="history.back();">뒤로가기</button>
-			<a href="join" class="ml-4 btn-text-color btn btn-info">회원가입</a>
+			<button onclick="history.back();">뒤로가기</button>
+			<div class="mx-4">|</div>
+			<a href="join">회원가입</a>
 		</div>
 	</section>
 </body>

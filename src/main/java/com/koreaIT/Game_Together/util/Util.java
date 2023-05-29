@@ -4,7 +4,7 @@ import java.security.MessageDigest;
 
 public class Util {
 
-	public static boolean empty(Object obj) {
+	public static boolean isEmpty(Object obj) {
 
 		if (obj == null) {
 			return true;
@@ -16,7 +16,7 @@ public class Util {
 
 	}
 
-	public static String jsHistoryBack(String msg) {
+	public static String returnStrJsAlertHistoryBack(String msg) {
 
 		if (msg == null) {
 			msg = "";
@@ -34,7 +34,7 @@ public class Util {
 
 	}
 
-	public static String jsReplace(String msg, String uri) {
+	public static String returnStrJsAlertReplace(String msg, String uri) {
 
 		if (msg == null) {
 			msg = "";

@@ -16,7 +16,7 @@ public class Util {
 
 	}
 
-	public static String returnStrJsAlertHistoryBack(String msg) {
+	public static String jsAlertHistoryBack(String msg) {
 
 		if (msg == null) {
 			msg = "";
@@ -34,7 +34,7 @@ public class Util {
 
 	}
 
-	public static String returnStrJsAlertReplace(String msg, String uri) {
+	public static String jsAlertReplace(String msg, String uri) {
 
 		if (msg == null) {
 			msg = "";

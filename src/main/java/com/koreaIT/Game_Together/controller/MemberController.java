@@ -34,7 +34,7 @@ public class MemberController {
 
 		ResultData doJoinRd = memberService.doJoin(loginId, Util.sha256(loginPw), name, nickname, birthday, gender, email, cellphoneNum);
 		
-		return Util.returnStrJsAlertReplace(doJoinRd.getMsg(), "/");
+		return Util.jsAlertReplace(doJoinRd.getMsg(), "/");
 		
 	}
 	
@@ -51,7 +51,7 @@ public class MemberController {
 		
 		rq.login(member);
 		
-		return Util.returnStrJsAlertReplace("", "/");
+		return Util.jsAlertReplace("", "/");
 		
 	}
 	
@@ -61,10 +61,28 @@ public class MemberController {
 		
 		rq.logout();
 		
-		return Util.returnStrJsAlertReplace("로그아웃 되었습니다", "/");
+		return Util.jsAlertReplace("로그아웃 되었습니다", "/");
 		
 	}
 
+	@RequestMapping("/usr/member/loginCheck")
+	@ResponseBody
+	public ResultData loginCheck(String loginId, String loginPw) {
+		
+		Member member = memberService.getMemberByLoginId(loginId);
+		
+		if (member == null) {
+			return ResultData.resultFrom("F-1", "아이디 또는 비밀번호를 잘못 입력했습니다.<br>입력하신 내용을 다시 확인해 주세요.");
+		}
+		
+		if (!member.getLoginPw().equals(Util.sha256(loginPw))) {
+			return ResultData.resultFrom("F-2", "아이디 또는 비밀번호를 잘못 입력했습니다.<br>입력하신 내용을 다시 확인해 주세요.");
+		}
+		
+		return ResultData.resultFrom("S-1", "로그인 성공");
+		
+	}
+	
 	@RequestMapping("/usr/member/loginIdDupCheck")
 	@ResponseBody
 	public ResultData<String> loginIdDupCheck(String loginId) {
@@ -72,7 +90,7 @@ public class MemberController {
 		Member member = memberService.getMemberByLoginId(loginId);
 		
 		if (member != null) {
-			return ResultData.resultFrom("F-3", "이미 사용중이거나 탈퇴한 아이디입니다.", "loginId", loginId);
+			return ResultData.resultFrom("F-1", "이미 사용중이거나 탈퇴한 아이디입니다.", "loginId", loginId);
 		}
 		
 		return ResultData.resultFrom("S-1", "사용 가능한 아이디입니다.", "loginId", loginId);

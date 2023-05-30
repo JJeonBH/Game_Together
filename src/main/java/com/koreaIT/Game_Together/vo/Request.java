@@ -66,7 +66,7 @@ public class Request {
 	public void doJsAlertHistoryBack(String msg) {
 		response.setContentType("text/html; charset=UTF-8;");
 		
-		responseAppend(Util.returnStrJsAlertHistoryBack(msg));
+		responseAppend(Util.jsAlertHistoryBack(msg));
 	}
 
 	private void responseAppend(String str) {

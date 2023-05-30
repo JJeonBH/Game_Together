@@ -135,7 +135,7 @@ function pwCheck(input) {
 			pwMsg.html('<span>8~16자 영문 대 소문자, 숫자, 특수문자(!@#$%^&*-?)를 사용하세요.</span>');
 			return;
 		} else if (value.search(/\s/) != -1) {
-			pwMsg.html('<span>비밀번호는 공백 없이 입력해주세요.</span>');
+			pwMsg.html('<span>비밀번호는 공백 없이 입력해 주세요.</span>');
 			return;
 		} else if (hangulcheck.test(value)) {
 			pwMsg.html('<span>비밀번호에 한글을 사용 할 수 없습니다.</span>');
@@ -258,7 +258,7 @@ function birthdayCheck(input) {
 	const regex = /^(19[0-9][0-9]|20\d{2})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/;
 	
 	if (!regex.test(value)) {
-		birthdayMsg.html('<span>생년월일을 다시 확인해주세요.</span>');
+		birthdayMsg.html('<span>생년월일을 다시 확인해 주세요.</span>');
 		return;
 	}
 
@@ -328,7 +328,7 @@ function emailCheck(input) {
 	const regex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 
 	if (!regex.test(value)) {
-		emailMsg.html('<span>이메일 주소를 다시 확인해주세요.</span>');
+		emailMsg.html('<span>이메일 주소를 다시 확인해 주세요.</span>');
 		return;
 	}
 	

@@ -20,39 +20,38 @@
 <!-- CSS 파일 불러오기 -->
 <link rel="stylesheet" href="/resource/css/common.css" />
 <!-- JS 파일 불러오기 -->
-<!-- <script src="/resource/js/join.js" defer="defer"></script> -->
+<script src="/resource/js/login.js" defer="defer"></script>
 </head>
 <body>
-	<section class="text-lg my-20">
+	<section class="text-lg my-24">
 		<h1 class="logo flex justify-center">
 			<a href="/">
 				<img src="/resource/images/logo.png" alt="같이 할래?" width="380px">
 			</a>
 		</h1>
 		<div class="mt-10 flex justify-center">
-			<form action="doLogin" method="POST" class="border border-red-200 p-5">
+			<form action="doLogin" method="POST" class="border border-red-200 p-5" onsubmit="submitLoginForm(this); return false;">
 				<div>
 					<label class="cursor-pointer">
 						아이디
 						<br>
-						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="loginId" placeholder="아이디를 입력해주세요."/>
+						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="loginId" placeholder="아이디를 입력해 주세요."/>
 					</label>
-					<div id="loginIdMsg" class="mt-2 h-5 text-xs text-red-400"></div>
 				</div>
-				<div class="mt-4">
+				<div class="mt-5">
 					<label class="cursor-pointer">
 						비밀번호
 						<br>
-						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="loginPw" placeholder="비밀번호를 입력해주세요."/>
+						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="loginPw" placeholder="비밀번호를 입력해 주세요."/>
 					</label>
-					<div id="loginPwMsg" class="mt-2 h-5 text-xs text-red-400"></div>
 				</div>
-				<div class="mt-4">
+				<div id="loginMsg" class="mt-2 h-5 text-xs text-red-400"></div>
+				<div class="mt-8">
 					<button class="btn-text-color btn btn-info w-112">로그인</button>
 				</div>
 			</form>
 		</div>
-		<div class="mt-4 flex justify-center">
+		<div class="mt-5 flex justify-center">
 			<button onclick="history.back();">뒤로가기</button>
 			<div class="mx-4">|</div>
 			<a href="join">회원가입</a>

@@ -23,13 +23,15 @@
 <script src="/resource/js/login.js" defer="defer"></script>
 </head>
 <body>
-	<section class="text-lg my-24">
+	<header class="text-lg mt-14">
 		<h1 class="logo flex justify-center">
 			<a href="/">
 				<img src="/resource/images/logo.png" alt="같이 할래?" width="380px">
 			</a>
 		</h1>
-		<div class="mt-10 flex justify-center">
+	</header>
+	<section class="text-lg mt-10 mb-20">
+		<div class="flex justify-center">
 			<form action="doLogin" method="POST" class="border border-red-200 p-5" onsubmit="submitLoginForm(this); return false;">
 				<div>
 					<label class="cursor-pointer">

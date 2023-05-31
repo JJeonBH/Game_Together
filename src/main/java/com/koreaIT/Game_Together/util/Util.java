@@ -1,6 +1,8 @@
 package com.koreaIT.Game_Together.util;
 
 import java.security.MessageDigest;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Util {
 
@@ -75,6 +77,14 @@ public class Util {
 		} catch (Exception ex) {
 			return "";
 		}
+		
+	}
+	
+	public static String formatDate(LocalDateTime date) {
+		
+		String formatDate = date.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일"));
+		
+		return formatDate;
 		
 	}
 

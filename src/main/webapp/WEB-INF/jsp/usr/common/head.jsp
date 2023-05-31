@@ -23,7 +23,7 @@
 <script src="/resource/js/common.js" defer="defer"></script>
 </head>
 <body>
-	<section class="h-14">
+	<header class="h-10">
 		<div class="top-bar flex w-screen min-w-900 bg-indigo-100 text-2xl">
 			<h1 class="logo ml-4">
 				<a href="/">
@@ -53,7 +53,7 @@
 						</a>
 						<div class="theme-toggle-msg text-xs text-center bg-black text-white"></div>
 					</li>
-					<c:if test="${Request.getLoginedMemberId() == 0 }">
+					<c:if test="${Request.loginedMemberId == 0 }">
 						<li>
 							<a href="/usr/member/login" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>로그인</span></a>
 						</li>
@@ -61,7 +61,10 @@
 							<a href="/usr/member/join" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>회원가입</span></a>
 						</li>
 					</c:if>
-					<c:if test="${Request.getLoginedMemberId() != 0 }">
+					<c:if test="${Request.loginedMemberId != 0 }">
+						<li>
+							<a href="/usr/member/profile" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>프로필</span></a>
+						</li>
 						<li>
 							<a href="/usr/member/doLogout" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>로그아웃</span></a>
 						</li>
@@ -69,4 +72,4 @@
 				</ul>
 			</nav>
 		</div>
-	</section>
+	</header>

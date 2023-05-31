@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.koreaIT.Game_Together.repository.MemberRepository;
-import com.koreaIT.Game_Together.util.Util;
 import com.koreaIT.Game_Together.vo.Member;
 import com.koreaIT.Game_Together.vo.ResultData;
 

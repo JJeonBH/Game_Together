@@ -64,17 +64,29 @@ public class Request {
 	
 
 	public void doJsAlertHistoryBack(String msg) {
+		
 		response.setContentType("text/html; charset=UTF-8;");
 		
 		responseAppend(Util.jsAlertHistoryBack(msg));
+		
 	}
 
 	private void responseAppend(String str) {
+		
 		try {
 			response.getWriter().append(str);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+	}
+	
+	public String returnMain(String msg) {
+		
+		request.setAttribute("msg", msg);
+		
+		return "usr/common/js";
+		
 	}
 
 }

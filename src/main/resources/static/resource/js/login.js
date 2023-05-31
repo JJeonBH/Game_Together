@@ -18,7 +18,7 @@ function submitLoginForm(form) {
 		return;
 	}
 	
-	$.get('loginCheck', {
+	$.get('checkLogin', {
 		loginId : form.loginId.value,
 		loginPw : form.loginPw.value
 	}, function(data) {

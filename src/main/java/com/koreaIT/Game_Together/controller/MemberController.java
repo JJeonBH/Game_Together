@@ -2,6 +2,7 @@ package com.koreaIT.Game_Together.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -61,13 +62,28 @@ public class MemberController {
 		
 		rq.logout();
 		
-		return Util.jsAlertReplace("로그아웃 되었습니다", "/");
+		return Util.jsAlertReplace("로그아웃 되었습니다.", "/");
+		
+	}
+	
+	@RequestMapping("/usr/member/profile")
+	public String showProfile(Model model) {
+		
+		if (rq.getLoginedMember() == null) {
+			return rq.returnMain("세션이 만료되었습니다. 다시 로그인 해주세요.");
+		}
+		
+		String regDate = Util.formatDate(rq.getLoginedMember().getRegDate());
+		
+		model.addAttribute("regDate", regDate);
+		
+		return "usr/member/profile";
 		
 	}
 
-	@RequestMapping("/usr/member/loginCheck")
+	@RequestMapping("/usr/member/checkLogin")
 	@ResponseBody
-	public ResultData loginCheck(String loginId, String loginPw) {
+	public ResultData checkLogin(String loginId, String loginPw) {
 		
 		Member member = memberService.getMemberByLoginId(loginId);
 		

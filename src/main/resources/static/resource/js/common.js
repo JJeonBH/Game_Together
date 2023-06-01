@@ -36,4 +36,17 @@ function themeApplyTo(themeName) {
 		
 }
 
+function submitSearchForm(form) {
+	
+	form.summonerName.value = form.summonerName.value.trim();
+	
+	if (form.summonerName.value.length == 0) {
+		alert("소환사명을 입력해주세요.");
+		return;
+	}
+	
+	form.submit();
+	
+}
+
 themeInit();

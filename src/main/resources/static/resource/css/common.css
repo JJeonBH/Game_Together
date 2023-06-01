@@ -135,3 +135,18 @@ a:hover > .main-image {
 .table-box > table th {
 	border-right: 1px solid rgb(134, 247, 238);
 }
+
+/* 소환사 아이콘에 소환사 레벨 겹치기 */
+.summoner-icon {
+	position: relative;
+}
+
+/* 소환사 아이콘에 소환사 레벨 겹치기 */
+.summoner-icon > .summoner-level {
+	position: absolute;
+	left: 50%;
+	top: 100%;
+	transform: translate(-50%, -50%);
+	background-color: rgb(207, 247, 126);
+	border-radius: 5px;
+}

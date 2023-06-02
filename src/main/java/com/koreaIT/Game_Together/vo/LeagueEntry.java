@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LeagueEntry {
 	
-	private String leagueId;
+//	private String leagueId;
 	private String queueType;
 	private String tier;
 	private String rank;

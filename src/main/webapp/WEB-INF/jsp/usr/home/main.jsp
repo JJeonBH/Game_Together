@@ -48,18 +48,20 @@
 				</c:if>
 			</div>
 		</c:if>
-<%-- 		<c:if test="${summoner != null && matches != null}"> --%>
-<!-- 			<div class="mt-4 border border-red-200"> -->
-<%-- 				<c:forEach var="match" items="${matches}"> --%>
-				
-<%-- 					${match.info.participants} --%>
-<%-- 			 		<c:if test="${match.info == ''}"> --%>
-<%-- 			 		</c:if> --%>
-<%-- 				</c:forEach> --%>
-<%-- 				<div>${matches.get(0).info.participants[0].assists}</div> --%>
-<%-- 				<div>${Math.round(matches.get(3).info.gameDuration / 60 * 100) / 100.0}</div> --%>
-<!-- 			</div> -->
-<%-- 		</c:if> --%>
+		<c:if test="${summoner != null && matches != null}">
+			<c:forEach var="match" items="${matches}">
+				<c:forEach var="participant" items="${match.info.participants}">
+			 		<c:if test="${participant.puuid == summoner.puuid}">
+						<div class="mt-4 border border-red-200">
+							<span>
+								<img src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer.get(0)}/img/champion/${participant.championName}.png" width="50" alt="champion icon image"/>
+							</span>
+							<span>${Math.round(match.info.gameDuration / 60)} 분</span>
+						</div>
+			 		</c:if>
+				</c:forEach>
+			</c:forEach>
+		</c:if>
 		<div class="mt-4 flex">
 			<div class="w-1/2 h-80 border border-indigo-400">공지사항</div>
 			<div class="ml-4 w-1/2 h-80 border border-indigo-400">인기글</div>

@@ -7,12 +7,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-//@NoArgsConstructor
-//@AllArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class Metadata {
 	
 //	private String dataVersion;
 //	private String matchId;
-//	private List<String> participants;
+	private List<String> participants;
 
 }

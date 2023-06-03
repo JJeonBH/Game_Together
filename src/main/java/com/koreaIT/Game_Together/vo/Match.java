@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Match {
 	
-//	private Metadata metadata;
+	private Metadata metadata;
 	private Info info;
 	
 }

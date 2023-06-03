@@ -8,7 +8,7 @@ function themeToggle() {
 			localStorage.setItem("theme", "light");
 		}
 		
-		location.reload();
+		themeInit();
 		
 }
 

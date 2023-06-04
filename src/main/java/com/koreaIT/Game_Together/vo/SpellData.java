@@ -1,5 +1,7 @@
 package com.koreaIT.Game_Together.vo;
 
+import java.util.Map;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,13 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LeagueEntry {
+public class SpellData {
 	
-	private String queueType;
-	private String tier;
-	private String rank;
-	private int leaguePoints;
-	private int wins;
-	private int losses;
+//	private String type;
+//	private String version;
+	private Map<String, Spell> data;
 	
 }

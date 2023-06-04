@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koreaIT.Game_Together.vo.LeagueEntry;
 import com.koreaIT.Game_Together.vo.Match;
+import com.koreaIT.Game_Together.vo.Queue;
+import com.koreaIT.Game_Together.vo.SpellData;
 import com.koreaIT.Game_Together.vo.Summoner;
 
 @Service
@@ -55,6 +57,8 @@ public class LOLService {
             summoner = objectMapper.readValue(entity.getContent(), Summoner.class);
             
             setDataDragonVer(summoner);
+            setDataQueues(summoner);
+            setSpellData(summoner);
             	
         } catch (IOException e) {
             e.printStackTrace();
@@ -88,6 +92,57 @@ public class LOLService {
             return;
         }
         
+	}
+	
+	private void setDataQueues(Summoner summoner) {
+		
+		try {
+            HttpGet request = new HttpGet("http://static.developer.riotgames.com/docs/lol/queues.json");
+ 
+            HttpResponse response = client.execute(request);
+ 
+            if(response.getStatusLine().getStatusCode() != 200){
+            	return;
+            }
+ 
+            HttpEntity entity = response.getEntity();
+            
+			@SuppressWarnings("unchecked")
+			List<Queue> dataQueues = objectMapper.readValue(entity.getContent(), List.class);
+            
+            summoner.setDataQueues(dataQueues);
+            	
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+		
+	}
+	
+	private void setSpellData(Summoner summoner) {
+		
+		String dataDragonVer = summoner.getDataDragonVer().get(0);
+		
+		try {
+            HttpGet request = new HttpGet("https://ddragon.leagueoflegends.com/cdn/"+ dataDragonVer +"/data/ko_KR/summoner.json");
+ 
+            HttpResponse response = client.execute(request);
+ 
+            if(response.getStatusLine().getStatusCode() != 200){
+            	return;
+            }
+ 
+            HttpEntity entity = response.getEntity();
+            
+            SpellData spellData = objectMapper.readValue(entity.getContent(), SpellData.class);
+            
+            summoner.setSpellData(spellData);
+            	
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+		
 	}
 
 	@SuppressWarnings("unchecked")

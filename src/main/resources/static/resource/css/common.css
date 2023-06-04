@@ -14,8 +14,20 @@ html > body {
 	text-underline-position: under;
 }
 
+.ml-1px {
+	margin-left: 1px;
+}
+
+.w-25px {
+	width: 25px;
+}
+
 .w-112 {
 	width: 28rem;
+}
+
+.h-25px {
+	height: 25px;
 }
 
 .min-w-900 {

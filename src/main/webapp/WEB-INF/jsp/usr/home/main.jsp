@@ -3,13 +3,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="같이 할래?"></c:set>
 <%@ include file="../common/head.jsp" %>
-	<section class="mt-6 mb-20 mx-20 text-lg min-w-1000">
+	<section class="mt-6 mx-20 text-lg min-w-1000">
 		<div class="flex justify-center">
 			<form action="../lol/search" method="POST" onsubmit="submitSearchForm(this); return false;">
 				<input class="cursor-pointer input input-bordered input-info w-96 mr-2" type="text" name="summonerName" placeholder="소환사명을 입력해주세요."/>
 				<button class="btn-text-color btn btn-info">검색</button>
 			</form>
 		</div>
+	</section>
+	<section class="mt-6 mx-20 text-lg min-w-1000">
 		<c:if test="${summoner != null}">
 			<div class="mt-4 flex">
 				<div class="summoner-icon">
@@ -48,33 +50,194 @@
 				</c:if>
 			</div>
 		</c:if>
+	</section>
+	<section class="mt-6 mx-20 min-w-1000">
 		<c:if test="${summoner != null && matches != null}">
+			<div class="h-80 overflow-auto">
 			<c:forEach var="match" items="${matches}">
 				<c:forEach var="participant" items="${match.info.participants}">
-			 		<c:if test="${participant.puuid == summoner.puuid}">
-						<div class="mt-4 border border-red-200">
-							<span>
-								<img src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer.get(0)}/img/champion/${participant.championName}.png" width="50" alt="champion icon image"/>
-							</span>
-							<span>${Math.round(match.info.gameDuration / 60)} 분</span>
+		 			<c:if test="${participant.puuid == summoner.puuid}">
+						<div class="text-gray-600 rounded-lg mt-2 px-4 py-2 flex ${participant.win == true ? 'bg-blue-200' : 'bg-red-200'}">
+			 				<div class="text-sm">
+								<c:forEach var="queue" items="${summoner.dataQueues}">
+									<c:if test="${queue.queueId == match.info.queueId}">
+										<div class="w-32 text-base ${participant.win == true ? 'text-blue-600' : 'text-red-600'}">
+											<c:choose>
+												<c:when test="${queue.queueId == 0}">
+													<div>사용자 지정 게임</div>
+												</c:when>
+												<c:when test="${queue.queueId == 400 || queue.queueId == 430}">
+													<div>일반</div>
+												</c:when>
+												<c:when test="${queue.queueId == 420}">
+													<div>솔랭</div>
+												</c:when>
+												<c:when test="${queue.queueId == 440}">
+													<div>자유 5:5 랭크</div>
+												</c:when>
+												<c:when test="${queue.queueId == 450}">
+													<div>무작위 총력전</div>
+												</c:when>
+												<c:when test="${queue.queueId == 830}">
+													<div>입문</div>
+												</c:when>
+												<c:when test="${queue.queueId == 840}">
+													<div>초보</div>
+												</c:when>
+												<c:when test="${queue.queueId == 850}">
+													<div>중급</div>
+												</c:when>
+												<c:when test="${queue.queueId == 900 || queue.queueId == 1010}">
+													<div>모두 무작위 U.R.F.</div>
+												</c:when>
+												<c:when test="${queue.queueId == 920}">
+													<div>전설의 포로왕</div>
+												</c:when>
+												<c:when test="${queue.queueId == 1400}">
+													<div>궁극의 주문서</div>
+												</c:when>
+												<c:when test="${queue.queueId == 1900}">
+													<div>U.R.F.</div>
+												</c:when>
+												<c:otherwise>
+													<div>특별 게임</div>
+												</c:otherwise>
+											</c:choose>
+										</div>
+									</c:if>
+								</c:forEach>
+								<div>${match.info.getMatchStartDateTime()}</div>
+								<div class="w-16 ${participant.win == true ? 'border-b border-blue-500' : 'border-b border-red-500'}"></div>
+								<div>
+									<c:choose>
+										<c:when test="${participant.win}">
+											<span>승리</span>
+										</c:when>
+										<c:otherwise>
+											<span>패배</span>
+										</c:otherwise>
+									</c:choose>
+								</div>
+								<div>${match.info.getMatchDuration()}</div>
+							</div>
+							<div class="ml-4">
+								<div class="flex">
+									<div>
+										<img class="rounded-full" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer.get(0)}/img/champion/${participant.championName}.png" width="50" alt="champion icon image"/>
+									</div>
+									<div class="ml-1">
+										<c:forEach var="spell" items="${summoner.spellData.data}">
+											<c:if test="${spell.value.key == participant.summoner1Id}">
+												<img class="rounded" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer.get(0)}/img/spell/${spell.key}.png" width="25" alt="spell image"/>
+											</c:if>
+										</c:forEach>
+										<c:forEach var="spell" items="${summoner.spellData.data}">
+											<c:if test="${spell.value.key == participant.summoner2Id}">
+												<img class="rounded" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer.get(0)}/img/spell/${spell.key}.png" width="25" alt="spell image"/>
+											</c:if>
+										</c:forEach>
+									</div>
+									<div>
+										<div>룬1</div>
+										<div>룬2</div>
+									</div>
+								</div>
+								<div class="mt-2 flex">
+									<div>
+										<c:choose>
+											<c:when test="${participant.item0 != 0}">
+												<img class="rounded" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer.get(0)}/img/item/${participant.item0}.png" width="25" alt="item image"/>
+											</c:when>
+											<c:otherwise>
+												<div class="rounded w-25px h-25px ${participant.win == true ? 'bg-blue-400' : 'bg-red-400'}"></div>
+											</c:otherwise>
+										</c:choose>
+									</div>
+									<div class="ml-1px">
+										<c:choose>
+											<c:when test="${participant.item1 != 0}">
+												<img class="rounded" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer.get(0)}/img/item/${participant.item1}.png" width="25" alt="item image"/>
+											</c:when>
+											<c:otherwise>
+												<div class="rounded w-25px h-25px ${participant.win == true ? 'bg-blue-400' : 'bg-red-400'}"></div>
+											</c:otherwise>
+										</c:choose>
+									</div>
+									<div class="ml-1px">
+										<c:choose>
+											<c:when test="${participant.item2 != 0}">
+												<img class="rounded" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer.get(0)}/img/item/${participant.item2}.png" width="25" alt="item image"/>
+											</c:when>
+											<c:otherwise>
+												<div class="rounded w-25px h-25px ${participant.win == true ? 'bg-blue-400' : 'bg-red-400'}"></div>
+											</c:otherwise>
+										</c:choose>
+									</div>
+									<div class="ml-1px">
+										<c:choose>
+											<c:when test="${participant.item3 != 0}">
+												<img class="rounded" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer.get(0)}/img/item/${participant.item3}.png" width="25" alt="item image"/>
+											</c:when>
+											<c:otherwise>
+												<div class="rounded w-25px h-25px ${participant.win == true ? 'bg-blue-400' : 'bg-red-400'}"></div>
+											</c:otherwise>
+										</c:choose>
+									</div>
+									<div class="ml-1px">
+										<c:choose>
+											<c:when test="${participant.item4 != 0}">
+												<img class="rounded" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer.get(0)}/img/item/${participant.item4}.png" width="25" alt="item image"/>
+											</c:when>
+											<c:otherwise>
+												<div class="rounded w-25px h-25px ${participant.win == true ? 'bg-blue-400' : 'bg-red-400'}"></div>
+											</c:otherwise>
+										</c:choose>
+									</div>
+									<div class="ml-1px">
+										<c:choose>
+											<c:when test="${participant.item5 != 0}">
+												<img class="rounded" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer.get(0)}/img/item/${participant.item5}.png" width="25" alt="item image"/>
+											</c:when>
+											<c:otherwise>
+												<div class="rounded w-25px h-25px ${participant.win == true ? 'bg-blue-400' : 'bg-red-400'}"></div>
+											</c:otherwise>
+										</c:choose>
+									</div>
+									<div class="ml-1px">
+										<c:choose>
+											<c:when test="${participant.item6 != 0}">
+												<img class="rounded" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer.get(0)}/img/item/${participant.item6}.png" width="25" alt="item image"/>
+											</c:when>
+											<c:otherwise>
+												<div class="rounded w-25px h-25px ${participant.win == true ? 'bg-blue-400' : 'bg-red-400'}"></div>
+											</c:otherwise>
+										</c:choose>
+									</div>
+								</div>
+							</div>
 						</div>
-			 		</c:if>
+		 			</c:if>
 				</c:forEach>
 			</c:forEach>
+			</div>
 		</c:if>
+	</section>
+	<section class="mt-6 mx-20 text-lg min-w-1000">
 		<div class="mt-4 flex">
 			<div class="w-1/2 h-80 border border-indigo-400">공지사항</div>
 			<div class="ml-4 w-1/2 h-80 border border-indigo-400">인기글</div>
 		</div>
-		<div class="mt-4 flex">
+	</section>
+	<section class="mt-6 mb-20 mx-20 text-lg min-w-1000">
+		<div class="mt-6 flex">
 			<a href="/" class="w-1/2"><img class="main-image w-full" src="/resource/images/리그오브레전드.jpg" alt="리그오브레전드 이미지"></a>
 			<a href="/" class="ml-4 w-1/2"><img class="main-image w-full" src="/resource/images/배틀그라운드.jpg" alt="배틀그라운드 이미지"></a>
 		</div>
-		<div class="mt-4 flex">
+		<div class="mt-6 flex">
 			<a href="/" class="w-1/2"><img class="main-image w-full" src="/resource/images/리그오브레전드.jpg" alt="리그오브레전드 이미지"></a>
 			<a href="/" class="ml-4 w-1/2"><img class="main-image w-full" src="/resource/images/배틀그라운드.jpg" alt="배틀그라운드 이미지"></a>
 		</div>
-		<div class="mt-4 flex">
+		<div class="mt-6 flex">
 			<a href="/" class="w-1/2"><img class="main-image w-full" src="/resource/images/리그오브레전드.jpg" alt="리그오브레전드 이미지"></a>
 			<a href="/" class="ml-4 w-1/2"><img class="main-image w-full" src="/resource/images/배틀그라운드.jpg" alt="배틀그라운드 이미지"></a>
 		</div>

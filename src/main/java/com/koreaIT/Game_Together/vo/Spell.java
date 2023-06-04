@@ -7,13 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LeagueEntry {
-	
-	private String queueType;
-	private String tier;
-	private String rank;
-	private int leaguePoints;
-	private int wins;
-	private int losses;
+public class Spell {
+
+	private String id;
+	private String name;
+	private String description;
+	private String key;
 	
 }

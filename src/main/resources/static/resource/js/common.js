@@ -28,6 +28,8 @@ function themeApplyTo(themeName) {
 		
 		if (themeName == 'light') {
 			$('.theme-toggle-msg').append('Light mode');
+			$('.dropdown-content').css('background', 'white');
+			$('.dropdown-content').css('color', 'black');
 		} else {
 			$('.theme-toggle-msg').append('Dark mode');
 			$('.dropdown-content').css('background', '#221c75');

@@ -173,13 +173,13 @@ public class LOLService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Match> getMatchesBySummonerPuuid(String summonerPuuid) {
+	public List<Match> getMatchesBySummonerPuuid(String summonerPuuid, int start, int count) {
 		
 		List<String> matchIds = new ArrayList<>();
 		List<Match> matches = new ArrayList<>();
 		
 		try {
-            HttpGet request = new HttpGet(riotServerUrlAsia + "/lol/match/v5/matches/by-puuid/" + summonerPuuid + "/ids?start=0&count=10&api_key=" + riotAPIKey);
+            HttpGet request = new HttpGet(riotServerUrlAsia + "/lol/match/v5/matches/by-puuid/" + summonerPuuid + "/ids?start=" + start + "&count=" + count + "&api_key=" + riotAPIKey);
  
             HttpResponse response = client.execute(request);
  

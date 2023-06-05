@@ -1,11 +1,8 @@
 package com.koreaIT.Game_Together.vo;
 
-import java.time.Duration;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -36,50 +33,38 @@ public class Info {
 		//	현재 날짜, 시간
 		LocalDateTime currentDateTime = LocalDateTime.now();
 		
-		//	날짜만 가져오기
-		LocalDate matchStartDate = matchStartDateTime.toLocalDate();
-		LocalDate currentDate = currentDateTime.toLocalDate();
-		
-		//	시간만 가져오기
-		LocalTime matchStartTime = matchStartDateTime.toLocalTime();
-		LocalTime currentTime = currentDateTime.toLocalTime();
-		
-		if (matchStartDate.isEqual(currentDate)) {
+		if (ChronoUnit.DAYS.between(matchStartDateTime, currentDateTime) < 1) {
 			
-			Duration diff = Duration.between(matchStartTime, currentTime);
-			
-			if (diff.toHours() >= 1) {
-				return diff.toHours() + "시간 전";
+			if (ChronoUnit.HOURS.between(matchStartDateTime, currentDateTime) >= 1) {
+				return ChronoUnit.HOURS.between(matchStartDateTime, currentDateTime) + "시간 전";
 			}
 			
-			if (diff.toMinutes() >= 1 && diff.toMinutes() < 60) {
-				return diff.toMinutes() + "분 전";
+			if (ChronoUnit.MINUTES.between(matchStartDateTime, currentDateTime) >= 1 && ChronoUnit.MINUTES.between(matchStartDateTime, currentDateTime) < 60) {
+				return ChronoUnit.MINUTES.between(matchStartDateTime, currentDateTime) + "분 전";
 			} else {
-				return diff.getSeconds() + "초 전";
+				return ChronoUnit.SECONDS.between(matchStartDateTime, currentDateTime) + "초 전";
 			}
 			
 		} else {
 			
-			Period diff = Period.between(matchStartDate, currentDate);
-			
-			if (diff.getYears() >= 1) {
-				return diff.getYears() + "년 전";
+			if (ChronoUnit.YEARS.between(matchStartDateTime, currentDateTime) >= 1) {
+				return ChronoUnit.YEARS.between(matchStartDateTime, currentDateTime) + "년 전";
 			}
 			
-			if (diff.getMonths() >= 1) {
+			if (ChronoUnit.MONTHS.between(matchStartDateTime, currentDateTime) >= 1) {
 				
-				if (diff.getMonths() == 1) {
+				if (ChronoUnit.MONTHS.between(matchStartDateTime, currentDateTime) == 1) {
 					return "한 달 전";
 				} else {
-					return diff.getMonths() + "달 전";
+					return ChronoUnit.MONTHS.between(matchStartDateTime, currentDateTime) + "달 전";
 				}
 				
 			} else {
 				
-				if (diff.getDays() == 1) {
+				if (ChronoUnit.DAYS.between(matchStartDateTime, currentDateTime) == 1) {
 					return "하루 전";
 				} else {
-					return diff.getDays() + "일 전";
+					return ChronoUnit.DAYS.between(matchStartDateTime, currentDateTime) + "일 전";
 				}
 				
 			}

@@ -1,5 +1,8 @@
 package com.koreaIT.Game_Together.vo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,5 +47,32 @@ public class Participant {
 	private int wardsKilled;
 	private int wardsPlaced;
 	private boolean win;
+	
+	public List<Integer> getItemList() {
+		
+		List<Integer> items = new ArrayList<>();
+		
+		items.add(item0);
+		items.add(item1);
+		items.add(item2);
+		items.add(item3);
+		items.add(item4);
+		items.add(item5);
+		items.add(item6);
+		
+		return items;
+		
+	}
+	
+	public List<Integer> getSpellList() {
+		
+		List<Integer> spells = new ArrayList<>();
+		
+		spells.add(summoner1Id);
+		spells.add(summoner2Id);
+		
+		return spells;
+		
+	}
 	
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.koreaIT.Game_Together.service.LOLService;
 import com.koreaIT.Game_Together.vo.LeagueEntry;
@@ -16,6 +17,8 @@ import com.koreaIT.Game_Together.vo.Summoner;
 public class LOLController {
 	
 	private LOLService lOLService;
+	private int start;
+	private int count;
 	
 	@Autowired
 	public LOLController(LOLService lOLService) {
@@ -39,13 +42,42 @@ public class LOLController {
 		
 		String summonerPuuid = summoner.getPuuid();
 		
-		List<Match> matches = lOLService.getMatchesBySummonerPuuid(summonerPuuid);
+		this.start = 0;
+		this.count = 20;
+		
+		List<Match> matches = lOLService.getMatchesBySummonerPuuid(summonerPuuid, start, count);
+		
+		this.start += count;
 		
 		model.addAttribute("summoner", summoner);
 		model.addAttribute("leagueEntries", leagueEntries);
 		model.addAttribute("matches", matches);
 		
 		return "usr/home/main";
+		
+	}
+	
+	@RequestMapping("/usr/lol/getSummoner")
+	@ResponseBody
+	public Summoner getSummoner(String summonerName) {
+		
+		summonerName = summonerName.trim().replaceAll(" ","%20");
+		
+		Summoner summoner = lOLService.getSummonerBySummonerName(summonerName);
+		
+		return summoner;
+		
+	}
+	
+	@RequestMapping("/usr/lol/getMatches")
+	@ResponseBody
+	public List<Match> getMatches(String summonerPuuid) {
+		
+		List<Match> matches = lOLService.getMatchesBySummonerPuuid(summonerPuuid, start, count/2);
+		
+		this.start += count/2;
+		
+		return matches;
 		
 	}
 	

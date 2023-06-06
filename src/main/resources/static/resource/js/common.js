@@ -81,11 +81,11 @@ function showMatches(matches, summoner) {
 	matches.forEach((match) => {
 		match.info.participants.forEach((participant) => {
 			if (participant.puuid == summoner.puuid) {
-				let append = `<div class="text-gray-600 rounded-lg mt-2 px-4 py-2 flex ${participant.win == true ? 'bg-blue-200' : 'bg-red-200'}">`;
+				let append = `<div class="text-gray-600 rounded-lg mt-2 px-4 py-2 flex ${participant.gameEndedInEarlySurrender == true ? 'bg-gray-200' : participant.win == true ? 'bg-blue-200' : 'bg-red-200'}">`;
 				append += `<div class="text-sm">`;
 				summoner.queues.forEach((queue) => {
 					if(queue.queueId == match.info.queueId) {
-						append += `<div class="w-32 text-base ${participant.win == true ? 'text-blue-600' : 'text-red-600'}">`;
+						append += `<div class="w-32 text-base ${participant.gameEndedInEarlySurrender == true ? 'text-gray-600' : participant.win == true ? 'text-blue-600' : 'text-red-600'}">`;
 						switch (queue.queueId) {
 							case 0:
 								append += `<div>사용자 지정 게임</div>`;
@@ -132,10 +132,12 @@ function showMatches(matches, summoner) {
 						append += `</div>`;
 					}
 				});
-				append += `<div>${match.info.matchStartDateTime}</div>`;
-				append += `<div class="w-16 ${participant.win == true ? 'border-b border-blue-500' : 'border-b border-red-500'}"></div>`;
+				append += `<div>${match.info.matchFinishDateTime}</div>`;
+				append += `<div class="w-16 ${participant.gameEndedInEarlySurrender == true ? 'border-b border-gray-500' : participant.win == true ? 'border-b border-blue-500' : 'border-b border-red-500'}"></div>`;
 				append += `<div>`;
-				if (participant.win) {
+				if (participant.gameEndedInEarlySurrender) {
+					append += `<span>다시하기</span>`;
+				} else if (participant.win) {
 					append += `<span>승리</span>`;
 				} else {
 					append += `<span>패배</span>`;
@@ -181,6 +183,18 @@ function showMatches(matches, summoner) {
 					}
 				});
 				append += `</div>`;
+				append += `<div class="ml-3 mt-1 text-black">`;
+				append += `<div>`;
+				append += `<span>${participant.kills}</span>`;
+				append += `<span class="text-gray-500"> / </span>`;
+				append += `<span class="text-red-600">${participant.deaths}</span>`;
+				append += `<span class="text-gray-500"> / </span>`;
+				append += `<span>${participant.assists}</span>`;
+				append += `</div>`;
+				append += `<div>`;
+				append += `<span>${participant.kda} 평점</span>`;
+				append += `</div>`;
+				append += `</div>`;
 				append += `</div>`;
 				append += `<div class="mt-2 flex">`;
 				let items = participant.items;
@@ -189,7 +203,7 @@ function showMatches(matches, summoner) {
 					if (item != 0) {
 						append += `<img class="rounded" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer[0]}/img/item/${item}.png" width="25" alt="item image"/>`;
 					} else {
-						append += `<div class="rounded w-25px h-25px ${participant.win == true ? 'bg-blue-400' : 'bg-red-400'}"></div>`;
+						append += `<div class="rounded w-25px h-25px ${participant.gameEndedInEarlySurrender == true ? 'bg-gray-400' : participant.win == true ? 'bg-blue-400' : 'bg-red-400'}"></div>`;
 					}
 					append += `</div>`;
 				});

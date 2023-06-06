@@ -77,4 +77,22 @@ public class Participant {
 		
 	}
 	
+	public String getKDA() {
+		
+		if (this.deaths == 0) {
+			
+			if (this.kills + this.assists == 0) {
+				return "0.00";
+			} else {
+				return "Perfect";
+			}
+			
+		}
+		
+		double kda = (double)(this.kills + this.assists) / this.deaths;
+		
+		return String.format("%.2f", kda);
+		
+	}
+	
 }

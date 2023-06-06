@@ -7,11 +7,11 @@
 			<c:forEach var="match" items="${matches}">
 				<c:forEach var="participant" items="${match.info.participants}">
 		 			<c:if test="${participant.puuid == summoner.puuid}">
-						<div class="text-gray-600 rounded-lg mt-2 px-4 py-2 flex ${participant.win == true ? 'bg-blue-200' : 'bg-red-200'}">
+						<div class="text-gray-600 rounded-lg mt-2 px-4 py-2 flex ${participant.gameEndedInEarlySurrender == true ? 'bg-gray-200' : participant.win == true ? 'bg-blue-200' : 'bg-red-200'}">
 			 				<div class="text-sm">
 								<c:forEach var="queue" items="${summoner.queues}">
 									<c:if test="${queue.queueId == match.info.queueId}">
-										<div class="w-32 text-base ${participant.win == true ? 'text-blue-600' : 'text-red-600'}">
+										<div class="w-32 text-base ${participant.gameEndedInEarlySurrender == true ? 'text-gray-600' : participant.win == true ? 'text-blue-600' : 'text-red-600'}">
 											<c:choose>
 												<c:when test="${queue.queueId == 0}">
 													<div>사용자 지정 게임</div>
@@ -56,10 +56,13 @@
 										</div>
 									</c:if>
 								</c:forEach>
-								<div>${match.info.getMatchStartDateTime()}</div>
-								<div class="w-16 ${participant.win == true ? 'border-b border-blue-500' : 'border-b border-red-500'}"></div>
+								<div>${match.info.getMatchFinishDateTime()}</div>
+								<div class="w-16 ${participant.gameEndedInEarlySurrender == true ? 'border-b border-gray-500' : participant.win == true ? 'border-b border-blue-500' : 'border-b border-red-500'}"></div>
 								<div>
 									<c:choose>
+										<c:when test="${participant.gameEndedInEarlySurrender}">
+											<span>다시하기</span>
+										</c:when>
 										<c:when test="${participant.win}">
 											<span>승리</span>
 										</c:when>
@@ -107,6 +110,18 @@
 											</c:if>
 										</c:forEach>
 									</div>
+									<div class="ml-3 mt-1 text-black">
+										<div>
+											<span>${participant.kills}</span>
+											<span class="text-gray-500">/</span>
+											<span class="text-red-600">${participant.deaths}</span>
+											<span class="text-gray-500">/</span>
+											<span>${participant.assists}</span>
+										</div>
+										<div>
+											<span>${participant.getKDA()} 평점</span>
+										</div>
+									</div>
 								</div>
 								<div class="mt-2 flex">
 									<c:set var="items" value="${participant.getItems()}"></c:set>
@@ -117,7 +132,7 @@
 													<img class="rounded" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer.get(0)}/img/item/${item}.png" width="25" alt="item image"/>
 												</c:when>
 												<c:otherwise>
-													<div class="rounded w-25px h-25px ${participant.win == true ? 'bg-blue-400' : 'bg-red-400'}"></div>
+													<div class="rounded w-25px h-25px ${participant.gameEndedInEarlySurrender == true ? 'bg-gray-400' : participant.win == true ? 'bg-blue-400' : 'bg-red-400'}"></div>
 												</c:otherwise>
 											</c:choose>
 										</div>

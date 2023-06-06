@@ -25,46 +25,58 @@ public class Info {
 	private int queueId;
 	private List<Team> teams;
 
-	//	매치 시작 시간 구하기
-	public String getMatchStartDateTime() {
+	//	매치 끝난 시간 구하기
+	public String getMatchFinishDateTime() {
 		
-		//	매치 시작 날짜, 시간
-		LocalDateTime matchStartDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(gameCreation), TimeZone.getDefault().toZoneId());
+		long gameFinishTime;
+		
+		//	gameEndTimestamp필드가 응답에 있으면(0이 아니면) gameDuration필드의 값은 '초'
+		//	gameEndTimestamp필드가 응답에 없으면(기본값 0이면) gameDuration필드의 값은 '밀리초'
+		if (gameEndTimestamp != 0) {
+			//	gameCreation은 '밀리초'
+			//	gameDuration '초'를 '밀리초'로 변환
+			gameFinishTime = this.gameCreation + (this.gameDuration * 1000);
+		} else {
+			gameFinishTime = this.gameCreation + this.gameDuration;
+		}
+		
+		//	매치 끝난 날짜, 시간
+		LocalDateTime matchFinishDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(gameFinishTime), TimeZone.getDefault().toZoneId());
 		//	현재 날짜, 시간
 		LocalDateTime currentDateTime = LocalDateTime.now();
 		
-		if (ChronoUnit.DAYS.between(matchStartDateTime, currentDateTime) < 1) {
+		if (ChronoUnit.DAYS.between(matchFinishDateTime, currentDateTime) < 1) {
 			
-			if (ChronoUnit.HOURS.between(matchStartDateTime, currentDateTime) >= 1) {
-				return ChronoUnit.HOURS.between(matchStartDateTime, currentDateTime) + "시간 전";
+			if (ChronoUnit.HOURS.between(matchFinishDateTime, currentDateTime) >= 1) {
+				return ChronoUnit.HOURS.between(matchFinishDateTime, currentDateTime) + "시간 전";
 			}
 			
-			if (ChronoUnit.MINUTES.between(matchStartDateTime, currentDateTime) >= 1 && ChronoUnit.MINUTES.between(matchStartDateTime, currentDateTime) < 60) {
-				return ChronoUnit.MINUTES.between(matchStartDateTime, currentDateTime) + "분 전";
+			if (ChronoUnit.MINUTES.between(matchFinishDateTime, currentDateTime) >= 1 && ChronoUnit.MINUTES.between(matchFinishDateTime, currentDateTime) < 60) {
+				return ChronoUnit.MINUTES.between(matchFinishDateTime, currentDateTime) + "분 전";
 			} else {
-				return ChronoUnit.SECONDS.between(matchStartDateTime, currentDateTime) + "초 전";
+				return ChronoUnit.SECONDS.between(matchFinishDateTime, currentDateTime) + "초 전";
 			}
 			
 		} else {
 			
-			if (ChronoUnit.YEARS.between(matchStartDateTime, currentDateTime) >= 1) {
-				return ChronoUnit.YEARS.between(matchStartDateTime, currentDateTime) + "년 전";
+			if (ChronoUnit.YEARS.between(matchFinishDateTime, currentDateTime) >= 1) {
+				return ChronoUnit.YEARS.between(matchFinishDateTime, currentDateTime) + "년 전";
 			}
 			
-			if (ChronoUnit.MONTHS.between(matchStartDateTime, currentDateTime) >= 1) {
+			if (ChronoUnit.MONTHS.between(matchFinishDateTime, currentDateTime) >= 1) {
 				
-				if (ChronoUnit.MONTHS.between(matchStartDateTime, currentDateTime) == 1) {
+				if (ChronoUnit.MONTHS.between(matchFinishDateTime, currentDateTime) == 1) {
 					return "한 달 전";
 				} else {
-					return ChronoUnit.MONTHS.between(matchStartDateTime, currentDateTime) + "달 전";
+					return ChronoUnit.MONTHS.between(matchFinishDateTime, currentDateTime) + "달 전";
 				}
 				
 			} else {
 				
-				if (ChronoUnit.DAYS.between(matchStartDateTime, currentDateTime) == 1) {
+				if (ChronoUnit.DAYS.between(matchFinishDateTime, currentDateTime) == 1) {
 					return "하루 전";
 				} else {
-					return ChronoUnit.DAYS.between(matchStartDateTime, currentDateTime) + "일 전";
+					return ChronoUnit.DAYS.between(matchFinishDateTime, currentDateTime) + "일 전";
 				}
 				
 			}

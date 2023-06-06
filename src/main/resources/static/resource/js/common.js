@@ -52,6 +52,9 @@ function submitSearchForm(form) {
 }
 
 function addMatches(sName) {
+	
+	$('.add-matches').empty();
+	$('.add-matches').addClass('loading loading-spinner');
 
 	$.get('/usr/lol/getSummoner', {
 		summonerName : sName
@@ -67,18 +70,20 @@ function getMatches(sPuuid, summoner) {
 		summonerPuuid : sPuuid
 	}, function(matches) {
 		showMatches(matches, summoner);
+		$('.add-matches').html('더보기');
+		$('.add-matches').removeClass('loading loading-spinner');
 	});
 	
 }
 
 function showMatches(matches, summoner) {
 	
-	matches.forEach((match, idx1, arr1) => {
-		match.info.participants.forEach((participant, idx2, arr2) => {
+	matches.forEach((match) => {
+		match.info.participants.forEach((participant) => {
 			if (participant.puuid == summoner.puuid) {
 				let append = `<div class="text-gray-600 rounded-lg mt-2 px-4 py-2 flex ${participant.win == true ? 'bg-blue-200' : 'bg-red-200'}">`;
 				append += `<div class="text-sm">`;
-				summoner.dataQueues.forEach((queue, idx3, arr3) => {
+				summoner.queues.forEach((queue) => {
 					if(queue.queueId == match.info.queueId) {
 						append += `<div class="w-32 text-base ${participant.win == true ? 'text-blue-600' : 'text-red-600'}">`;
 						switch (queue.queueId) {
@@ -144,25 +149,42 @@ function showMatches(matches, summoner) {
 				append += `<img class="rounded-full" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer[0]}/img/champion/${participant.championName}.png" width="50" alt="champion icon image"/>`;
 				append += `</div>`;
 				append += `<div class="ml-1">`;
-				let spells = participant.spellList;
-//				let map = summoner.spellData.data
-//				console.log(map);
-//				spells.forEach((spell, idx4, arr4) => {
-//					summoner.spellData.data.forEach((spellData, idx5, arr5) => {
-//						if(spellData.value.key == spell) {
-//							append += `<img class="rounded" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer.get[0]}/img/spell/${spellData.key}.png" width="25" alt="spell image"/>`;
-//						}
-//					});
-//				});
+				let spellIds = participant.spellIds;
+				let spellData = summoner.spellData.data
+				spellIds.forEach((spellId) => {
+					for (let spellName in spellData) {
+						if(spellData[spellName].key == spellId) {
+							append += `<img class="rounded" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer[0]}/img/spell/${spellName}.png" width="25" alt="spell image"/>`;
+						}
+					}
+				});
 				append += `</div>`;
-				append += `<div>`;
-				append += `<div>룬1</div>`;
-				append += `<div>룬2</div>`;
+				append += `<div class="ml-1px">`;
+				summoner.runeStyle.forEach((runeStyle) => {
+					if(runeStyle.id == participant.perks.styles[0].style) {
+						runeStyle.slots.forEach((runeDetail) => {
+							runeDetail.runes.forEach((rune) => {
+								if(rune.id == participant.perks.styles[0].selections[0].perk) {
+									append += `<div>`;
+									append += `<img class="rounded-full bg-black my-1px" src="http://ddragon.leagueoflegends.com/cdn/img/${rune.icon}" width="25" alt="rune image"/>`;
+									append += `</div>`;
+								}
+							});
+						});
+					}
+				});
+				summoner.runeStyle.forEach((runeStyle) => {
+					if(runeStyle.id == participant.perks.styles[1].style) {
+						append += `<div>`;
+						append += `<img class="rounded-full my-1px" src="http://ddragon.leagueoflegends.com/cdn/img/${runeStyle.icon}" width="25" alt="rune image"/>`;
+						append += `</div>`;
+					}
+				});
 				append += `</div>`;
 				append += `</div>`;
 				append += `<div class="mt-2 flex">`;
-				let items = participant.itemList;
-				items.forEach((item, idx6, arr6) => {
+				let items = participant.items;
+				items.forEach((item) => {
 					append += `<div class="ml-1px">`;
 					if (item != 0) {
 						append += `<img class="rounded" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer[0]}/img/item/${item}.png" width="25" alt="item image"/>`;

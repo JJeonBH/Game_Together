@@ -1,7 +1,5 @@
 package com.koreaIT.Game_Together.vo;
 
-import java.util.Map;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,8 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SpellData {
+public class PerkStats {
 	
-	private Map<String, Spell> data;
+	private int defense;
+	private int flex;
+	private int offense;
 	
 }

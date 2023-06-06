@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koreaIT.Game_Together.vo.LeagueEntry;
 import com.koreaIT.Game_Together.vo.Match;
 import com.koreaIT.Game_Together.vo.Queue;
+import com.koreaIT.Game_Together.vo.RuneStyle;
 import com.koreaIT.Game_Together.vo.SpellData;
 import com.koreaIT.Game_Together.vo.Summoner;
 
@@ -57,8 +58,9 @@ public class LOLService {
             summoner = objectMapper.readValue(entity.getContent(), Summoner.class);
             
             setDataDragonVer(summoner);
-            setDataQueues(summoner);
+            setQueues(summoner);
             setSpellData(summoner);
+            setRuneStyle(summoner);
             	
         } catch (IOException e) {
             e.printStackTrace();
@@ -94,7 +96,7 @@ public class LOLService {
         
 	}
 	
-	private void setDataQueues(Summoner summoner) {
+	private void setQueues(Summoner summoner) {
 		
 		try {
             HttpGet request = new HttpGet("http://static.developer.riotgames.com/docs/lol/queues.json");
@@ -108,9 +110,9 @@ public class LOLService {
             HttpEntity entity = response.getEntity();
             
 			@SuppressWarnings("unchecked")
-			List<Queue> dataQueues = objectMapper.readValue(entity.getContent(), List.class);
+			List<Queue> queues = objectMapper.readValue(entity.getContent(), List.class);
             
-            summoner.setDataQueues(dataQueues);
+            summoner.setQueues(queues);
             	
         } catch (IOException e) {
             e.printStackTrace();
@@ -137,6 +139,33 @@ public class LOLService {
             SpellData spellData = objectMapper.readValue(entity.getContent(), SpellData.class);
             
             summoner.setSpellData(spellData);
+            	
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+		
+	}
+	
+	private void setRuneStyle(Summoner summoner) {
+		
+		String dataDragonVer = summoner.getDataDragonVer().get(0);
+		
+		try {
+            HttpGet request = new HttpGet("https://ddragon.leagueoflegends.com/cdn/"+ dataDragonVer +"/data/ko_KR/runesReforged.json");
+ 
+            HttpResponse response = client.execute(request);
+ 
+            if(response.getStatusLine().getStatusCode() != 200){
+            	return;
+            }
+ 
+            HttpEntity entity = response.getEntity();
+            
+            @SuppressWarnings("unchecked")
+			List<RuneStyle> runeStyle = objectMapper.readValue(entity.getContent(), List.class);
+            
+            summoner.setRuneStyle(runeStyle);
             	
         } catch (IOException e) {
             e.printStackTrace();

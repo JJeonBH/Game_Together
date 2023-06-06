@@ -18,7 +18,8 @@ public class Summoner {
 	private long summonerLevel;
 	
 	private List<String> dataDragonVer;
-	private List<Queue> dataQueues;
+	private List<Queue> queues;
 	private SpellData spellData;
+	private List<RuneStyle> runeStyle;
 	
 }

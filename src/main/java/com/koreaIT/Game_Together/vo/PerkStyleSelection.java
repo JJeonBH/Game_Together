@@ -1,7 +1,5 @@
 package com.koreaIT.Game_Together.vo;
 
-import java.util.Map;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,8 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SpellData {
+public class PerkStyleSelection {
 	
-	private Map<String, Spell> data;
+	private int perk;
+	private int var1;
+	private int var2;
+	private int var3;
 	
 }

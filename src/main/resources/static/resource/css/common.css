@@ -18,6 +18,11 @@ html > body {
 	margin-left: 1px;
 }
 
+.my-1px {
+	margin-top: 1px;
+	margin-bottom: 1px;
+}
+
 .w-25px {
 	width: 25px;
 }

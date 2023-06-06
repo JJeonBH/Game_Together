@@ -18,6 +18,7 @@ public class Participant {
 	private String championName;
 	private int deaths;
 	private int doubleKills;
+	private boolean gameEndedInEarlySurrender;
 	private int item0;
 	private int item1;
 	private int item2;
@@ -31,6 +32,7 @@ public class Participant {
 	private int participantId;
 	private String puuid;
 	private int pentaKills;
+	private Perks perks;
 	private int quadraKills;
 	private String role;
 	private int summoner1Id;
@@ -48,7 +50,7 @@ public class Participant {
 	private int wardsPlaced;
 	private boolean win;
 	
-	public List<Integer> getItemList() {
+	public List<Integer> getItems() {
 		
 		List<Integer> items = new ArrayList<>();
 		
@@ -64,14 +66,14 @@ public class Participant {
 		
 	}
 	
-	public List<Integer> getSpellList() {
+	public List<Integer> getSpellIds() {
 		
-		List<Integer> spells = new ArrayList<>();
+		List<Integer> spellIds = new ArrayList<>();
 		
-		spells.add(summoner1Id);
-		spells.add(summoner2Id);
+		spellIds.add(summoner1Id);
+		spellIds.add(summoner2Id);
 		
-		return spells;
+		return spellIds;
 		
 	}
 	

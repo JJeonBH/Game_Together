@@ -167,3 +167,22 @@ a:hover > .main-image {
 	background-color: rgb(207, 247, 126);
 	border-radius: 5px;
 }
+
+/* 원형 차트 가운데에 승률 보여주기 */
+.chartWithOverlay {
+	position: relative;
+}
+
+/* 원형 차트 가운데에 승률 보여주기 */
+.overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #0076f5;
+}
+
+/* 원형 차트 제목 글자색 변경 */
+.chartWithOverlay > #pieChart > div > div[dir="ltr"] > div[aria-label="A chart."] > svg[aria-label="A chart."] > g > text[text-anchor="start"] {
+	fill: #81c8e6;
+}

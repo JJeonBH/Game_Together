@@ -17,6 +17,8 @@
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 <!-- 폰트어썸 불러오기 -->
 <script src="https://kit.fontawesome.com/c186b4187f.js" crossorigin="anonymous"></script>
+<!-- 구글 차트 불러오기 -->
+<script src="https://www.gstatic.com/charts/loader.js"></script>
 <!-- CSS 파일 불러오기 -->
 <link rel="stylesheet" href="/resource/css/common.css" />
 <!-- JS 파일 불러오기 -->

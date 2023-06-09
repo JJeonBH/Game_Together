@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="pageTitle" value="프로필"></c:set>
+<c:set var="pageTitle" value="프로필"/>
 <%@ include file="../common/head.jsp" %>
 	<section class="h-20 text-xl min-w-900 flex justify-between items-center bg-white mt-1">
 		<div class="ml-14 bg-pink-200">이미지</div>

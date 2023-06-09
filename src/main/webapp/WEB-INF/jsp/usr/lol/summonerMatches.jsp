@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<section class="mt-6 mx-20 min-w-1000">
+<section class="mt-3 mx-20 text-sm min-w-1000">
 	<c:if test="${summoner != null && matches != null}">
 		<div class="show-match h-80 overflow-auto">
 			<c:forEach var="match" items="${matches}">
 				<c:forEach var="participant" items="${match.info.participants}">
 		 			<c:if test="${participant.puuid == summoner.puuid}">
 						<div class="text-gray-600 rounded-lg mt-2 px-4 py-2 flex ${participant.gameEndedInEarlySurrender == true ? 'bg-gray-200' : participant.win == true ? 'bg-blue-200' : 'bg-red-200'}">
-			 				<div class="text-sm">
+			 				<div class="">
 								<c:forEach var="queue" items="${summoner.queues}">
 									<c:if test="${queue.queueId == match.info.queueId}">
 										<div class="w-32 text-base ${participant.gameEndedInEarlySurrender == true ? 'text-gray-600' : participant.win == true ? 'text-blue-600' : 'text-red-600'}">
@@ -79,7 +79,7 @@
 										<img class="rounded-full" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer.get(0)}/img/champion/${participant.championName}.png" width="50" alt="champion icon image"/>
 									</div>
 									<div class="ml-1">
-										<c:set var="spellIds" value="${participant.getSpellIds()}"></c:set>
+										<c:set var="spellIds" value="${participant.getSpellIds()}"/>
 										<c:forEach var="spellId" items="${spellIds}">
 											<c:forEach var="spellData" items="${summoner.spellData.data}">
 												<c:if test="${spellData.value.key == spellId}">
@@ -110,7 +110,7 @@
 											</c:if>
 										</c:forEach>
 									</div>
-									<div class="ml-3 mt-1 text-black">
+									<div class="ml-3 mt-1 text-black text-base">
 										<div>
 											<span>${participant.kills}</span>
 											<span class="text-gray-500">/</span>
@@ -124,7 +124,7 @@
 									</div>
 								</div>
 								<div class="mt-2 flex">
-									<c:set var="items" value="${participant.getItems()}"></c:set>
+									<c:set var="items" value="${participant.getItems()}"/>
 									<c:forEach var="item" items="${items}">
 										<div class="ml-1px">
 											<c:choose>

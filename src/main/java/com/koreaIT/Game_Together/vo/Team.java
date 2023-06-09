@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class Team {
 
 	private Objectives objectives;
-//	private int teamId;
-//	private boolean win;
+	private int teamId;
+	private boolean win;
 	
 }

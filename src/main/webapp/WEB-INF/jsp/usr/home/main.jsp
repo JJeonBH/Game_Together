@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="pageTitle" value="같이 할래?"></c:set>
+<c:set var="pageTitle" value="같이 할래?"/>
 <%@ include file="../common/head.jsp" %>
 	<section class="mt-6 mx-20 text-lg min-w-1000">
 		<div class="flex justify-center">
@@ -12,6 +12,7 @@
 		</div>
 	</section>
 <%@ include file="../lol/summonerInfo.jsp" %>
+<%@ include file="../lol/summonerMatchesInfo.jsp" %>
 <%@ include file="../lol/summonerMatches.jsp" %>
 	<section class="mt-6 mx-20 text-lg min-w-1000">
 		<div class="mt-4 flex">

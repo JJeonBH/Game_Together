@@ -315,14 +315,6 @@ public class LOLService {
 							teamPositions.put(participant.getTeamPosition(), teamPositions.get(participant.getTeamPosition()) + 1);
 						}
 						
-//						if (match.getInfo().getQueueId() == 420) {
-//							if (teamPositions.containsKey(participant.getTeamPosition()) == false) {
-//								teamPositions.put(participant.getTeamPosition(), 1);
-//							} else {
-//								teamPositions.put(participant.getTeamPosition(), teamPositions.get(participant.getTeamPosition()) + 1);
-//							}
-//						}
-						
 						String championName = participant.getChampionName();
 						int matchCount = 1;
 						int winCount;

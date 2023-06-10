@@ -169,12 +169,12 @@ a:hover > .main-image {
 }
 
 /* 원형 차트 가운데에 승률 보여주기 */
-.chartWithOverlay {
+.pieChartWithOverlay {
 	position: relative;
 }
 
 /* 원형 차트 가운데에 승률 보여주기 */
-.overlay {
+.pieChartOverlay {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -182,7 +182,14 @@ a:hover > .main-image {
     color: #0076f5;
 }
 
-/* 원형 차트 제목 글자색 변경 */
-.chartWithOverlay > #pieChart > div > div[dir="ltr"] > div[aria-label="A chart."] > svg[aria-label="A chart."] > g > text[text-anchor="start"] {
-	fill: #81c8e6;
+/* 막대 차트 아래에 포지션 이미지 위치시키기 */
+.barChartWithOverlay {
+	position: relative;
+}
+
+/* 막대 차트 아래에 포지션 이미지 위치시키기 */
+.barChartOverlay {
+    position: absolute;
+    top: 85%;
+    left: 17%;
 }

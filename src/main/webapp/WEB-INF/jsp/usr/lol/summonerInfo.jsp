@@ -5,7 +5,7 @@
 	<c:if test="${summoner != null}">
 		<div class="mt-4 flex">
 			<div class="summoner-icon">
-				<img src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer.get(0)}/img/profileicon/${summoner.profileIconId}.png" width="180" alt="profile icon"/>
+				<img class="rounded-3xl" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer.get(0)}/img/profileicon/${summoner.profileIconId}.png" width="180" alt="profile icon"/>
 				<div class="summoner-level text-sm text-black">${summoner.summonerLevel}</div>
 			</div>
 			<div class="mx-4 text-xl font-bold">${summoner.name}</div>

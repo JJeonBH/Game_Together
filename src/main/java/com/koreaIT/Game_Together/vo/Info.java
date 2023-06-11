@@ -30,11 +30,11 @@ public class Info {
 		
 		long gameFinishTime;
 		
-		//	gameEndTimestamp필드가 응답에 있으면(0이 아니면) gameDuration필드의 값은 '초'
-		//	gameEndTimestamp필드가 응답에 없으면(기본값 0이면) gameDuration필드의 값은 '밀리초'
+		//	gameEndTimestamp필드가 응답에 있으면(0이 아니면) gameDuration필드의 값은 "초"
+		//	gameEndTimestamp필드가 응답에 없으면(기본값 0이면) gameDuration필드의 값은 "밀리초"
 		if (gameEndTimestamp != 0) {
-			//	gameCreation은 '밀리초'
-			//	gameDuration '초'를 '밀리초'로 변환
+			//	gameCreation은 "밀리초"
+			//	gameDuration "초"를 "밀리초"로 변환
 			gameFinishTime = this.gameCreation + (this.gameDuration * 1000);
 		} else {
 			gameFinishTime = this.gameCreation + this.gameDuration;
@@ -87,8 +87,8 @@ public class Info {
 	
 	public String getMatchDuration() {
 		
-	//	gameEndTimestamp필드가 응답에 있으면(0이 아니면) gameDuration필드의 값은 '초'
-	//	gameEndTimestamp필드가 응답에 없으면(기본값 0이면) gameDuration필드의 값은 '밀리초'
+	//	gameEndTimestamp필드가 응답에 있으면(0이 아니면) gameDuration필드의 값은 "초"
+	//	gameEndTimestamp필드가 응답에 없으면(기본값 0이면) gameDuration필드의 값은 "밀리초"
 		
 		if (gameEndTimestamp != 0) {
 			
@@ -103,7 +103,7 @@ public class Info {
 			}
 			
 		} else {
-			//	'밀리초'를 '초'로 변환
+			//	"밀리초"를 "초"로 변환
 			long gameDuration = this.gameDuration / 1000;
 			
 			long hour = gameDuration / (60*60);
@@ -119,5 +119,19 @@ public class Info {
 		}
 		
 	}
+	
+	public double getCSPerMinute(int cs) {
+		//	gameEndTimestamp필드가 응답에 있으면(0이 아니면) gameDuration필드의 값은 "초"
+		//	gameEndTimestamp필드가 응답에 없으면(기본값 0이면) gameDuration필드의 값은 "밀리초"
+		if (gameEndTimestamp != 0) {
+			return Math.round((((double) cs / this.gameDuration) * 60) * 10) / 10.0;
+		} else {
+			//	'밀리초'를 '초'로 변환
+			long gD = this.gameDuration / 1000;
+			return Math.round((((double) cs / gD) * 60) * 10) / 10.0;
+		}
+		
+	}
+	
 	
 }

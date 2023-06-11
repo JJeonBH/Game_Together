@@ -1,5 +1,6 @@
 package com.koreaIT.Game_Together.vo;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,6 +93,22 @@ public class Participant {
 		double kda = (double)(this.kills + this.assists) / this.deaths;
 		
 		return String.format("%.2f", kda);
+		
+	}
+	
+	public int getKillInvolvement(int teamChampionKills) {
+		return (int) Math.round(((double)(this.kills + this.assists) / teamChampionKills) * 100);
+	}
+	
+	public int getCS() {
+		return this.totalMinionsKilled + this.neutralMinionsKilled;
+	}
+	
+	public String getTotalDamageDealtToChampions() {
+		
+		DecimalFormat decFormat = new DecimalFormat("###,###");
+		
+		return decFormat.format(this.totalDamageDealtToChampions);
 		
 	}
 	

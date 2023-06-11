@@ -1,3 +1,4 @@
+//	테마 관련 함수
 function themeToggle() {
 	
 		const theme = localStorage.getItem("theme") ?? "light";
@@ -12,6 +13,7 @@ function themeToggle() {
 		
 }
 
+//	테마 관련 함수
 function themeInit() {
 	
 		const theme = localStorage.getItem("theme") ?? "light";
@@ -20,6 +22,7 @@ function themeInit() {
 		
 }
 
+//	테마 관련 함수
 function themeApplyTo(themeName) {
 	
 		$('html').attr('data-theme', themeName);
@@ -38,6 +41,9 @@ function themeApplyTo(themeName) {
 		
 }
 
+//	테마 적용
+themeInit();
+
 function submitSearchForm(form) {
 	
 	form.summonerName.value = form.summonerName.value.trim();
@@ -51,6 +57,7 @@ function submitSearchForm(form) {
 	
 }
 
+//	매치 더보기 함수
 function addMatches(sName) {
 	
 	$('.add-matches').empty();
@@ -64,6 +71,7 @@ function addMatches(sName) {
 	
 }
 
+//	매치 더보기 함수
 function getMatches(sPuuid, summoner) {
 	
 	$.get('/usr/lol/getMatches', {
@@ -76,16 +84,22 @@ function getMatches(sPuuid, summoner) {
 	
 }
 
+//	매치 더보기 함수
 function showMatches(matches, summoner) {
 	
 	matches.forEach((match) => {
 		match.info.participants.forEach((participant) => {
 			if (participant.puuid == summoner.puuid) {
+				
+				//	처음 여는 div
 				let append = `<div class="text-gray-600 rounded-lg mt-2 px-4 py-2 flex ${participant.gameEndedInEarlySurrender == true ? 'bg-gray-200' : participant.win == true ? 'bg-blue-200' : 'bg-red-200'}">`;
-				append += `<div class="text-sm">`;
+				
+				//	class="w-36" div 시작
+				append += `<div class="w-36">`;
+				
 				summoner.queues.forEach((queue) => {
 					if(queue.queueId == match.info.queueId) {
-						append += `<div class="w-32 text-base ${participant.gameEndedInEarlySurrender == true ? 'text-gray-600' : participant.win == true ? 'text-blue-600' : 'text-red-600'}">`;
+						append += `<div class="text-base ${participant.gameEndedInEarlySurrender == true ? 'text-gray-600' : participant.win == true ? 'text-blue-600' : 'text-red-600'}">`;
 						switch (queue.queueId) {
 							case 0:
 								append += `<div>사용자 지정 게임</div>`;
@@ -144,8 +158,13 @@ function showMatches(matches, summoner) {
 				}
 				append += `</div>`;
 				append += `<div>${match.info.matchDuration}</div>`;
+				
+				//	class="w-36" div 끝
 				append += `</div>`;
-				append += `<div class="ml-4">`;
+				
+				//	class="w-68" div 시작
+				append += `<div class="w-68">`;
+				
 				append += `<div class="flex">`;
 				append += `<div>`;
 				append += `<img class="rounded-full" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer[0]}/img/champion/${participant.championName}.png" width="50" alt="champion icon image"/>`;
@@ -156,7 +175,7 @@ function showMatches(matches, summoner) {
 				spellIds.forEach((spellId) => {
 					for (let spellName in spellData) {
 						if(spellData[spellName].key == spellId) {
-							append += `<img class="rounded" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer[0]}/img/spell/${spellName}.png" width="25" alt="spell image"/>`;
+							append += `<img class="rounded my-1px" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer[0]}/img/spell/${spellName}.png" width="25" alt="spell image"/>`;
 						}
 					}
 				});
@@ -183,7 +202,7 @@ function showMatches(matches, summoner) {
 					}
 				});
 				append += `</div>`;
-				append += `<div class="ml-3 mt-1 text-black">`;
+				append += `<div class="ml-3 mt-1 text-black text-base">`;
 				append += `<div>`;
 				append += `<span>${participant.kills}</span>`;
 				append += `<span class="text-gray-500"> / </span>`;
@@ -208,8 +227,35 @@ function showMatches(matches, summoner) {
 					append += `</div>`;
 				});
 				append += `</div>`;
+				
+				//	class="w-68" div 끝
 				append += `</div>`;
+				
+				//	class="w-36 text-xs" div 시작
+				append += `<div class="w-36 text-xs">`;
+				
+				match.info.teams.forEach((team) => {
+					if (team.teamId == participant.teamId) {
+						let kASum = participant.kills + participant.assists;
+						let teamChampionKills = team.objectives.champion.kills;
+						let killInvolvement = getKillInvolvement(kASum, teamChampionKills);
+						append += `<div class="text-red-600">킬관여 ${killInvolvement}%</div>`
+					}
+				});
+				append += `<div>제어 와드 ${participant.visionWardsBoughtInGame}</div>`;
+				append += `<div>와드 설치 ${participant.wardsPlaced}</div>`;
+				append += `<div>와드 제거 ${participant.wardsKilled}</div>`;
+				let cs = participant.cs;
+				let csPerMinute = getCSPerMinute(match.info, cs);
+				append += `<div class="text-purple-600">CS ${cs} (${csPerMinute})</div>`
+				append += `<div class="text-pink-600">피해량 ${participant.totalDamageDealtToChampions}</div>`
+				
+				//	class="w-36 text-xs" div 끝
 				append += `</div>`;
+				
+				//	마지막 닫는 div
+				append += `</div>`;
+				
 				$('.show-match').append(append);
 			}
 		});
@@ -217,4 +263,17 @@ function showMatches(matches, summoner) {
 	
 }
 
-themeInit();
+//	매치 킬관여
+function getKillInvolvement(kASum, teamChampionKills) {
+	return Math.round((kASum / teamChampionKills) * 100);
+}
+
+//	매치 분당 CS
+function getCSPerMinute(matchInfo, cs) {
+	if (matchInfo.gameEndTimestamp != 0) {
+		return Math.round(((cs / matchInfo.gameDuration) * 60) * 10) / 10.0;
+	} else {
+		let gD = matchInfo.gameDuration / 1000;
+		return Math.round(((cs / gD) * 60) * 10) / 10.0;
+	}
+}

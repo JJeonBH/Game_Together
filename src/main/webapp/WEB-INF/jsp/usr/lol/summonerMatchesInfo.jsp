@@ -49,16 +49,16 @@
 	
 	function drawBarChart() {
 		
-	     let data = google.visualization.arrayToDataTable([
-	       ['Position', 'Frequency', { role: 'style' }],
-	       ["Top", ${matchesData.getTeamPositions().get("TOP")}, 'color: #ff0303; opacity: 0.7;'],
-	       ["Jungle", ${matchesData.getTeamPositions().get("JUNGLE")}, 'color: #ff8903; opacity: 0.7;'],
-	       ["Middle", ${matchesData.getTeamPositions().get("MIDDLE")}, 'color: #63ff03; opacity: 0.7;'],
-	       ["Bottom", ${matchesData.getTeamPositions().get("BOTTOM")}, 'color: #03afff; opacity: 0.7;'],
-	       ["Support", ${matchesData.getTeamPositions().get("UTILITY")}, 'color: #c403ff; opacity: 0.7;']
-	     ]);
+		let data = google.visualization.arrayToDataTable([
+			['Position', 'Frequency', { role: 'style' }],
+			["Top", ${matchesData.getTeamPositions().get("TOP")}, 'color: #ff0303; opacity: 0.7;'],
+			["Jungle", ${matchesData.getTeamPositions().get("JUNGLE")}, 'color: #ff8903; opacity: 0.7;'],
+			["Middle", ${matchesData.getTeamPositions().get("MIDDLE")}, 'color: #63ff03; opacity: 0.7;'],
+			["Bottom", ${matchesData.getTeamPositions().get("BOTTOM")}, 'color: #03afff; opacity: 0.7;'],
+			["Support", ${matchesData.getTeamPositions().get("UTILITY")}, 'color: #c403ff; opacity: 0.7;']
+		]);
 	
-	     let options = {
+		let options = {
 			title: "선호 포지션 (솔로랭크)",
 			titleTextStyle: {
 				color: '#858585',
@@ -79,19 +79,36 @@
 				textStyle: {
 					color: '#858585'
 				},
-				gridlines: {
-					color: '#ee54ff',
-				},
-				baselineColor: '#008efa',
-				ticks: [0, 5, 10, 15, 20]
+			gridlines: {
+				color: '#ee54ff',
+			},
+			baselineColor: '#008efa',
+			ticks: [0, 5, 10, 15, 20]
 			}
-	     };
+		};
 	     
-	     let chart = new google.visualization.ColumnChart(document.getElementById('barChart'));
+		let chart = new google.visualization.ColumnChart(document.getElementById('barChart'));
+		
+		chart.draw(data, options);
 	     
-	     chart.draw(data, options);
-	     
-	 }
+	}
+	
+	//	글자색 3초마다 랜덤으로 변경
+	window.onload = function() {
+		
+		let statistics = document.getElementById("statistics")
+		
+		setInterval(function() { 
+		 
+		let vr = parseInt(Math.random() * 256);
+		let vg = parseInt(Math.random() * 256); 
+		let vb = parseInt(Math.random() * 256); 
+		
+		statistics.style.color = 'rgb(' + vr +',' + vg +',' + vb +')';
+		  
+		}, 3000)
+		
+	}
 	
 </script>
 
@@ -99,7 +116,7 @@
 	<c:if test="${summoner != null && matches != null}">
 		<div class="border border-indigo-100">
 			<div class="flex justify-center text-xl mt-2">
-				<span>최근 20게임 통계</span>
+				<span id="statistics">최근 20게임 통계</span>
 			</div>
 			<div class="flex justify-center">
 				<div>

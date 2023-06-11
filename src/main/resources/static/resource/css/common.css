@@ -27,8 +27,12 @@ html > body {
 	width: 25px;
 }
 
+.w-68 {
+	width: 272px;
+}
+
 .w-112 {
-	width: 28rem;
+	width: 448px;
 }
 
 .h-25px {

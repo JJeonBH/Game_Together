@@ -8,10 +8,10 @@
 				<c:forEach var="participant" items="${match.info.participants}">
 		 			<c:if test="${participant.puuid == summoner.puuid}">
 						<div class="text-gray-600 rounded-lg mt-2 px-4 py-2 flex ${participant.gameEndedInEarlySurrender == true ? 'bg-gray-200' : participant.win == true ? 'bg-blue-200' : 'bg-red-200'}">
-			 				<div class="">
+			 				<div class="w-36">
 								<c:forEach var="queue" items="${summoner.queues}">
 									<c:if test="${queue.queueId == match.info.queueId}">
-										<div class="w-32 text-base ${participant.gameEndedInEarlySurrender == true ? 'text-gray-600' : participant.win == true ? 'text-blue-600' : 'text-red-600'}">
+										<div class="text-base ${participant.gameEndedInEarlySurrender == true ? 'text-gray-600' : participant.win == true ? 'text-blue-600' : 'text-red-600'}">
 											<c:choose>
 												<c:when test="${queue.queueId == 0}">
 													<div>사용자 지정 게임</div>
@@ -73,7 +73,7 @@
 								</div>
 								<div>${match.info.getMatchDuration()}</div>
 							</div>
-							<div class="ml-4">
+							<div class="w-68">
 								<div class="flex">
 									<div>
 										<img class="rounded-full" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer.get(0)}/img/champion/${participant.championName}.png" width="50" alt="champion icon image"/>
@@ -138,6 +138,18 @@
 										</div>
 									</c:forEach>
 								</div>
+							</div>
+							<div class="w-36 text-xs">
+								<c:forEach var="team" items="${match.info.teams}">
+									<c:if test="${team.teamId == participant.teamId}">
+										<div class="text-red-600">킬관여 ${participant.getKillInvolvement(team.objectives.champion.kills)}%</div>
+									</c:if>
+								</c:forEach>
+								<div>제어 와드 ${participant.visionWardsBoughtInGame}</div>
+								<div>와드 설치 ${participant.wardsPlaced}</div>
+								<div>와드 제거 ${participant.wardsKilled}</div>
+								<div class="text-purple-600">CS ${participant.getCS()} (${match.info.getCSPerMinute(participant.getCS())})</div>
+								<div class="text-pink-600">피해량 ${participant.getTotalDamageDealtToChampions()}</div>
 							</div>
 						</div>
 		 			</c:if>

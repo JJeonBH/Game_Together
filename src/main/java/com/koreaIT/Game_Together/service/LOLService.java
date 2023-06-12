@@ -362,32 +362,15 @@ public class LOLService {
 			
 		}
 		
-		//	경기 수
-		int numberOfMatches = totalWins + totalLoses;
-		
-		//	전체 승률
-		int odds = (int) Math.round(((double) totalWins / numberOfMatches) * 100);
-		
-		//	전체 평균 킬, 평균 데스, 평균 어시, 평균 KDA
-		double avgKill = Math.round(((double) totalKills / numberOfMatches) * 10) / 10.0;
-		double avgDeath = Math.round(((double) totalDeaths / numberOfMatches) * 10) / 10.0;
-		double avgAssist = Math.round(((double) totalAssists / numberOfMatches) * 10) / 10.0;
-		double avgKDA = Math.round(((avgKill + avgAssist) / avgDeath) * 100) / 100.0;
-		
-		//	전체 평균 킬 관여
-		int killInvolvement = (int) Math.round(((double) (totalKills + totalAssists) / totalTeamKills) * 100);
-		
 		//	경기 수 기준 내림차순 정렬
 		Collections.sort(champions, Collections.reverseOrder());
 		
 		matchesData.setTotalWins(totalWins);
 		matchesData.setTotalLoses(totalLoses);
-		matchesData.setOdds(odds);
-		matchesData.setAvgKill(avgKill);
-		matchesData.setAvgDeath(avgDeath);
-		matchesData.setAvgAssist(avgAssist);
-		matchesData.setAvgKDA(avgKDA);
-		matchesData.setKillInvolvement(killInvolvement);
+		matchesData.setTotalKills(totalKills);
+		matchesData.setTotalDeaths(totalDeaths);
+		matchesData.setTotalAssists(totalAssists);
+		matchesData.setTotalTeamKills(totalTeamKills);
 		matchesData.setTeamPositions(teamPositions);
 		matchesData.setChampions(champions);
 		

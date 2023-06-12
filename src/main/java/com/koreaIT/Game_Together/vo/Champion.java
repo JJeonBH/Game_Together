@@ -29,19 +29,4 @@ public class Champion implements Comparable<Champion> {
 		
 	}
 	
-	public int getOdds() {
-		
-		int odds = (int) Math.round(((double) winCount / matchCount) * 100);
-		
-		return odds;
-		
-	}
-	
-	public double getAvgKDA() {
-		
-		double avgKDA = Math.round(((double) (kills + assists) / deaths) * 100) / 100.0;
-		
-		return avgKDA;
-		
-	}
 }

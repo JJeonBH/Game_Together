@@ -14,12 +14,10 @@ public class MatchesData {
 
 	private int totalWins;
 	private int totalLoses;
-	private int odds;
-	private double avgKill;
-	private double avgDeath;
-	private double avgAssist;
-	private double avgKDA;
-	private int killInvolvement;
+	private int totalKills;
+	private int totalDeaths;
+	private int totalAssists;
+	private int totalTeamKills;
 	private Map<String, Integer> teamPositions;
 	private List<Champion> champions;
 	

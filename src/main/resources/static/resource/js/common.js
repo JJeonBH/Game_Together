@@ -44,6 +44,7 @@ function themeApplyTo(themeName) {
 //	테마 적용
 themeInit();
 
+//	소환사 검색시 유효성 검사
 function submitSearchForm(form) {
 	
 	form.summonerName.value = form.summonerName.value.trim();

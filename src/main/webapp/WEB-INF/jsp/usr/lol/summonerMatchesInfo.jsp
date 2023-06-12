@@ -116,36 +116,39 @@
 	<c:if test="${summoner != null && matches != null}">
 		<div class="border border-indigo-100">
 			<div class="flex justify-center text-xl mt-2">
-				<span id="statistics">최근 20게임 통계</span>
+				<span id="statistics">최근 ${matchesData.totalWins + matchesData.totalLoses}게임 통계</span>
 			</div>
 			<div class="flex justify-center">
 				<div>
 					<div class="pieChartWithOverlay">
 						<div id="pieChart"></div>
-						<div class="pieChartOverlay">${matchesData.odds}%</div>
+						<div class="pieChartOverlay">${Math.round((matchesData.totalWins / (matchesData.totalWins + matchesData.totalLoses)) * 100)}%</div>
 					</div>
 				</div>
 				<div class="flex items-center">
 					<div>
 						<div class="text-gray-400">
-							<span>${matchesData.avgKill}</span>
+							<c:set var="avgKill" value="${Math.round((matchesData.totalKills / (matchesData.totalWins + matchesData.totalLoses)) * 10) / 10.0}" />
+							<span>${avgKill}</span>
 							<span>/</span>
-							<span class="text-red-600">${matchesData.avgDeath}</span>
+							<c:set var="avgDeath" value="${Math.round((matchesData.totalDeaths / (matchesData.totalWins + matchesData.totalLoses)) * 10) / 10.0}" />
+							<span class="text-red-600">${avgDeath}</span>
 							<span>/</span>
-							<span>${matchesData.avgAssist}</span>
+							<c:set var="avgAssist" value="${Math.round((matchesData.totalAssists / (matchesData.totalWins + matchesData.totalLoses)) * 10) / 10.0}" />
+							<span>${avgAssist}</span>
 						</div>
 						<div class="my-1">
-							<span class="text-base">${matchesData.avgKDA} 평점</span>
+							<span class="text-base">${Math.round(((avgKill + avgAssist) / avgDeath) * 100) / 100.0} 평점</span>
 						</div>
 						<div>
-							<span class="text-red-600">킬관여 ${matchesData.killInvolvement}%</span>
+							<span class="text-red-600">킬관여 ${Math.round(((matchesData.totalKills + matchesData.totalAssists) / matchesData.totalTeamKills) * 100)}%</span>
 						</div>
 					</div>
 				</div>
 				<div class="ml-12 flex items-center">
 					<div>
 						<div class="my-3 text-gray-400">
-							<span>플레이한 챔피언 (최근 20게임)</span>
+							<span>플레이한 챔피언 (최근 ${matchesData.totalWins + matchesData.totalLoses}게임)</span>
 						</div>
 						<c:forEach var="champion" items="${matchesData.champions}" begin="0" end="2">
 							<div class="flex items-center text-xs my-2">
@@ -153,13 +156,14 @@
 									<img class="rounded-full" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer.get(0)}/img/champion/${champion.championName}.png" width="30" alt="champion icon image"/>
 								</div>
 								<div class="ml-2">
-									<span class="${champion.getOdds() < 60 ? 'text-gray-500' : 'text-red-600'}">${champion.getOdds()}%</span>
+									<span class="${Math.round((champion.winCount / champion.matchCount) * 100) < 60 ? 'text-gray-500' : 'text-red-600'}">${Math.round((champion.winCount / champion.matchCount) * 100)}%</span>
 								</div>
 								<div class="ml-1">
 									<span class="text-gray-400">(${champion.winCount}승 ${champion.matchCount - champion.winCount}패)</span>
 								</div>
 								<div class="ml-1">
-									<span class="${champion.getAvgKDA() < 3.0 ? 'text-gray-500' : champion.getAvgKDA() < 4.0 ? 'text-green-500' : champion.getAvgKDA() < 5.0 ? 'text-blue-500' : 'text-yellow-500'}">${champion.getAvgKDA()} 평점</span>
+									<c:set var="champAvgKDA" value="${Math.round(((champion.kills + champion.assists) / champion.deaths) * 100) / 100.0}"/>
+									<span class="${champAvgKDA < 3.0 ? 'text-gray-500' : champAvgKDA < 4.0 ? 'text-green-500' : champAvgKDA < 5.0 ? 'text-blue-500' : 'text-yellow-500'}">${champAvgKDA} 평점</span>
 								</div>
 							</div>
 						</c:forEach>

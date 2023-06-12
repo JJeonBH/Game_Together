@@ -87,9 +87,8 @@ public class Info {
 	
 	public String getMatchDuration() {
 		
-	//	gameEndTimestamp필드가 응답에 있으면(0이 아니면) gameDuration필드의 값은 "초"
-	//	gameEndTimestamp필드가 응답에 없으면(기본값 0이면) gameDuration필드의 값은 "밀리초"
-		
+		//	gameEndTimestamp필드가 응답에 있으면(0이 아니면) gameDuration필드의 값은 "초"
+		//	gameEndTimestamp필드가 응답에 없으면(기본값 0이면) gameDuration필드의 값은 "밀리초"
 		if (gameEndTimestamp != 0) {
 			
 			long hour = gameDuration / (60*60);
@@ -121,6 +120,7 @@ public class Info {
 	}
 	
 	public double getCSPerMinute(int cs) {
+		
 		//	gameEndTimestamp필드가 응답에 있으면(0이 아니면) gameDuration필드의 값은 "초"
 		//	gameEndTimestamp필드가 응답에 없으면(기본값 0이면) gameDuration필드의 값은 "밀리초"
 		if (gameEndTimestamp != 0) {

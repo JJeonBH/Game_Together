@@ -1,6 +1,387 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<script>
+
+	let mD;
+	
+	// 소환사 이름으로 소환사 정보 가져오기
+	function addMatches(summonerName) {
+		
+		if (mD == null) {
+			mD = getOriginalMatchesData();
+		}
+		
+		$('.add-matches').empty();
+		$('.add-matches').addClass('loading loading-spinner');
+	
+		$.get('/usr/lol/getSummoner', {
+			summonerName : summonerName
+		}, function(summoner) {
+			getMatches(summoner.puuid, summoner);
+		}, 'json');
+		
+	}
+	
+	//	처음 검색했을 때 보여준 통계 정보 가져오기
+	function getOriginalMatchesData() {
+		
+		let originalMatchesData = {
+				
+			totalWins: ${matchesData.totalWins},
+			totalLoses: ${matchesData.totalLoses},
+			totalKills: ${matchesData.totalKills},
+			totalDeaths: ${matchesData.totalDeaths},
+			totalAssists: ${matchesData.totalAssists},
+			totalTeamKills: ${matchesData.totalTeamKills},
+			teamPositions: new Map([
+				["TOP", ${matchesData.teamPositions.get("TOP")}],
+				["JUNGLE", ${matchesData.teamPositions.get("JUNGLE")}],
+				["MIDDLE", ${matchesData.teamPositions.get("MIDDLE")}],
+				["BOTTOM", ${matchesData.teamPositions.get("BOTTOM")}],
+				["UTILITY", ${matchesData.teamPositions.get("UTILITY")}]
+			]),
+			champions: []
+				
+		}
+		
+		let champion;
+		
+		<c:forEach var="champ" items="${matchesData.champions}">
+			
+			champion = {
+				
+				championName: '${champ.championName}',
+				kills: ${champ.kills},
+				deaths: ${champ.deaths},
+				assists: ${champ.assists},
+				winCount: ${champ.winCount},
+				matchCount: ${champ.matchCount}
+				
+			}
+			
+			originalMatchesData.champions.push(champion);
+			
+		</c:forEach>
+		
+		return originalMatchesData;
+		
+	}
+	
+	//	소환사 정보의 puuid로 매치 정보 가져오기
+	function getMatches(summonerPuuid, summoner) {
+		
+		$.get('/usr/lol/getMatches', {
+			summonerPuuid : summonerPuuid
+		}, function(matches) {
+			let mcsData = getMatchesData(matches, summoner);
+			addMatchesData(mcsData);
+			google.charts.setOnLoadCallback(modifyPieChart);
+			google.charts.setOnLoadCallback(modifyBarChart);
+			modifyStatistics(summoner);
+			showMatches(matches, summoner);
+			$('.add-matches').html('더보기');
+			$('.add-matches').removeClass('loading loading-spinner');
+		});
+		
+	}
+	
+	//	매치 정보에서 통계에 필요한 정보 뽑기
+	function getMatchesData(matches, summoner) {
+		
+		let mcsData = {
+			
+			totalWins: 0,
+			totalLoses: 0,
+			totalKills: 0,
+			totalDeaths: 0,
+			totalAssists: 0,
+			totalTeamKills: 0,
+			teamPositions: new Map([
+				["TOP", 0],
+				["JUNGLE", 0],
+				["MIDDLE", 0],
+				["BOTTOM", 0],
+				["UTILITY", 0]
+			]),
+			champions: []
+			
+		}
+		
+		matches.forEach((match) => {
+			
+			match.info.participants.forEach((participant) => {
+				
+				if (participant.puuid == summoner.puuid) {
+					
+					if (participant.gameEndedInEarlySurrender == false) {
+						
+						let kills = participant.kills;
+						let deaths = participant.deaths;
+						let assists = participant.assists;
+						
+						if (participant.win) {
+							mcsData.totalWins += 1;
+						} else {
+							mcsData.totalLoses += 1;
+						}
+						
+						mcsData.totalKills += kills;
+						mcsData.totalDeaths += deaths;
+						mcsData.totalAssists += assists;
+						
+						match.info.teams.forEach((team) => {
+							
+							if (team.teamId == participant.teamId) {
+								mcsData.totalTeamKills += team.objectives.champion.kills;
+							}
+							
+						});
+						
+						if (match.info.queueId == 420) {
+							mcsData.teamPositions.set(participant.teamPosition, mcsData.teamPositions.get(participant.teamPosition) + 1);
+						}
+						
+						let championName = participant.championName;
+						let matchCount = 1;
+						let winCount;
+						
+						if (participant.win) {
+							winCount = 1;
+						} else {
+							winCount = 0;
+						}
+						
+						let champion = {
+							
+							championName: championName,
+							kills: kills,
+							deaths: deaths,
+							assists: assists,
+							winCount: winCount,
+							matchCount: matchCount
+							
+						}
+						
+						mcsData.champions.push(champion);
+						
+						for (let i = 0; i < mcsData.champions.length; i++) {
+							
+							let champ = mcsData.champions[i];
+							let champName = champ.championName;
+							
+							for (let j = i + 1; j < mcsData.champions.length; j++) {
+								
+								if (champName == mcsData.champions[j].championName) {
+									
+									let equalChamp = mcsData.champions[j];
+									
+									champ.kills += equalChamp.kills;
+									champ.deaths += equalChamp.deaths;
+									champ.assists += equalChamp.assists;
+									champ.winCount += equalChamp.winCount;
+									champ.matchCount += equalChamp.matchCount;
+									
+									mcsData.champions.splice(j, 1);
+									
+								}
+								
+							}
+							
+						}
+						
+					}
+					
+				}
+				
+			});
+			
+		});
+		
+		//	경기 수 기준 내림차순 정렬
+		mcsData.champions.sort(function(champA, champB) {
+			return champB.matchCount - champA.matchCount;
+		});
+		
+		return mcsData;
+		
+	}
+	
+	//	기존에 있던 통계 정보에 가져온 정보 합치기
+	function addMatchesData(mcsData) {
+		
+		mD.totalWins += mcsData.totalWins;
+		mD.totalLoses += mcsData.totalLoses;
+		mD.totalKills += mcsData.totalKills;
+		mD.totalDeaths += mcsData.totalDeaths;
+		mD.totalAssists += mcsData.totalAssists;
+		mD.totalTeamKills += mcsData.totalTeamKills;
+		
+		mD.teamPositions.set("TOP", mD.teamPositions.get("TOP") + mcsData.teamPositions.get("TOP"));
+		mD.teamPositions.set("JUNGLE", mD.teamPositions.get("JUNGLE") + mcsData.teamPositions.get("JUNGLE"));
+		mD.teamPositions.set("MIDDLE", mD.teamPositions.get("MIDDLE") + mcsData.teamPositions.get("MIDDLE"));
+		mD.teamPositions.set("BOTTOM", mD.teamPositions.get("BOTTOM") + mcsData.teamPositions.get("BOTTOM"));
+		mD.teamPositions.set("UTILITY", mD.teamPositions.get("UTILITY") + mcsData.teamPositions.get("UTILITY"));
+		
+		mD.champions = mD.champions.concat(mcsData.champions);
+		
+		for (let i = 0; i < mD.champions.length; i++) {
+			
+			let champ = mD.champions[i];
+			let champName = champ.championName;
+			
+			for (let j = i + 1; j < mD.champions.length; j++) {
+				
+				if (champName == mD.champions[j].championName) {
+					
+					let equalChamp = mD.champions[j];
+					
+					champ.kills += equalChamp.kills;
+					champ.deaths += equalChamp.deaths;
+					champ.assists += equalChamp.assists;
+					champ.winCount += equalChamp.winCount;
+					champ.matchCount += equalChamp.matchCount;
+					
+					mD.champions.splice(j, 1);
+					
+				}
+				
+			}
+			
+		}
+		
+		mD.champions.sort(function(champA, champB) {
+			return champB.matchCount - champA.matchCount;
+		});
+		
+	}
+	
+	//	원형 차트 값 변경
+	function modifyPieChart() {
+		// Define the chart to be drawn.
+		let data = new google.visualization.DataTable();
+			data.addColumn('string', 'WinOrLose');
+			data.addColumn('number', 'Count');
+			data.addRows([
+				['승리', mD.totalWins],
+				['패배', mD.totalLoses]
+			]);
+		
+		// Set chart options
+		let options = {
+		    backgroundColor: 'transparent',
+			width: 200,
+			height: 200,
+			pieHole: 0.8,
+			pieSliceText: 'none',
+			legend: 'none',
+			tooltip: { 
+				trigger: 'none'
+			},
+			chartArea: {
+				left: '25%',
+				width: '50%'
+			},
+			enableInteractivity: 'false'
+		};
+		
+		// Instantiate and draw the chart.
+		let chart = new google.visualization.PieChart(document.getElementById('pieChart'));
+		
+		chart.draw(data, options);
+		
+	}
+	
+	//	막대 차트 값 변경
+	function modifyBarChart() {
+		
+		let data = google.visualization.arrayToDataTable([
+			['Position', 'Frequency', { role: 'style' }],
+			["Top", mD.teamPositions.get("TOP"), 'color: #ff0303; opacity: 0.7;'],
+			["Jungle", mD.teamPositions.get("JUNGLE"), 'color: #ff8903; opacity: 0.7;'],
+			["Middle", mD.teamPositions.get("MIDDLE"), 'color: #63ff03; opacity: 0.7;'],
+			["Bottom", mD.teamPositions.get("BOTTOM"), 'color: #03afff; opacity: 0.7;'],
+			["Support", mD.teamPositions.get("UTILITY"), 'color: #c403ff; opacity: 0.7;']
+		]);
+	
+		let options = {
+			title: "선호 포지션 (솔로랭크)",
+			titleTextStyle: {
+				color: '#858585',
+				fontSize: 15
+			},
+			backgroundColor: 'transparent',
+			width: 425,
+			fontSize: 12,
+			legend: { 
+				position: "none"
+			},
+			hAxis: {
+				textStyle: {
+					color: 'transparent'
+				}
+			},
+			vAxis: {
+				textStyle: {
+					color: '#858585'
+				},
+				gridlines: {
+					color: '#ee54ff'
+				},
+				baselineColor: '#008efa'
+			}
+		};
+	     
+		let chart = new google.visualization.ColumnChart(document.getElementById('barChart'));
+		
+		chart.draw(data, options);
+	     
+	}
+	
+	//	'더보기' 눌렀을 때 통계 업데이트
+	function modifyStatistics(summoner) {
+		
+		$('#statistics-title').html('최근 ' + (mD.totalWins + mD.totalLoses) + '게임 통계');
+		$('.pieChartTitleOverlay').html((mD.totalWins + mD.totalLoses) + '전 ' + mD.totalWins + '승 ' + mD.totalLoses + '패');
+		$('.pieChartOverlay').html(Math.round((mD.totalWins / (mD.totalWins + mD.totalLoses)) * 100) + '%');
+		let avgKill = Math.round((mD.totalKills / (mD.totalWins + mD.totalLoses)) * 10) / 10.0;
+		let avgDeath = Math.round((mD.totalDeaths / (mD.totalWins + mD.totalLoses)) * 10) / 10.0;
+		let avgAssist = Math.round((mD.totalAssists / (mD.totalWins + mD.totalLoses)) * 10) / 10.0;
+		$('.avgKill').html(avgKill);
+		$('.avgDeath').html(avgDeath);
+		$('.avgAssist').html(avgAssist);
+		$('.avgKDA').html(Math.round(((avgKill + avgAssist) / avgDeath) * 100) / 100.0 + ' 평점');
+		$('.avgKillInvolvement').html('킬관여 ' + Math.round(((mD.totalKills + mD.totalAssists) / mD.totalTeamKills) * 100) + '%');
+		$('.mostChampionsTitle').html('플레이한 챔피언 (최근 ' + (mD.totalWins + mD.totalLoses) + '게임)');
+		$('.mostChampions').empty();
+		
+		for (let i = 0; i < 3; i++) {
+			
+			let champion = mD.champions[i];
+			let champAvgKDA = Math.round(((champion.kills + champion.assists) / champion.deaths) * 100) / 100.0;
+			
+			let append = `<div class="flex items-center text-xs my-2">`;
+			append += `<div>`;
+			append += `<img class="rounded-full" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer[0]}/img/champion/\${champion.championName}.png" width="30" alt="champion icon image"/>`;
+			append += `</div>`;
+			append += `<div class="ml-2">`;
+			append += `<span class="\${Math.round((champion.winCount / champion.matchCount) * 100) < 60 ? 'text-gray-500' : 'text-red-600'}">\${Math.round((champion.winCount / champion.matchCount) * 100)}%</span>`;
+			append += `</div>`;
+			append += `<div class="ml-1">`;
+			append += `<span class="text-gray-400">(\${champion.winCount}승 \${champion.matchCount - champion.winCount}패)</span>`;
+			append += `</div>`;
+			append += `<div class="ml-1">`;
+			append += `<span class="\${champAvgKDA < 3.0 ? 'text-gray-500' : champAvgKDA < 4.0 ? 'text-green-500' : champAvgKDA < 5.0 ? 'text-blue-500' : 'text-yellow-500'}">\${champAvgKDA} 평점</span>`;
+			append += `</div>`;
+			append += `</div>`;
+			
+			$('.mostChampions').append(append);
+			
+		}
+		
+	}
+
+</script>
 <section class="mt-3 mx-20 text-sm min-w-1000">
 	<c:if test="${summoner != null && matches != null}">
 		<div class="show-match h-80 overflow-auto">
@@ -57,7 +438,7 @@
 									</c:if>
 								</c:forEach>
 								<div>${match.info.getMatchFinishDateTime()}</div>
-								<div class="w-16 ${participant.gameEndedInEarlySurrender == true ? 'border-b border-gray-500' : participant.win == true ? 'border-b border-blue-500' : 'border-b border-red-500'}"></div>
+								<div class="w-16 my-1 ${participant.gameEndedInEarlySurrender == true ? 'border-b border-gray-500' : participant.win == true ? 'border-b border-blue-500' : 'border-b border-red-500'}"></div>
 								<div>
 									<c:choose>
 										<c:when test="${participant.gameEndedInEarlySurrender}">
@@ -123,7 +504,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="mt-2 flex">
+								<div class="mt-3 flex">
 									<c:set var="items" value="${participant.getItems()}"/>
 									<c:forEach var="item" items="${items}">
 										<div class="ml-1px">

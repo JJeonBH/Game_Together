@@ -19,14 +19,9 @@
 		
 		// Set chart options
 		let options = {
-			title: ${matchesData.totalWins + matchesData.totalLoses} + '전 ' + ${matchesData.totalWins} + '승 ' + ${matchesData.totalLoses} + '패',
-			titleTextStyle: {
-				color: '#81c8e6'
-			},
 		    backgroundColor: 'transparent',
 			width: 200,
 			height: 200,
-			fontSize: 15,
 			pieHole: 0.8,
 			pieSliceText: 'none',
 			legend: 'none',
@@ -35,9 +30,9 @@
 			},
 			chartArea: {
 				left: '25%',
-				width: '50%',
+				width: '50%'
 			},
-			enableInteractivity: 'false',
+			enableInteractivity: 'false'
 		};
 		
 		// Instantiate and draw the chart.
@@ -79,11 +74,10 @@
 				textStyle: {
 					color: '#858585'
 				},
-			gridlines: {
-				color: '#ee54ff',
-			},
-			baselineColor: '#008efa',
-			ticks: [0, 5, 10, 15, 20]
+				gridlines: {
+					color: '#ee54ff'
+				},
+				baselineColor: '#008efa'
 			}
 		};
 	     
@@ -96,7 +90,7 @@
 	//	글자색 3초마다 랜덤으로 변경
 	window.onload = function() {
 		
-		let statistics = document.getElementById("statistics")
+		let statisticsTitle = document.getElementById("statistics-title")
 		
 		setInterval(function() { 
 		 
@@ -104,24 +98,25 @@
 		let vg = parseInt(Math.random() * 256); 
 		let vb = parseInt(Math.random() * 256); 
 		
-		statistics.style.color = 'rgb(' + vr +',' + vg +',' + vb +')';
+		
+		statisticsTitle.style.color = 'rgb(' + vr +',' + vg +',' + vb +')';
 		  
 		}, 3000)
 		
 	}
 	
 </script>
-
 <section class="mt-6 mx-20 text-sm min-w-1000">
 	<c:if test="${summoner != null && matches != null}">
-		<div class="border border-indigo-100">
+		<div class="statistics border border-indigo-100">
 			<div class="flex justify-center text-xl mt-2">
-				<span id="statistics">최근 ${matchesData.totalWins + matchesData.totalLoses}게임 통계</span>
+				<span id="statistics-title">최근 ${matchesData.totalWins + matchesData.totalLoses}게임 통계</span>
 			</div>
 			<div class="flex justify-center">
 				<div>
 					<div class="pieChartWithOverlay">
 						<div id="pieChart"></div>
+						<div class="pieChartTitleOverlay w-full text-center">${matchesData.totalWins + matchesData.totalLoses}전 ${matchesData.totalWins}승 ${matchesData.totalLoses}패</div>
 						<div class="pieChartOverlay">${Math.round((matchesData.totalWins / (matchesData.totalWins + matchesData.totalLoses)) * 100)}%</div>
 					</div>
 				</div>
@@ -129,44 +124,46 @@
 					<div>
 						<div class="text-gray-400">
 							<c:set var="avgKill" value="${Math.round((matchesData.totalKills / (matchesData.totalWins + matchesData.totalLoses)) * 10) / 10.0}" />
-							<span>${avgKill}</span>
+							<span class="avgKill">${avgKill}</span>
 							<span>/</span>
 							<c:set var="avgDeath" value="${Math.round((matchesData.totalDeaths / (matchesData.totalWins + matchesData.totalLoses)) * 10) / 10.0}" />
-							<span class="text-red-600">${avgDeath}</span>
+							<span class="avgDeath text-red-600">${avgDeath}</span>
 							<span>/</span>
 							<c:set var="avgAssist" value="${Math.round((matchesData.totalAssists / (matchesData.totalWins + matchesData.totalLoses)) * 10) / 10.0}" />
-							<span>${avgAssist}</span>
+							<span class="avgAssist">${avgAssist}</span>
 						</div>
 						<div class="my-1">
-							<span class="text-base">${Math.round(((avgKill + avgAssist) / avgDeath) * 100) / 100.0} 평점</span>
+							<span class="avgKDA text-base">${Math.round(((avgKill + avgAssist) / avgDeath) * 100) / 100.0} 평점</span>
 						</div>
 						<div>
-							<span class="text-red-600">킬관여 ${Math.round(((matchesData.totalKills + matchesData.totalAssists) / matchesData.totalTeamKills) * 100)}%</span>
+							<span class="avgKillInvolvement text-red-600">킬관여 ${Math.round(((matchesData.totalKills + matchesData.totalAssists) / matchesData.totalTeamKills) * 100)}%</span>
 						</div>
 					</div>
 				</div>
 				<div class="ml-12 flex items-center">
 					<div>
 						<div class="my-3 text-gray-400">
-							<span>플레이한 챔피언 (최근 ${matchesData.totalWins + matchesData.totalLoses}게임)</span>
+							<span class="mostChampionsTitle">플레이한 챔피언 (최근 ${matchesData.totalWins + matchesData.totalLoses}게임)</span>
 						</div>
-						<c:forEach var="champion" items="${matchesData.champions}" begin="0" end="2">
-							<div class="flex items-center text-xs my-2">
-								<div>
-									<img class="rounded-full" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer.get(0)}/img/champion/${champion.championName}.png" width="30" alt="champion icon image"/>
+						<div class="mostChampions">
+							<c:forEach var="champion" items="${matchesData.champions}" begin="0" end="2">
+								<div class="flex items-center text-xs my-2">
+									<div>
+										<img class="rounded-full" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer.get(0)}/img/champion/${champion.championName}.png" width="30" alt="champion icon image"/>
+									</div>
+									<div class="ml-2">
+										<span class="${Math.round((champion.winCount / champion.matchCount) * 100) < 60 ? 'text-gray-500' : 'text-red-600'}">${Math.round((champion.winCount / champion.matchCount) * 100)}%</span>
+									</div>
+									<div class="ml-1">
+										<span class="text-gray-400">(${champion.winCount}승 ${champion.matchCount - champion.winCount}패)</span>
+									</div>
+									<div class="ml-1">
+										<c:set var="champAvgKDA" value="${Math.round(((champion.kills + champion.assists) / champion.deaths) * 100) / 100.0}"/>
+										<span class="${champAvgKDA < 3.0 ? 'text-gray-500' : champAvgKDA < 4.0 ? 'text-green-500' : champAvgKDA < 5.0 ? 'text-blue-500' : 'text-yellow-500'}">${champAvgKDA} 평점</span>
+									</div>
 								</div>
-								<div class="ml-2">
-									<span class="${Math.round((champion.winCount / champion.matchCount) * 100) < 60 ? 'text-gray-500' : 'text-red-600'}">${Math.round((champion.winCount / champion.matchCount) * 100)}%</span>
-								</div>
-								<div class="ml-1">
-									<span class="text-gray-400">(${champion.winCount}승 ${champion.matchCount - champion.winCount}패)</span>
-								</div>
-								<div class="ml-1">
-									<c:set var="champAvgKDA" value="${Math.round(((champion.kills + champion.assists) / champion.deaths) * 100) / 100.0}"/>
-									<span class="${champAvgKDA < 3.0 ? 'text-gray-500' : champAvgKDA < 4.0 ? 'text-green-500' : champAvgKDA < 5.0 ? 'text-blue-500' : 'text-yellow-500'}">${champAvgKDA} 평점</span>
-								</div>
-							</div>
-						</c:forEach>
+							</c:forEach>
+						</div>
 					</div>
 				</div>
 				<div>

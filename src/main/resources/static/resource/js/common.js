@@ -58,34 +58,7 @@ function submitSearchForm(form) {
 	
 }
 
-//	매치 더보기 함수
-function addMatches(sName) {
-	
-	$('.add-matches').empty();
-	$('.add-matches').addClass('loading loading-spinner');
-
-	$.get('/usr/lol/getSummoner', {
-		summonerName : sName
-	}, function(summoner) {
-		getMatches(summoner.puuid, summoner);
-	}, 'json');
-	
-}
-
-//	매치 더보기 함수
-function getMatches(sPuuid, summoner) {
-	
-	$.get('/usr/lol/getMatches', {
-		summonerPuuid : sPuuid
-	}, function(matches) {
-		showMatches(matches, summoner);
-		$('.add-matches').html('더보기');
-		$('.add-matches').removeClass('loading loading-spinner');
-	});
-	
-}
-
-//	매치 더보기 함수
+//	'매치' 화면에 보여주기
 function showMatches(matches, summoner) {
 	
 	matches.forEach((match) => {
@@ -148,7 +121,7 @@ function showMatches(matches, summoner) {
 					}
 				});
 				append += `<div>${match.info.matchFinishDateTime}</div>`;
-				append += `<div class="w-16 ${participant.gameEndedInEarlySurrender == true ? 'border-b border-gray-500' : participant.win == true ? 'border-b border-blue-500' : 'border-b border-red-500'}"></div>`;
+				append += `<div class="w-16 my-1 ${participant.gameEndedInEarlySurrender == true ? 'border-b border-gray-500' : participant.win == true ? 'border-b border-blue-500' : 'border-b border-red-500'}"></div>`;
 				append += `<div>`;
 				if (participant.gameEndedInEarlySurrender) {
 					append += `<span>다시하기</span>`;
@@ -216,7 +189,7 @@ function showMatches(matches, summoner) {
 				append += `</div>`;
 				append += `</div>`;
 				append += `</div>`;
-				append += `<div class="mt-2 flex">`;
+				append += `<div class="mt-3 flex">`;
 				let items = participant.items;
 				items.forEach((item) => {
 					append += `<div class="ml-1px">`;

@@ -172,6 +172,12 @@ a:hover > .main-image {
 	border-radius: 5px;
 }
 
+/* 원형 차트 상단에 타이틀 보여주기 */
+.pieChartTitleOverlay {
+	position: absolute;
+	top: 5%;
+}
+
 /* 원형 차트 가운데에 승률 보여주기 */
 .pieChartWithOverlay {
 	position: relative;

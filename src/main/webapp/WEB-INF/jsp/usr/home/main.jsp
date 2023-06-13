@@ -11,9 +11,9 @@
 			</form>
 		</div>
 	</section>
-<%@ include file="../lol/summonerInfo.jsp" %>
-<%@ include file="../lol/summonerMatchesInfo.jsp" %>
-<%@ include file="../lol/summonerMatches.jsp" %>
+	<%@ include file="../lol/summonerInfo.jsp" %>
+	<%@ include file="../lol/summonerMatchesInfo.jsp" %>
+	<%@ include file="../lol/summonerMatches.jsp" %>
 	<section class="mt-6 mx-20 text-lg min-w-1000">
 		<div class="mt-4 flex">
 			<div class="w-1/2 h-80 border border-indigo-400">공지사항</div>

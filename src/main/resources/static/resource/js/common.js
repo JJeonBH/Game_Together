@@ -66,7 +66,7 @@ function showMatches(matches, summoner) {
 			if (participant.puuid == summoner.puuid) {
 				
 				//	처음 여는 div
-				let append = `<div class="text-gray-600 rounded-lg mt-2 px-4 py-2 flex ${participant.gameEndedInEarlySurrender == true ? 'bg-gray-200' : participant.win == true ? 'bg-blue-200' : 'bg-red-200'}">`;
+				let append = `<div class="text-gray-600 rounded-lg mt-2 px-4 py-2 flex items-center ${participant.gameEndedInEarlySurrender == true ? 'bg-gray-200' : participant.win == true ? 'bg-blue-200' : 'bg-red-200'}">`;
 				
 				//	class="w-36" div 시작
 				append += `<div class="w-36">`;
@@ -227,10 +227,41 @@ function showMatches(matches, summoner) {
 				//	class="w-36 text-xs" div 끝
 				append += `</div>`;
 				
+				//	class="ml-6 w-40" ul 시작
+				append += `<ul class="ml-6 w-40">`;
+				
+				for (let index = 0; index < 5; index++) {
+					append += `<li class="flex">`;
+					append += `<div class="my-1px">`;
+					append += `<img class="${match.info.participants[index].puuid == summoner.puuid ? 'rounded-full' : 'rounded'}" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer[0]}/img/champion/${match.info.participants[index].championName}.png" width="20" alt="champion icon image"/>`;
+					append += `</div>`;
+					append += `<div class="w-32 my-1px ml-1 truncate ${match.info.participants[index].puuid == summoner.puuid ? 'text-indigo-600' : ''}"><a href="../lol/searchFromMatch?summonerPuuid=${match.info.participants[index].puuid}">${match.info.participants[index].summonerName}</a></div>`;
+					append += `</li>`;
+				}
+				
+				//	class="ml-6 w-40" ul 끝
+				append += `</ul>`;
+				
+				//	class="ml-3 w-40" ul 시작
+				append += `<ul class="ml-3 w-40">`;
+				
+				for (let index = 5; index < 10; index++) {
+					append += `<li class="flex">`;
+					append += `<div class="my-1px">`;
+					append += `<img class="${match.info.participants[index].puuid == summoner.puuid ? 'rounded-full' : 'rounded'}" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer[0]}/img/champion/${match.info.participants[index].championName}.png" width="20" alt="champion icon image"/>`;
+					append += `</div>`;
+					append += `<div class="w-32 my-1px ml-1 truncate ${match.info.participants[index].puuid == summoner.puuid ? 'text-indigo-600' : ''}"><a href="../lol/searchFromMatch?summonerPuuid=${match.info.participants[index].puuid}">${match.info.participants[index].summonerName}</a></div>`;
+					append += `</li>`;
+				}
+				
+				//	class="ml-3 w-40" ul 끝
+				append += ``;
+
 				//	마지막 닫는 div
 				append += `</div>`;
 				
 				$('.show-match').append(append);
+				
 			}
 		});
 	});

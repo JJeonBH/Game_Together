@@ -77,6 +77,37 @@ public class LOLService {
         return summoner;
         
 	}
+	
+	public Summoner getSummonerBySummonerPuuid(String summonerPuuid) {
+		
+		Summoner summoner = new Summoner();
+		
+		try {
+			HttpGet request = new HttpGet(riotServerUrlKr + "/lol/summoner/v4/summoners/by-puuid/" + summonerPuuid + "?api_key=" + riotAPIKey);
+			
+			HttpResponse response = client.execute(request);
+			
+			if(response.getStatusLine().getStatusCode() != 200){
+				return null;
+			}
+			
+			HttpEntity entity = response.getEntity();
+			
+			summoner = objectMapper.readValue(entity.getContent(), Summoner.class);
+			
+			setDataDragonVer(summoner);
+			setQueues(summoner);
+			setSpellData(summoner);
+			setRuneStyle(summoner);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		return summoner;
+		
+	}
 
 	private void setDataDragonVer(Summoner summoner) {
 		

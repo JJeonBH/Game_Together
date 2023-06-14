@@ -98,7 +98,6 @@
 		let vg = parseInt(Math.random() * 256); 
 		let vb = parseInt(Math.random() * 256); 
 		
-		
 		statisticsTitle.style.color = 'rgb(' + vr +',' + vg +',' + vb +')';
 		  
 		}, 3000)
@@ -145,7 +144,7 @@
 						<div class="my-3 text-gray-400">
 							<span class="mostChampionsTitle">플레이한 챔피언 (최근 ${matchesData.totalWins + matchesData.totalLoses}게임)</span>
 						</div>
-						<div class="mostChampions">
+						<div class="mostChampions h-28">
 							<c:forEach var="champion" items="${matchesData.champions}" begin="0" end="2">
 								<div class="flex items-center text-xs my-2">
 									<div>

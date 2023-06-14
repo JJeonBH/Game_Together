@@ -12,6 +12,7 @@ import com.koreaIT.Game_Together.service.LOLService;
 import com.koreaIT.Game_Together.vo.LeagueEntry;
 import com.koreaIT.Game_Together.vo.Match;
 import com.koreaIT.Game_Together.vo.MatchesData;
+import com.koreaIT.Game_Together.vo.Participant;
 import com.koreaIT.Game_Together.vo.Summoner;
 
 @Controller
@@ -52,6 +53,57 @@ public class LOLController {
 			return "usr/home/main";
 		}
 		
+		for(Match match : matches) {
+			for(Participant participant : match.getInfo().getParticipants()) {
+				if (participant.getChampionName().equals("FiddleSticks")) {
+					participant.setChampionName("Fiddlesticks");
+				}
+			}
+		}
+		
+		this.start += count;
+		
+		MatchesData matchesData = lOLService.getMatchesData(matches, summoner);
+		
+		model.addAttribute("summoner", summoner);
+		model.addAttribute("leagueEntries", leagueEntries);
+		model.addAttribute("matches", matches);
+		model.addAttribute("matchesData", matchesData);
+		
+		return "usr/home/main";
+		
+	}
+	
+	@RequestMapping("/usr/lol/searchFromMatch")
+	public String searchFromMatch(String summonerPuuid, Model model) {
+		
+		Summoner summoner = lOLService.getSummonerBySummonerPuuid(summonerPuuid);
+		
+		if (summoner == null) {
+			return "usr/home/main";
+		}
+		
+		String summonerId = summoner.getId();
+		
+		List<LeagueEntry> leagueEntries = lOLService.getLeagueEntriesBySummonerId(summonerId);
+		
+		this.start = 0;
+		this.count = 20;
+		
+		List<Match> matches = lOLService.getMatchesBySummonerPuuid(summonerPuuid, start, count);
+		
+		if (matches == null) {
+			return "usr/home/main";
+		}
+		
+		for(Match match : matches) {
+			for(Participant participant : match.getInfo().getParticipants()) {
+				if (participant.getChampionName().equals("FiddleSticks")) {
+					participant.setChampionName("Fiddlesticks");
+				}
+			}
+		}
+		
 		this.start += count;
 		
 		MatchesData matchesData = lOLService.getMatchesData(matches, summoner);
@@ -84,6 +136,16 @@ public class LOLController {
 		List<Match> matches = lOLService.getMatchesBySummonerPuuid(summonerPuuid, start, count/2);
 		
 		this.start += count/2;
+		
+		if (matches != null) {
+			for(Match match : matches) {
+				for(Participant participant : match.getInfo().getParticipants()) {
+					if (participant.getChampionName().equals("FiddleSticks")) {
+						participant.setChampionName("Fiddlesticks");
+					}
+				}
+			}
+		}
 		
 		return matches;
 		

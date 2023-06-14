@@ -74,12 +74,14 @@
 		$.get('/usr/lol/getMatches', {
 			summonerPuuid : summonerPuuid
 		}, function(matches) {
-			let mcsData = getMatchesData(matches, summoner);
-			addMatchesData(mcsData);
-			google.charts.setOnLoadCallback(modifyPieChart);
-			google.charts.setOnLoadCallback(modifyBarChart);
-			modifyStatistics(summoner);
-			showMatches(matches, summoner);
+			if (matches != null) {
+				let mcsData = getMatchesData(matches, summoner);
+				addMatchesData(mcsData);
+				showMatches(matches, summoner);
+				google.charts.setOnLoadCallback(modifyPieChart);
+				google.charts.setOnLoadCallback(modifyBarChart);
+				modifyStatistics(summoner);
+			}
 			$('.add-matches').html('더보기');
 			$('.add-matches').removeClass('loading loading-spinner');
 		});
@@ -341,17 +343,26 @@
 	//	'더보기' 눌렀을 때 통계 업데이트
 	function modifyStatistics(summoner) {
 		
+		$('#statistics-title').empty();
 		$('#statistics-title').html('최근 ' + (mD.totalWins + mD.totalLoses) + '게임 통계');
+		$('.pieChartTitleOverlay').empty();
 		$('.pieChartTitleOverlay').html((mD.totalWins + mD.totalLoses) + '전 ' + mD.totalWins + '승 ' + mD.totalLoses + '패');
+		$('.pieChartOverlay').empty();
 		$('.pieChartOverlay').html(Math.round((mD.totalWins / (mD.totalWins + mD.totalLoses)) * 100) + '%');
 		let avgKill = Math.round((mD.totalKills / (mD.totalWins + mD.totalLoses)) * 10) / 10.0;
 		let avgDeath = Math.round((mD.totalDeaths / (mD.totalWins + mD.totalLoses)) * 10) / 10.0;
 		let avgAssist = Math.round((mD.totalAssists / (mD.totalWins + mD.totalLoses)) * 10) / 10.0;
+		$('.avgKill').empty();
 		$('.avgKill').html(avgKill);
+		$('.avgDeath').empty();
 		$('.avgDeath').html(avgDeath);
+		$('.avgAssist').empty();
 		$('.avgAssist').html(avgAssist);
+		$('.avgKDA').empty();
 		$('.avgKDA').html(Math.round(((avgKill + avgAssist) / avgDeath) * 100) / 100.0 + ' 평점');
+		$('.avgKillInvolvement').empty();
 		$('.avgKillInvolvement').html('킬관여 ' + Math.round(((mD.totalKills + mD.totalAssists) / mD.totalTeamKills) * 100) + '%');
+		$('.mostChampionsTitle').empty();
 		$('.mostChampionsTitle').html('플레이한 챔피언 (최근 ' + (mD.totalWins + mD.totalLoses) + '게임)');
 		$('.mostChampions').empty();
 		
@@ -384,11 +395,11 @@
 </script>
 <section class="mt-3 mx-20 text-sm min-w-1000">
 	<c:if test="${summoner != null && matches != null}">
-		<div class="show-match h-80 overflow-auto">
+		<div class="show-match h-96 overflow-auto">
 			<c:forEach var="match" items="${matches}">
 				<c:forEach var="participant" items="${match.info.participants}">
 		 			<c:if test="${participant.puuid == summoner.puuid}">
-						<div class="text-gray-600 rounded-lg mt-2 px-4 py-2 flex ${participant.gameEndedInEarlySurrender == true ? 'bg-gray-200' : participant.win == true ? 'bg-blue-200' : 'bg-red-200'}">
+						<div class="text-gray-600 rounded-lg mt-2 px-4 py-2 flex items-center ${participant.gameEndedInEarlySurrender == true ? 'bg-gray-200' : participant.win == true ? 'bg-blue-200' : 'bg-red-200'}">
 			 				<div class="w-36">
 								<c:forEach var="queue" items="${summoner.queues}">
 									<c:if test="${queue.queueId == match.info.queueId}">
@@ -532,6 +543,26 @@
 								<div class="text-purple-600">CS ${participant.getCS()} (${match.info.getCSPerMinute(participant.getCS())})</div>
 								<div class="text-pink-600">피해량 ${participant.getTotalDamageDealtToChampions()}</div>
 							</div>
+							<ul class="ml-6 w-40">
+								<c:forEach var="participant" items="${match.info.participants}" begin="0" end="4">
+									<li class="flex">
+										<div class="my-1px">
+											<img class="${participant.puuid == summoner.puuid ? 'rounded-full' : 'rounded'}" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer.get(0)}/img/champion/${participant.championName}.png" width="20" alt="champion icon image"/>
+										</div>
+										<div class="w-32 my-1px ml-1 truncate ${participant.puuid == summoner.puuid ? 'text-indigo-600' : ''}"><a href="../lol/searchFromMatch?summonerPuuid=${participant.puuid}">${participant.summonerName}</a></div>
+									</li>
+								</c:forEach>
+							</ul>
+							<ul class="ml-3 w-40">
+								<c:forEach var="participant" items="${match.info.participants}" begin="5" end="9">
+									<li class="flex">
+										<div class="my-1px">
+											<img class="${participant.puuid == summoner.puuid ? 'rounded-full' : 'rounded'}" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer.get(0)}/img/champion/${participant.championName}.png" width="20" alt="champion icon image"/>
+										</div>
+										<div class="w-32 my-1px ml-1 truncate ${participant.puuid == summoner.puuid ? 'text-indigo-600' : ''}"><a href="../lol/searchFromMatch?summonerPuuid=${participant.puuid}">${participant.summonerName}</a></div>
+									</li>
+								</c:forEach>
+							</ul>
 						</div>
 		 			</c:if>
 				</c:forEach>

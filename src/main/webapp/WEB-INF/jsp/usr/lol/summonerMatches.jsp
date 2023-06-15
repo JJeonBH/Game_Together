@@ -369,24 +369,27 @@
 		for (let i = 0; i < 3; i++) {
 			
 			let champion = mD.champions[i];
-			let champAvgKDA = Math.round(((champion.kills + champion.assists) / champion.deaths) * 100) / 100.0;
 			
-			let append = `<div class="flex items-center text-xs my-2">`;
-			append += `<div>`;
-			append += `<img class="rounded-full" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer[0]}/img/champion/\${champion.championName}.png" width="30" alt="champion icon image"/>`;
-			append += `</div>`;
-			append += `<div class="ml-2">`;
-			append += `<span class="\${Math.round((champion.winCount / champion.matchCount) * 100) < 60 ? 'text-gray-500' : 'text-red-600'}">\${Math.round((champion.winCount / champion.matchCount) * 100)}%</span>`;
-			append += `</div>`;
-			append += `<div class="ml-1">`;
-			append += `<span class="text-gray-400">(\${champion.winCount}승 \${champion.matchCount - champion.winCount}패)</span>`;
-			append += `</div>`;
-			append += `<div class="ml-1">`;
-			append += `<span class="\${champAvgKDA < 3.0 ? 'text-gray-500' : champAvgKDA < 4.0 ? 'text-green-500' : champAvgKDA < 5.0 ? 'text-blue-500' : 'text-yellow-500'}">\${champAvgKDA} 평점</span>`;
-			append += `</div>`;
-			append += `</div>`;
-			
-			$('.mostChampions').append(append);
+			if (champion != null) {
+				let champAvgKDA = Math.round(((champion.kills + champion.assists) / champion.deaths) * 100) / 100.0;
+				
+				let append = `<div class="flex items-center text-xs my-2">`;
+				append += `<div>`;
+				append += `<img class="rounded-full" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer[0]}/img/champion/\${champion.championName}.png" width="30" alt="champion icon image"/>`;
+				append += `</div>`;
+				append += `<div class="ml-2">`;
+				append += `<span class="\${Math.round((champion.winCount / champion.matchCount) * 100) < 60 ? 'text-gray-500' : 'text-red-600'}">\${Math.round((champion.winCount / champion.matchCount) * 100)}%</span>`;
+				append += `</div>`;
+				append += `<div class="ml-1">`;
+				append += `<span class="text-gray-400">(\${champion.winCount}승 \${champion.matchCount - champion.winCount}패)</span>`;
+				append += `</div>`;
+				append += `<div class="ml-1">`;
+				append += `<span class="\${champAvgKDA < 3.0 ? 'text-gray-500' : champAvgKDA < 4.0 ? 'text-green-500' : champAvgKDA < 5.0 ? 'text-blue-500' : 'text-yellow-500'}">\${champAvgKDA} 평점</span>`;
+				append += `</div>`;
+				append += `</div>`;
+				
+				$('.mostChampions').append(append);
+			}
 			
 		}
 		

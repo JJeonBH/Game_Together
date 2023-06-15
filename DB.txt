@@ -21,6 +21,30 @@ CREATE TABLE `member`(
 	delDate DATETIME COMMENT '탈퇴 날짜'
 );
 
+# article 테이블 생성
+CREATE TABLE article(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    memberId INT UNSIGNED NOT NULL,
+    boardId INT UNSIGNED NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    `body` TEXT NOT NULL,
+    viewCount INT UNSIGNED NOT NULL DEFAULT 0 
+);
+
+# board 테이블 생성
+CREATE TABLE board(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    `type` VARCHAR(20) NOT NULL UNIQUE COMMENT 'lol(리그오브레전드), bg(배틀그라운드), ...',
+    `code` VARCHAR(20) NOT NULL COMMENT 'notice(공지사항), free(자유), ...',
+	`name` VARCHAR(20) NOT NULL COMMENT '게시판 이름',
+	delStatus TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제여부 (삭제 전 = 0, 삭제 후 = 1)',
+	delDate DATETIME COMMENT '삭제 날짜'
+);
+
 # member 테스트 데이터
 INSERT INTO `member`
 SET regDate = NOW(),
@@ -61,10 +85,14 @@ gender = 'female',
 email = 'test2@naver.com',
 cellphoneNum = '01011131113';
 
-# member 테이블 구조
+# 테이블 구조
 DESC `member`;
+DESC article;
+DESC board;
 
-# member 테이블 조회
+# 테이블 조회
 SELECT * FROM `member`;
+SELECT * FROM article;
+SELECT * FROM board;
 
 SELECT LAST_INSERT_ID();

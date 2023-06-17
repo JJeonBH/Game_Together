@@ -65,6 +65,9 @@
 					</c:if>
 					<c:if test="${Request.loginedMemberId != 0 }">
 						<li>
+							<a href="/usr/article/write" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>글쓰기</span></a>
+						</li>
+						<li>
 							<a href="/usr/member/profile" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>프로필</span></a>
 						</li>
 						<li>

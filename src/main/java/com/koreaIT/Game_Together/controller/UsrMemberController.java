@@ -13,13 +13,13 @@ import com.koreaIT.Game_Together.vo.Request;
 import com.koreaIT.Game_Together.vo.ResultData;
 
 @Controller
-public class MemberController {
+public class UsrMemberController {
 
 	private MemberService memberService;
 	private Request rq;
 	
 	@Autowired
-	public MemberController(MemberService memberService, Request rq) {
+	public UsrMemberController(MemberService memberService, Request rq) {
 		this.memberService = memberService;
 		this.rq = rq;
 	}

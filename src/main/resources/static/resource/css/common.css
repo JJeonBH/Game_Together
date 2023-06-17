@@ -2,15 +2,15 @@
 
 /* 폰트 불러오기 */
 @font-face {
-    font-family: 'KIMM_Bold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/KIMM_Bold.woff2') format('woff2');
-    font-weight: 700;
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
     font-style: normal;
 }
 
 /* 폰트 적용 */
 html > body {
-	font-family: 'KIMM_Bold', sans-serif;
+	font-family: 'GmarketSansMedium', sans-serif;
 	text-underline-position: under;
 }
 
@@ -45,6 +45,11 @@ html > body {
 
 .min-w-1000 {
 	min-width: 1000px;
+}
+
+/* 셀렉트박스 옵션 글자 크기 */
+select > option {
+	font-size: 16px;
 }
 
 /* 화면에서 탑바 맨앞에 위치, 위치 고정 */

@@ -5,7 +5,7 @@
 <%@ include file="../common/head.jsp" %>
 	<section class="mt-6 mx-20 text-lg min-w-1000">
 		<div class="flex justify-center">
-			<form action="../lol/search" method="POST" onsubmit="submitSearchForm(this); return false;">
+			<form action="../lol/search" method="POST" onsubmit="submitSummonerSearchForm(this); return false;">
 				<input class="cursor-pointer input input-bordered input-info w-96 mr-1" type="text" name="summonerName" placeholder="소환사명을 입력해주세요."/>
 				<button class="btn-text-color btn btn-info">검색</button>
 			</form>

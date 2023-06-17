@@ -85,6 +85,57 @@ gender = 'female',
 email = 'test2@naver.com',
 cellphoneNum = '01011131113';
 
+# article 테스트 데이터
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+boardId = 1,
+title = '공지사항(필독)',
+`body` = '공지사항입니다';
+
+# article 테스트 데이터
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+boardId = 2,
+title = '난 자유다',
+`body` = '난 자유다!!';
+
+# article 테스트 데이터
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+boardId = 3,
+title = '비매너 유저 신고합니다',
+`body` = '정지먹여주세요';
+
+# board 테스트 데이터
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`type` = 'lol',
+`code` = 'notice',
+`name` = '공지사항';
+
+# board 테스트 데이터
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`type` = 'lol',
+`code` = 'free',
+`name` = '자유 게시판';
+
+# board 테스트 데이터
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`type` = 'lol',
+`code` = 'declaration',
+`name` = '신고 게시판';
+
 # 테이블 구조
 DESC `member`;
 DESC article;

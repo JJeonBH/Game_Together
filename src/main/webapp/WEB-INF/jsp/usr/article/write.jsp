@@ -3,19 +3,23 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="글쓰기 - 같이 할래?"/>
 <%@ include file="../common/head.jsp" %>
-<!-- Toast UI 에디터 불러오기 -->
-<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<%@ include file="../common/toastUiEditorLib.jsp" %>
 <script>
 
 	let isFormChanged = false;
 	
 	$(document).ready(function() {
 		
-		$('form').find('select, input, textarea').on('change', function() {
+		$('form').find('select, input').on('change', function() {
 			isFormChanged = true;
 		});
 		
+		$('form').find('div.toast-ui-editor').on('input', function(event) {
+			if(event) {
+				isFormChanged = true;
+			}
+		});
+
 		$(window).on('beforeunload', function() {
 			
 			if (isFormChanged) {
@@ -63,18 +67,8 @@
 					<input class="input input-bordered input-info w-full" type="text" name="title" placeholder="제목을 입력해 주세요."/>
 				</div>
 				<div class="mb-3">
-					<div id="editor"></div>
+					<div class="toast-ui-editor"></div>
 				</div>
-				<script>
-					const Editor = toastui.Editor;
-					
-					const editor = new Editor({
-						el: document.querySelector('#editor'),
-						previewStyle: 'tab',
-						height: '350px',
-						initialEditType: 'markdown'
-					});
-				</script>
 				<div class="mb-3 flex justify-end">
 					<button class="ml-2 btn-text-color btn btn-info btn-sm">작성완료</button>
 				</div>

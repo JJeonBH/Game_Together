@@ -9,7 +9,7 @@
 }
 
 /* 폰트 적용 */
-html > body {
+html > body, html > body .ProseMirror, html > body .toastui-editor-contents {
 	font-family: 'GmarketSansMedium', sans-serif;
 	text-underline-position: under;
 }

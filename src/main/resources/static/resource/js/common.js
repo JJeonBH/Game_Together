@@ -4,7 +4,7 @@ function themeToggle() {
 		const theme = localStorage.getItem("theme") ?? "light";
 		
 		if (theme == 'light') {
-			localStorage.setItem("theme", "night");
+			localStorage.setItem("theme", "dark");
 		} else {
 			localStorage.setItem("theme", "light");
 		}
@@ -53,34 +53,6 @@ function submitSummonerSearchForm(form) {
 		alert("소환사명을 입력해주세요.");
 		return;
 	}
-	
-	form.submit();
-	
-}
-
-//	글쓰기 유효성 검사
-function submitWriteForm(form) {
-	
-	if (form.boardId.value == '') {
-		alert("게시판을 선택해 주세요.");
-		return;
-	}
-	
-	form.title.value = form.title.value.trim();
-	
-	if (form.title.value.length == 0) {
-		alert("제목을 입력해 주세요.");
-		return;
-	}
-	
-	form.body.value = form.body.value.trim();
-	
-	if (form.body.value.length == 0) {
-		alert("내용을 입력해 주세요.");
-		return;
-	}
-	
-	isFormChanged = false;
 	
 	form.submit();
 	

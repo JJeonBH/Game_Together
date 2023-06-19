@@ -5,18 +5,18 @@
 	
 	<insert id="doJoin">
 		INSERT INTO `member`
-				SET regDate = NOW(),
-				updateDate = NOW(),
-				loginId = #{loginId},
-				loginPw = #{loginPw},
-				`name` = #{name},
-				nickname = #{nickname},
-				birthday = #{birthday},
-				gender = #{gender},
+			SET regDate = NOW()
+				, updateDate = NOW()
+				, loginId = #{loginId}
+				, loginPw = #{loginPw}
+				, `name` = #{name}
+				, nickname = #{nickname}
+				, birthday = #{birthday}
+				, gender = #{gender}
 				<if test = "email != null and email != ''">
-					email = #{email},
+					, email = #{email}
 				</if>
-				cellphoneNum = #{cellphoneNum};		
+				, cellphoneNum = #{cellphoneNum};
 	</insert>
 	
 	<select id="getLastInsertId" resultType="int">
@@ -25,32 +25,32 @@
 	
 	<select id="getMemberById" resultType="Member">
 		SELECT *
-				FROM `member`
-				WHERE id = #{id}
+			FROM `member`
+			WHERE id = #{id};
 	</select>
 	
 	<select id="getMemberByLoginId" resultType="Member">
 		SELECT *
-				FROM `member`
-				WHERE loginId = #{loginId}
+			FROM `member`
+			WHERE loginId = #{loginId};
 	</select>
 	
 	<select id="getMemberByNickname" resultType="Member">
 		SELECT *
-				FROM `member`
-				WHERE nickname = #{nickname}
+			FROM `member`
+			WHERE nickname = #{nickname};
 	</select>
 	
 	<select id="getMemberByEmail" resultType="Member">
 		SELECT *
-				FROM `member`
-				WHERE email = #{email}
+			FROM `member`
+			WHERE email = #{email};
 	</select>
 	
 	<select id="getMemberByCellphoneNum" resultType="Member">
 		SELECT *
-				FROM `member`
-				WHERE cellphoneNum = #{cellphoneNum}
+			FROM `member`
+			WHERE cellphoneNum = #{cellphoneNum};
 	</select>
 
 </mapper>

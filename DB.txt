@@ -38,7 +38,7 @@ CREATE TABLE board(
     id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
-    `type` VARCHAR(20) NOT NULL UNIQUE COMMENT 'lol(리그오브레전드), bg(배틀그라운드), ...',
+    `type` VARCHAR(20) NOT NULL COMMENT 'lol(리그오브레전드), bg(배틀그라운드), ...',
     `code` VARCHAR(20) NOT NULL COMMENT 'notice(공지사항), free(자유), ...',
 	`name` VARCHAR(20) NOT NULL COMMENT '게시판 이름',
 	delStatus TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제여부 (삭제 전 = 0, 삭제 후 = 1)',

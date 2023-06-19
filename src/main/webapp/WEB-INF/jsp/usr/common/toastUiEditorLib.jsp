@@ -254,14 +254,16 @@
 			const $node = $(node);
 			const $initialValueEl = $node.find(' > script');
 			const initialValue = $initialValueEl.length == 0 ? '' : $initialValueEl.html().trim();
-	
+			
+			const theme = localStorage.getItem('theme') ?? "light";
+			
 			const editor = new toastui.Editor({
 				el: node,
 				previewStyle: 'tab',
 				initialValue: initialValue,
 				initialEditType: 'wysiwyg',
 				height: '350px',
-				hideModeSwitch: true,
+			 	theme: theme,
 				plugins: [
 					[toastui.Editor.plugin.chart, ToastEditor__chartOptions],
 					[toastui.Editor.plugin.codeSyntaxHighlight, {highlighter:Prism}],
@@ -292,11 +294,14 @@
 			const $initialValueEl = $node.find(' > script');
 			const initialValue = $initialValueEl.length == 0 ? '' : $initialValueEl.html().trim();
 			$node.empty();
+			
+			const theme = localStorage.getItem('theme') ?? "light";
 	    
 			let viewer = new toastui.Editor.factory({
 				el: node,
 				initialValue: initialValue,
 				viewer: true,
+				theme: theme,
 				plugins: [
 					[toastui.Editor.plugin.chart, ToastEditor__chartOptions],
 					[toastui.Editor.plugin.codeSyntaxHighlight, {highlighter:Prism}],
@@ -323,7 +328,8 @@
 		ToastEditor__init();
 		ToastEditorView__init();
 	});
-
+	
+	//	글쓰기 유효성 검사
 	function submitWriteForm(form) {
 		
 		if (form.boardId.value == '') {

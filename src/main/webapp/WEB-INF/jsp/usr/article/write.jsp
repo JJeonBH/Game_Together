@@ -31,8 +31,8 @@
 	});
 
 </script>
-<section class="mt-6 mx-20 text-lg min-w-1000 flex">
-	<div class="w-56 bg-green-200">
+<section class="mt-6 mb-20 mx-20 text-lg min-w-1000 flex">
+	<div class="w-56 bg-green-200 p-6">
 		<div>
 			<a href="#">1</a>
 		</div>
@@ -66,8 +66,10 @@
 				<div class="mb-3">
 					<input class="input input-bordered input-info w-full" type="text" name="title" placeholder="제목을 입력해 주세요."/>
 				</div>
-				<div class="mb-3">
-					<div class="toast-ui-editor"></div>
+				<div class="toast-ui mb-3">
+					<div class="toast-ui-editor">
+						<script type="text/x-template"></script>
+					</div>
 				</div>
 				<div class="mb-3 flex justify-end">
 					<button class="ml-2 btn-text-color btn btn-info btn-sm">작성완료</button>

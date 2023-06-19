@@ -9,7 +9,13 @@ function themeToggle() {
 			localStorage.setItem("theme", "light");
 		}
 		
-		themeInit();
+		let toastUI = $('.toast-ui');
+		
+		if (toastUI.length == 0) {
+			themeInit();
+		} else {
+			location.reload();
+		}
 		
 }
 

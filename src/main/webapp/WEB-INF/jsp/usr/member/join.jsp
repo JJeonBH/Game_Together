@@ -116,7 +116,7 @@
 			</form>
 		</div>
 		<div class="mt-4 flex justify-center">
-			<button class="btn-text-color btn btn-info w-112" onclick="if(!confirm('회원가입을 취소하시겠습니까?')){return false}; history.back();">뒤로가기</button>
+			<button class="btn-text-color btn btn-info w-112" onclick="if(!confirm('회원가입을 취소하시겠습니까?')) {return false;} history.back();">뒤로가기</button>
 		</div>
 	</section>
 </body>

@@ -91,8 +91,8 @@ SET regDate = NOW(),
 updateDate = NOW(),
 memberId = 1,
 boardId = 1,
-title = '공지사항(필독)',
-`body` = '공지사항입니다';
+title = '롤 공지사항(필독)',
+`body` = '공지사항입니다.';
 
 # article 테스트 데이터
 INSERT INTO article
@@ -100,8 +100,8 @@ SET regDate = NOW(),
 updateDate = NOW(),
 memberId = 2,
 boardId = 2,
-title = '난 자유다',
-`body` = '난 자유다!!';
+title = '일반 게임 같이 해요.',
+`body` = '탑 빼고 4명 구해요.';
 
 # article 테스트 데이터
 INSERT INTO article
@@ -109,8 +109,35 @@ SET regDate = NOW(),
 updateDate = NOW(),
 memberId = 2,
 boardId = 3,
-title = '비매너 유저 신고합니다',
-`body` = '정지먹여주세요';
+title = '트롤 유저 신고합니다.',
+`body` = '정지먹여주세요.';
+
+# article 테스트 데이터
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+boardId = 4,
+title = '배그 공지사항(필독)',
+`body` = '공지사항입니다.';
+
+# article 테스트 데이터
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+boardId = 5,
+title = '배그 같이 해요.',
+`body` = '같이 하실 2명 구해요.';
+
+# article 테스트 데이터
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 3,
+boardId = 6,
+title = '팀킬 유저 신고합니다.',
+`body` = '갑자기 팀킬 하네요.';
 
 # board 테스트 데이터
 INSERT INTO board
@@ -119,6 +146,14 @@ updateDate = NOW(),
 `type` = 'lol',
 `code` = 'notice',
 `name` = '공지사항';
+
+# board 테스트 데이터
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`type` = 'lol',
+`code` = 'greeting',
+`name` = '가입 인사';
 
 # board 테스트 데이터
 INSERT INTO board
@@ -136,6 +171,46 @@ updateDate = NOW(),
 `code` = 'declaration',
 `name` = '신고 게시판';
 
+# board 테스트 데이터
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`type` = 'bg',
+`code` = 'notice',
+`name` = '공지사항';
+
+# board 테스트 데이터
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`type` = 'bg',
+`code` = 'greeting',
+`name` = '가입 인사';
+
+# board 테스트 데이터
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`type` = 'bg',
+`code` = 'free',
+`name` = '자유 게시판';
+
+# board 테스트 데이터
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`type` = 'bg',
+`code` = 'declaration',
+`name` = '신고 게시판';
+
+# board 테스트 데이터
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`type` = 'lol',
+`code` = 'test',
+`name` = '테스트 게시판';
+
 # 테이블 구조
 DESC `member`;
 DESC article;
@@ -147,3 +222,11 @@ SELECT * FROM article;
 SELECT * FROM board;
 
 SELECT LAST_INSERT_ID();
+
+# 게시물 늘리기 쿼리 (memberId, boardId 바꿔가면서)
+INSERT INTO article
+(
+    regDate, updateDate, memberId, boardId, title, `body`
+)
+SELECT NOW(), NOW(), 3, 3, CONCAT('제목_', RAND()), CONCAT('내용_', RAND())
+FROM article;

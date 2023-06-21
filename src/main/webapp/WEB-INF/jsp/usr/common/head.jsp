@@ -41,8 +41,8 @@
 						<div class="dropdown dropdown-hover topbar-text-link h-full flex items-center px-3 mx-1 cursor-pointer">
 							<label tabindex="0" class="cursor-pointer">커뮤니티</label>
 							<ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-60">
-								<li><a href="/">리그오브레전드</a></li>
-								<li><a href="/">배틀그라운드</a></li>
+								<li><a href="/usr/article/list?boardType=lol">리그오브레전드</a></li>
+								<li><a href="/usr/article/list?boardType=bg">배틀그라운드</a></li>
 							</ul>
 						</div>
 					</li>
@@ -55,7 +55,7 @@
 						</a>
 						<div class="theme-toggle-msg text-xs text-center bg-black text-white"></div>
 					</li>
-					<c:if test="${Request.loginedMemberId == 0 }">
+					<c:if test="${Request.loginedMemberId == 0}">
 						<li>
 							<a href="/usr/member/login" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>로그인</span></a>
 						</li>
@@ -63,10 +63,7 @@
 							<a href="/usr/member/join" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>회원가입</span></a>
 						</li>
 					</c:if>
-					<c:if test="${Request.loginedMemberId != 0 }">
-						<li>
-							<a href="/usr/article/write" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>글쓰기</span></a>
-						</li>
+					<c:if test="${Request.loginedMemberId != 0}">
 						<li>
 							<a href="/usr/member/profile" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>프로필</span></a>
 						</li>

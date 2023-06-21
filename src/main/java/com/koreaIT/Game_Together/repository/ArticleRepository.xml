@@ -26,13 +26,141 @@
 			ON A.memberId = M.id
 			INNER JOIN board AS B
 			ON A.boardId = B.id
-			WHERE A.id = #{id};
+			WHERE A.id = #{articleId};
 	</select>
 	
 	<update id="increaseViewCount">
 		UPDATE article
 			SET viewCount = viewCount + 1
-			WHERE id = #{id};
+			WHERE id = #{articleId};
 	</update>
+	
+	<select id="getArticlesCntByBoardType" resultType="int">
+		SELECT COUNT(*)
+			FROM article AS A
+			INNER JOIN board AS B
+			ON A.boardId = B.id
+			INNER JOIN `member` AS M
+			ON A.memberId = M.id
+			WHERE B.type = #{boardType}
+			<if test="searchKeyword != ''">
+				<choose>
+					<when test="searchKeywordType == 'title'">
+						AND A.title LIKE CONCAT('%', #{searchKeyword}, '%');
+					</when>
+					<when test="searchKeywordType == 'body'">
+						AND A.body LIKE CONCAT('%', #{searchKeyword}, '%');
+					</when>
+					<when test="searchKeywordType == 'writerNickname'">
+						AND M.nickname LIKE CONCAT('%', #{searchKeyword}, '%');
+					</when>
+					<otherwise>
+						AND (
+							A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+							OR A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+						)
+					</otherwise>
+				</choose>
+			</if>
+			<if test="memberId != 0">
+				AND A.memberId = #{memberId};
+			</if>
+	</select>
+	
+	<select id="getArticlesCntByBoardId" resultType="int">
+		SELECT COUNT(*)
+			FROM article AS A
+			INNER JOIN `member` AS M
+			ON A.memberId = M.id
+			WHERE A.boardId = #{boardId}
+			<if test="searchKeyword != ''">
+				<choose>
+					<when test="searchKeywordType == 'title'">
+						AND A.title LIKE CONCAT('%', #{searchKeyword}, '%');
+					</when>
+					<when test="searchKeywordType == 'body'">
+						AND A.body LIKE CONCAT('%', #{searchKeyword}, '%');
+					</when>
+					<when test="searchKeywordType == 'writerNickname'">
+						AND M.nickname LIKE CONCAT('%', #{searchKeyword}, '%');
+					</when>
+					<otherwise>
+						AND (
+							A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+							OR A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+						);
+					</otherwise>
+				</choose>
+			</if>
+	</select>
+	
+	<select id="getArticlesByBoardType" resultType="Article">
+	    SELECT A.*
+	    	, M.nickname AS writerNickname
+	    	, B.name AS boardName
+	        FROM article AS A
+	        INNER JOIN `member` AS M
+	        ON A.memberId = M.id
+	        INNER JOIN board AS B
+			ON A.boardId = B.id
+			WHERE B.type = #{boardType}
+			<if test="searchKeyword != ''">
+				<choose>
+					<when test="searchKeywordType == 'title'">
+						AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+					</when>
+					<when test="searchKeywordType == 'body'">
+						AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+					</when>
+					<when test="searchKeywordType == 'writerNickname'">
+						AND M.nickname LIKE CONCAT('%', #{searchKeyword}, '%')
+					</when>
+					<otherwise>
+						AND (
+							A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+							OR A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+						)
+					</otherwise>
+				</choose>
+			</if>
+			<if test="memberId != 0">
+				AND A.memberId = #{memberId}
+			</if>
+			ORDER BY A.id DESC
+			LIMIT #{limitStart}, #{itemsInAPage};
+	</select>
+	
+	<select id="getArticlesByBoardId" resultType="Article">
+	    SELECT A.*
+	    	, M.nickname AS writerNickname
+	    	, B.name AS boardName
+	        FROM article AS A
+	        INNER JOIN `member` AS M
+	        ON A.memberId = M.id
+	        INNER JOIN board AS B
+			ON A.boardId = B.id
+			WHERE A.boardId = #{boardId}
+			<if test="searchKeyword != ''">
+				<choose>
+					<when test="searchKeywordType == 'title'">
+						AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+					</when>
+					<when test="searchKeywordType == 'body'">
+						AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+					</when>
+					<when test="searchKeywordType == 'writerNickname'">
+						AND M.nickname LIKE CONCAT('%', #{searchKeyword}, '%')
+					</when>
+					<otherwise>
+						AND (
+							A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+							OR A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+						)
+					</otherwise>
+				</choose>
+			</if>
+			ORDER BY A.id DESC
+			LIMIT #{limitStart}, #{itemsInAPage};
+	</select>
 
 </mapper>

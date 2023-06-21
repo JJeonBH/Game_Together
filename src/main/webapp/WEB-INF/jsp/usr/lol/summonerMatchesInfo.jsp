@@ -105,89 +105,89 @@
 	}
 	
 </script>
-<section class="mt-6 mx-20 text-sm min-w-1000">
-	<c:if test="${summoner != null && matches != null}">
-		<div class="statistics border border-indigo-100">
-			<div class="flex justify-center text-xl mt-2">
-				<span id="statistics-title">최근 ${matchesData.totalWins + matchesData.totalLoses}게임 통계</span>
-			</div>
-			<div class="flex justify-center">
-				<div>
-					<div class="pieChartWithOverlay">
-						<div id="pieChart"></div>
-						<div class="pieChartTitleOverlay w-full text-center">${matchesData.totalWins + matchesData.totalLoses}전 ${matchesData.totalWins}승 ${matchesData.totalLoses}패</div>
-						<div class="pieChartOverlay">${Math.round((matchesData.totalWins / (matchesData.totalWins + matchesData.totalLoses)) * 100)}%</div>
-					</div>
+	<section class="mt-6 mx-20 text-sm min-w-1000">
+		<c:if test="${summoner != null && matches != null}">
+			<div class="statistics border border-indigo-100">
+				<div class="flex justify-center text-xl mt-2">
+					<span id="statistics-title">최근 ${matchesData.totalWins + matchesData.totalLoses}게임 통계</span>
 				</div>
-				<div class="flex items-center">
+				<div class="flex justify-center">
 					<div>
-						<div class="text-gray-400">
-							<c:set var="avgKill" value="${Math.round((matchesData.totalKills / (matchesData.totalWins + matchesData.totalLoses)) * 10) / 10.0}" />
-							<span class="avgKill">${avgKill}</span>
-							<span>/</span>
-							<c:set var="avgDeath" value="${Math.round((matchesData.totalDeaths / (matchesData.totalWins + matchesData.totalLoses)) * 10) / 10.0}" />
-							<span class="avgDeath text-red-600">${avgDeath}</span>
-							<span>/</span>
-							<c:set var="avgAssist" value="${Math.round((matchesData.totalAssists / (matchesData.totalWins + matchesData.totalLoses)) * 10) / 10.0}" />
-							<span class="avgAssist">${avgAssist}</span>
+						<div class="pieChartWithOverlay">
+							<div id="pieChart"></div>
+							<div class="pieChartTitleOverlay w-full text-center">${matchesData.totalWins + matchesData.totalLoses}전 ${matchesData.totalWins}승 ${matchesData.totalLoses}패</div>
+							<div class="pieChartOverlay">${Math.round((matchesData.totalWins / (matchesData.totalWins + matchesData.totalLoses)) * 100)}%</div>
 						</div>
-						<div class="my-1">
-							<span class="avgKDA text-base">${Math.round(((avgKill + avgAssist) / avgDeath) * 100) / 100.0} 평점</span>
-						</div>
+					</div>
+					<div class="flex items-center">
 						<div>
-							<span class="avgKillInvolvement text-red-600">킬관여 ${Math.round(((matchesData.totalKills + matchesData.totalAssists) / matchesData.totalTeamKills) * 100)}%</span>
+							<div class="text-gray-400">
+								<c:set var="avgKill" value="${Math.round((matchesData.totalKills / (matchesData.totalWins + matchesData.totalLoses)) * 10) / 10.0}" />
+								<span class="avgKill">${avgKill}</span>
+								<span>/</span>
+								<c:set var="avgDeath" value="${Math.round((matchesData.totalDeaths / (matchesData.totalWins + matchesData.totalLoses)) * 10) / 10.0}" />
+								<span class="avgDeath text-red-600">${avgDeath}</span>
+								<span>/</span>
+								<c:set var="avgAssist" value="${Math.round((matchesData.totalAssists / (matchesData.totalWins + matchesData.totalLoses)) * 10) / 10.0}" />
+								<span class="avgAssist">${avgAssist}</span>
+							</div>
+							<div class="my-1">
+								<span class="avgKDA text-base">${Math.round(((avgKill + avgAssist) / avgDeath) * 100) / 100.0} 평점</span>
+							</div>
+							<div>
+								<span class="avgKillInvolvement text-red-600">킬관여 ${Math.round(((matchesData.totalKills + matchesData.totalAssists) / matchesData.totalTeamKills) * 100)}%</span>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="ml-12 flex items-center">
+					<div class="ml-12 flex items-center">
+						<div>
+							<div class="my-3 text-gray-400">
+								<span class="mostChampionsTitle">플레이한 챔피언 (최근 ${matchesData.totalWins + matchesData.totalLoses}게임)</span>
+							</div>
+							<div class="mostChampions h-28">
+								<c:forEach var="champion" items="${matchesData.champions}" begin="0" end="2">
+									<div class="flex items-center text-xs my-2">
+										<div>
+											<img class="rounded-full" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer.get(0)}/img/champion/${champion.championName}.png" width="30" alt="champion icon image"/>
+										</div>
+										<div class="ml-2">
+											<span class="${Math.round((champion.winCount / champion.matchCount) * 100) < 60 ? 'text-gray-500' : 'text-red-600'}">${Math.round((champion.winCount / champion.matchCount) * 100)}%</span>
+										</div>
+										<div class="ml-1">
+											<span class="text-gray-400">(${champion.winCount}승 ${champion.matchCount - champion.winCount}패)</span>
+										</div>
+										<div class="ml-1">
+											<c:set var="champAvgKDA" value="${Math.round(((champion.kills + champion.assists) / champion.deaths) * 100) / 100.0}"/>
+											<span class="${champAvgKDA < 3.0 ? 'text-gray-500' : champAvgKDA < 4.0 ? 'text-green-500' : champAvgKDA < 5.0 ? 'text-blue-500' : 'text-yellow-500'}">${champAvgKDA} 평점</span>
+										</div>
+									</div>
+								</c:forEach>
+							</div>
+						</div>
+					</div>
 					<div>
-						<div class="my-3 text-gray-400">
-							<span class="mostChampionsTitle">플레이한 챔피언 (최근 ${matchesData.totalWins + matchesData.totalLoses}게임)</span>
-						</div>
-						<div class="mostChampions h-28">
-							<c:forEach var="champion" items="${matchesData.champions}" begin="0" end="2">
-								<div class="flex items-center text-xs my-2">
-									<div>
-										<img class="rounded-full" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer.get(0)}/img/champion/${champion.championName}.png" width="30" alt="champion icon image"/>
-									</div>
-									<div class="ml-2">
-										<span class="${Math.round((champion.winCount / champion.matchCount) * 100) < 60 ? 'text-gray-500' : 'text-red-600'}">${Math.round((champion.winCount / champion.matchCount) * 100)}%</span>
-									</div>
-									<div class="ml-1">
-										<span class="text-gray-400">(${champion.winCount}승 ${champion.matchCount - champion.winCount}패)</span>
-									</div>
-									<div class="ml-1">
-										<c:set var="champAvgKDA" value="${Math.round(((champion.kills + champion.assists) / champion.deaths) * 100) / 100.0}"/>
-										<span class="${champAvgKDA < 3.0 ? 'text-gray-500' : champAvgKDA < 4.0 ? 'text-green-500' : champAvgKDA < 5.0 ? 'text-blue-500' : 'text-yellow-500'}">${champAvgKDA} 평점</span>
-									</div>
+						<div class="barChartWithOverlay">
+							<div id="barChart"></div>
+							<div class="barChartOverlay flex">
+								<div class="mx-4">
+									<img src="/resource/images/Position_Grandmaster-Top.png" alt="position img" width="25">
 								</div>
-							</c:forEach>
-						</div>
-					</div>
-				</div>
-				<div>
-					<div class="barChartWithOverlay">
-						<div id="barChart"></div>
-						<div class="barChartOverlay flex">
-							<div class="mx-4">
-								<img src="/resource/images/Position_Grandmaster-Top.png" alt="position img" width="25">
-							</div>
-							<div class="mx-4">
-								<img src="/resource/images/Position_Grandmaster-Jungle.png" alt="position img" width="25">
-							</div>
-							<div class="mx-4">
-								<img src="/resource/images/Position_Grandmaster-Mid.png" alt="position img" width="25">
-							</div>
-							<div class="mx-4">
-								<img src="/resource/images/Position_Grandmaster-Bot.png" alt="position img" width="25">
-							</div>
-							<div class="mx-4">
-								<img src="/resource/images/Position_Grandmaster-Support.png" alt="position img" width="25">
+								<div class="mx-4">
+									<img src="/resource/images/Position_Grandmaster-Jungle.png" alt="position img" width="25">
+								</div>
+								<div class="mx-4">
+									<img src="/resource/images/Position_Grandmaster-Mid.png" alt="position img" width="25">
+								</div>
+								<div class="mx-4">
+									<img src="/resource/images/Position_Grandmaster-Bot.png" alt="position img" width="25">
+								</div>
+								<div class="mx-4">
+									<img src="/resource/images/Position_Grandmaster-Support.png" alt="position img" width="25">
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</c:if>
-</section>
+		</c:if>
+	</section>

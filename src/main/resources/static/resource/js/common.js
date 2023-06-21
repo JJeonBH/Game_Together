@@ -50,6 +50,19 @@ function themeApplyTo(themeName) {
 //	테마 적용
 themeInit();
 
+//	게시물 리스트에서 게시물 검색할 때 셀렉트 값(제목, 내용, 작성자, ...) 유지
+$('select[data-value]').each(function(index, item) {
+	
+	const items = $(item);
+	
+	const defaultValue = items.attr('data-value').trim();
+	
+	if (defaultValue.length > 0) {
+		items.val(defaultValue);
+	}
+	
+});
+
 //	소환사 검색시 유효성 검사
 function submitSummonerSearchForm(form) {
 	

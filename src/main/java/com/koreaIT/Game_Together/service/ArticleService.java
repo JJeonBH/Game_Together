@@ -1,5 +1,7 @@
 package com.koreaIT.Game_Together.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +27,9 @@ public class ArticleService {
 		return articleRepository.getLastInsertId();
 	}
 	
-	public Article getForPrintArticle(int id) {
+	public Article getForPrintArticle(int articleId) {
 		
-		Article article = articleRepository.getForPrintArticle(id);
+		Article article = articleRepository.getForPrintArticle(articleId);
 		
 		return article;
 		
@@ -55,8 +57,32 @@ public class ArticleService {
 		
 	}
 	
-	public void increaseViewCount(int id) {
-		articleRepository.increaseViewCount(id);
+	public void increaseViewCount(int articleId) {
+		articleRepository.increaseViewCount(articleId);
+	}
+	
+	public int getArticlesCntByBoardType(String boardType, String searchKeywordType, String searchKeyword, int memberId) {
+		return articleRepository.getArticlesCntByBoardType(boardType, searchKeywordType, searchKeyword, memberId);
+	}
+	
+	public int getArticlesCntByBoardId(int boardId, String searchKeywordType, String searchKeyword) {
+		return articleRepository.getArticlesCntByBoardId(boardId, searchKeywordType, searchKeyword);
+	}
+	
+	public List<Article> getArticlesByBoardType(String boardType, String searchKeywordType, String searchKeyword, int itemsInAPage, int page, int memberId) {
+		
+		int limitStart = (page - 1) * itemsInAPage;
+		
+		return articleRepository.getArticlesByBoardType(boardType, searchKeywordType, searchKeyword, itemsInAPage, limitStart, memberId);
+		
+	}
+	
+	public List<Article> getArticlesByBoardId(int boardId, String searchKeywordType, String searchKeyword, int itemsInAPage, int page) {
+		
+		int limitStart = (page - 1) * itemsInAPage;
+		
+		return articleRepository.getArticlesByBoardId(boardId, searchKeywordType, searchKeyword, itemsInAPage, limitStart);
+	
 	}
 	
 }

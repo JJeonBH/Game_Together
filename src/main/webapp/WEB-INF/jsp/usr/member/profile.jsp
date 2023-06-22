@@ -15,7 +15,7 @@
 		</div>
 	</section>
 	<section class="text-lg min-w-900 flex justify-center mt-4">
-		<div class="table-box w-2/3">
+		<div class="table-box-type-1 w-2/3">
 			<table class="w-full">
 				<tbody>
 					<colgroup>

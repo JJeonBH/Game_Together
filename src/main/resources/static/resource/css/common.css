@@ -149,22 +149,40 @@ a:hover > .main-image {
 	opacity: 0.5;
 }
 
-/* 테이블 행(row) 높이 */
-.table-box > table tr {
+/* 프로필 테이블 행(row) 높이 */
+.table-box-type-1 > table tr {
 	height: 3.5rem;
 }
 
-/* 테이블 셀 테두리, 글자 정렬, 패딩 */
-.table-box > table th, .table-box > table td {
+/* 프로필 테이블 셀 테두리, 글자 정렬, 패딩 */
+.table-box-type-1 > table th, .table-box-type-1 > table td {
 	border-top: 1px solid rgb(134, 247, 238);
 	border-bottom: 1px solid rgb(134, 247, 238);
 	padding: 15px;
 	text-align: left;
 }
 
-/* 테이블 셀 테두리 */
-.table-box > table th {
+/* 프로필 테이블 셀 테두리 */
+.table-box-type-1 > table th {
 	border-right: 1px solid rgb(134, 247, 238);
+}
+
+/* 게시물 목록 테이블 레이아웃 고정 */
+.table-box-type-2 > table {
+	table-layout: fixed;
+}
+
+/* 게시물 목록 테이블 셀 테두리, 패딩, 줄 바꿈 방지, 길어지면 숨겨지게 */
+.table-box-type-2 > table th, .table-box-type-2 > table td {
+	border-top: 1px solid rgb(134, 247, 238);
+	border-bottom: 1px solid rgb(134, 247, 238);
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 5px;
+	padding-right: 5px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 /* 소환사 아이콘에 소환사 레벨 겹치기 */

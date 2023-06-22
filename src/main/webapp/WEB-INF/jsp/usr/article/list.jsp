@@ -4,7 +4,7 @@
 <c:set var="pageTitle" value="${pageTitle}" />
 <%@ include file="../common/head.jsp" %>
 	<section class="mt-6 mb-20 mx-20 min-w-1000 flex">
-		<div class="w-64 bg-green-200 p-6 text-lg">
+		<div class="w-64 p-6 text-lg">
 			<c:if test="${Request.loginedMemberId != 0}">
 				<div class="mb-2">
 					<span>${Request.loginedMember.nickname}</span>
@@ -21,17 +21,17 @@
 			</c:if>
 			<ul>
 				<li class="mb-2">
-					<a href="list?boardType=${boardType}"><span>전체 게시판</span></a>
+					<a href="list?boardType=${boardType}" class="hover:underline"><span>전체 게시판</span></a>
 					<div class="border-b border-blue-400 my-4"></div>
 				</li>
 				<c:forEach var="board" items="${boards}">
 					<li class="mb-2">
-						<a href="list?boardType=${boardType}&boardId=${board.id}"><span>${board.name}</span></a>
+						<a href="list?boardType=${boardType}&boardId=${board.id}" class="hover:underline"><span>${board.name}</span></a>
 					</li>
 				</c:forEach>
 			</ul>
 		</div>
-		<div class="w-3/4 bg-red-200 ml-6 p-6">
+		<div class="w-3/4 ml-6 p-6">
 			<div class="mb-2">
 				<a href="list?boardType=${boardType}&boardId=${boardId}"><span class="text-3xl">${pageTitle}</span></a>
 			</div>
@@ -51,6 +51,50 @@
 						<button class="ml-1 btn-text-color btn btn-info btn-sm">검색</button>
 					</form>
 				</div>
+			</div>
+			<div class="table-box-type-2">
+				<table class="w-full">
+					<colgroup>
+						<col width="80"/>
+						<col width="260"/>
+						<col width="80"/>
+						<col width="120"/>
+						<col width="80"/>
+						<col width="60"/>
+					</colgroup>
+					<thead class="text-base text-center">
+						<tr>
+							<th>
+								<c:choose>
+									<c:when test="${boardId == 0}">글머리</c:when>
+									<c:otherwise>글 번호</c:otherwise>
+								</c:choose>
+							</th>
+							<th>제목</th>
+							<th>작성자</th>
+							<th>작성일</th>
+							<th>조회</th>
+							<th>좋아요</th>
+						</tr>
+					</thead>
+					<tbody class="text-sm">
+						<c:forEach var="article" items="${articles}">
+							<tr>
+								<td class="text-center">
+									<c:choose>
+										<c:when test="${boardId == 0}"><a href="list?boardType=${boardType}&boardId=${article.boardId}" class="hover:underline">${article.boardName}</a></c:when>
+										<c:otherwise><span>${article.id}</span></c:otherwise>
+									</c:choose>
+								</td>
+								<td><a href="detail?articleId=${article.id}&boardType=${boardType}" class="hover:underline">${article.title}</a></td>
+								<td><span class="hover:underline">${article.writerNickname}</span></td>
+								<td class="text-center"><span>${article.regDate}</span></td>
+								<td class="text-center"><span>${article.viewCount}</span></td>
+								<td class="text-center"><span>0</span></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</section>

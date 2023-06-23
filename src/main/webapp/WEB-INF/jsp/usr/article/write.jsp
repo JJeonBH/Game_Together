@@ -32,7 +32,7 @@
 
 </script>
 	<section class="mt-6 mb-20 mx-20 min-w-1000 flex">
-		<div class="w-64 bg-green-200 p-6 text-lg">
+		<div class="w-64 p-6 text-lg">
 			<c:if test="${Request.loginedMemberId != 0}">
 				<div class="mb-2">
 					<span>${Request.loginedMember.nickname}</span>

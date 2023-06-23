@@ -33,14 +33,15 @@
 		</div>
 		<div class="w-3/4 ml-6 p-6">
 			<div class="mb-2">
-				<a href="list?boardType=${boardType}&boardId=${boardId}"><span class="text-3xl">${pageTitle}</span></a>
+				<a href="list?boardType=${boardType}&boardId=${boardId}&memberId=${memberId}"><span class="text-3xl">${pageTitle}</span></a>
 			</div>
 			<div class="mb-2 flex justify-between items-center">
 				<div>${articlesCnt}개의 글</div>
 				<div>
 					<form>
-						<input type="hidden" name="boardId" value="${boardId}"/>
 						<input type="hidden" name="boardType" value="${boardType}"/>
+						<input type="hidden" name="boardId" value="${boardId}"/>
+						<input type="hidden" name="memberId" value="${memberId}"/>
 						<select data-value="${searchKeywordType}" class="select select-primary" name="searchKeywordType">
 							<option value="title">제목</option>
 							<option value="body">내용</option>
@@ -52,7 +53,7 @@
 					</form>
 				</div>
 			</div>
-			<div class="table-box-type-2">
+			<div class="table-box-type-2 mb-2">
 				<table class="w-full">
 					<colgroup>
 						<col width="80"/>
@@ -88,13 +89,52 @@
 								</td>
 								<td><a href="detail?articleId=${article.id}&boardType=${boardType}" class="hover:underline">${article.title}</a></td>
 								<td><span class="hover:underline">${article.writerNickname}</span></td>
-								<td class="text-center"><span>${article.regDate}</span></td>
+								<td class="text-center"><span>${article.formatRegDate}</span></td>
 								<td class="text-center"><span>${article.viewCount}</span></td>
 								<td class="text-center"><span>0</span></td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
+			</div>
+			<c:if test="${Request.loginedMemberId != 0}">
+				<div class="mb-2 flex justify-end">
+					<a href="write?boardType=${boardType}" class="btn-text-color btn btn-info btn-sm"><span>글쓰기</span></a>	
+				</div>
+			</c:if>
+			<div class="mb-2 flex justify-center">
+				<div class="join">
+<%-- 					<c:set var="pageMenuLen" value="5" /> --%>
+<%-- 					<c:set var="startPage" value="${page - pageMenuLen >= 1 ? page - pageMenuLen : 1}" /> --%>
+<%-- 					<c:set var="endPage" value="${page + pageMenuLen <= pagesCount ? page + pageMenuLen : pagesCount}" /> --%>
+					<c:choose>
+						<c:when test="${memberId == 0}">
+							<c:set var="pageBaseUri" value="list?boardType=${boardType}&boardId=${boardId}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}" />
+						</c:when>
+						<c:otherwise>
+							<c:set var="pageBaseUri" value="list?boardType=${boardType}&boardId=${boardId}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}&memberId=${memberId}" />
+						</c:otherwise>
+					</c:choose>
+					<c:if test="${page == 1}">
+						<a class="join-item btn btn-sm btn-disabled">«</a>
+						<a class="join-item btn btn-sm btn-disabled">&lt;</a>
+					</c:if>
+					<c:if test="${page > 1}">
+						<a class="join-item btn btn-sm" href="${pageBaseUri}&page=1">«</a>
+						<a class="join-item btn btn-sm" href="${pageBaseUri}&page=${page - 1}">&lt;</a>
+					</c:if>
+					<c:forEach begin="${start}" end="${end}" var="i">
+						<a class="join-item btn btn-sm ${page == i ? 'btn-active' : ''}" href="${pageBaseUri}&page=${i}">${i}</a>
+					</c:forEach>
+					<c:if test="${page < pagesCount}">
+						<a class="join-item btn btn-sm" href="${pageBaseUri}&page=${page + 1}">&gt;</a>
+						<a class="join-item btn btn-sm" href="${pageBaseUri}&page=${pagesCount}">»</a>
+					</c:if>
+					<c:if test="${page == pagesCount}">
+						<a class="join-item btn btn-sm btn-disabled">&gt;</a>
+						<a class="join-item btn btn-sm btn-disabled">»</a>
+					</c:if>
+				</div>
 			</div>
 		</div>
 	</section>

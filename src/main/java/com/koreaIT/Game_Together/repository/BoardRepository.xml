@@ -7,14 +7,14 @@
 		SELECT *
 			FROM board
 			WHERE id = #{boardId}
-			AND delStatus = 0;
+			AND delStatus = 0
 	</select>
 	
 	<select id="getBoardsByBoardType" resultType="Board">
 		SELECT *
 			FROM board
 			WHERE type = #{boardType}
-			AND delStatus = 0;
+			AND delStatus = 0
 	</select>
 	
 </mapper>

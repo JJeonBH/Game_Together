@@ -10,11 +10,11 @@
 				, memberId = #{memberId}
 				, boardId = #{boardId}
 				, title = #{title}
-				, `body` = #{body};
+				, `body` = #{body}
 	</insert>
 	
 	<select id="getLastInsertId" resultType="int">
-		SELECT LAST_INSERT_ID();
+		SELECT LAST_INSERT_ID()
 	</select>
 	
 	<select id="getForPrintArticle" resultType="Article">
@@ -26,13 +26,13 @@
 			ON A.memberId = M.id
 			INNER JOIN board AS B
 			ON A.boardId = B.id
-			WHERE A.id = #{articleId};
+			WHERE A.id = #{articleId}
 	</select>
 	
 	<update id="increaseViewCount">
 		UPDATE article
 			SET viewCount = viewCount + 1
-			WHERE id = #{articleId};
+			WHERE id = #{articleId}
 	</update>
 	
 	<select id="getArticlesCntByBoardType" resultType="int">
@@ -46,13 +46,13 @@
 			<if test="searchKeyword != ''">
 				<choose>
 					<when test="searchKeywordType == 'title'">
-						AND A.title LIKE CONCAT('%', #{searchKeyword}, '%');
+						AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
 					</when>
 					<when test="searchKeywordType == 'body'">
-						AND A.body LIKE CONCAT('%', #{searchKeyword}, '%');
+						AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
 					</when>
 					<when test="searchKeywordType == 'writerNickname'">
-						AND M.nickname LIKE CONCAT('%', #{searchKeyword}, '%');
+						AND M.nickname LIKE CONCAT('%', #{searchKeyword}, '%')
 					</when>
 					<otherwise>
 						AND (
@@ -63,7 +63,7 @@
 				</choose>
 			</if>
 			<if test="memberId != 0">
-				AND A.memberId = #{memberId};
+				AND A.memberId = #{memberId}
 			</if>
 	</select>
 	
@@ -76,19 +76,19 @@
 			<if test="searchKeyword != ''">
 				<choose>
 					<when test="searchKeywordType == 'title'">
-						AND A.title LIKE CONCAT('%', #{searchKeyword}, '%');
+						AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
 					</when>
 					<when test="searchKeywordType == 'body'">
-						AND A.body LIKE CONCAT('%', #{searchKeyword}, '%');
+						AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
 					</when>
 					<when test="searchKeywordType == 'writerNickname'">
-						AND M.nickname LIKE CONCAT('%', #{searchKeyword}, '%');
+						AND M.nickname LIKE CONCAT('%', #{searchKeyword}, '%')
 					</when>
 					<otherwise>
 						AND (
 							A.title LIKE CONCAT('%', #{searchKeyword}, '%')
 							OR A.body LIKE CONCAT('%', #{searchKeyword}, '%')
-						);
+						)
 					</otherwise>
 				</choose>
 			</if>
@@ -127,7 +127,7 @@
 				AND A.memberId = #{memberId}
 			</if>
 			ORDER BY A.id DESC
-			LIMIT #{limitStart}, #{itemsInAPage};
+			LIMIT #{limitStart}, #{itemsInAPage}
 	</select>
 	
 	<select id="getArticlesByBoardId" resultType="Article">
@@ -160,7 +160,7 @@
 				</choose>
 			</if>
 			ORDER BY A.id DESC
-			LIMIT #{limitStart}, #{itemsInAPage};
+			LIMIT #{limitStart}, #{itemsInAPage}
 	</select>
 
 </mapper>

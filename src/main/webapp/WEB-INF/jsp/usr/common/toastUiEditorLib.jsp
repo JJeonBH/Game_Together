@@ -351,6 +351,11 @@
 			alert('내용을 입력해주세요');
 			return;
 		}
+		
+		if (form.title.value.length > 100) {
+			alert("제목은 최대 100자까지 입력할 수 있습니다.")
+			return;
+		}
 	  
 		form.body.value = markdown;
 		

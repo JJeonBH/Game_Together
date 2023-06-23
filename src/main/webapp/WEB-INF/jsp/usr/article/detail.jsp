@@ -5,7 +5,7 @@
 <%@ include file="../common/head.jsp" %>
 <%@ include file="../common/toastUiEditorLib.jsp" %>
 	<section class="mt-6 mb-20 mx-20 min-w-1000 flex">
-		<div class="w-64 bg-green-200 p-6 text-lg">
+		<div class="w-64 p-6 text-lg">
 			<c:if test="${Request.loginedMemberId != 0}">
 				<div class="mb-2">
 					<span>${Request.loginedMember.nickname}</span>
@@ -38,7 +38,7 @@
 					<a class="text-green-500" href="list?boardType=${boardType}&boardId=${article.boardId}">${article.boardName}</a>
 				</div>
 				<div class="my-4">
-					<span class="text-3xl">${article.title}</span>
+					<span class="text-3xl detail-title">${article.title}</span>
 				</div>
 				<div class="flex justify-between items-center">
 					<div class="flex">
@@ -47,7 +47,7 @@
 							<div class="font-bold">${article.writerNickname}</div>
 							<div>
 								<div>
-									<span>${article.formatUpdateDate()}</span>
+									<span>${article.formatRegDate}</span>
 									<span class="ml-2">조회 ${article.viewCount}</span>
 								</div>
 							</div>

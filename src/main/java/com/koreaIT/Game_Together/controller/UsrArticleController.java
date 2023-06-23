@@ -106,6 +106,8 @@ public class UsrArticleController {
 		}
 		
 		Article article = articleService.getForPrintArticle(articleId);
+		
+		article.setFormatRegDate(Util.formatRegDateVer1(article.getRegDate()));
 
 		articleService.actorCanChangeData(rq.getLoginedMemberId(), article);
 		
@@ -140,7 +142,11 @@ public class UsrArticleController {
 		if(boardId == 0) {
 			articlesCnt = articleService.getArticlesCntByBoardType(boardType, searchKeywordType, searchKeyword, memberId);
 			articles = articleService.getArticlesByBoardType(boardType, searchKeywordType, searchKeyword, itemsInAPage, page, memberId);
-			pageTitle = "전체 게시판";
+			if (memberId == 0) {
+				pageTitle = "전체 게시판";
+			} else {
+				pageTitle = "내가 쓴 글";
+			}
 		} else {
 			Board board = boardService.getBoardById(boardId);
 			
@@ -152,24 +158,51 @@ public class UsrArticleController {
 			articles = articleService.getArticlesByBoardId(boardId, searchKeywordType, searchKeyword, itemsInAPage, page);
 			pageTitle = board.getName();
 		}
+		
+		for (Article article : articles) {
+			article.setFormatRegDate(Util.formatRegDateVer2(article.getRegDate()));
+		}
 
 		int pagesCount = (int) Math.ceil((double) articlesCnt / itemsInAPage);
 		
 		List<Board> boards = boardService.getBoardsByBoardType(boardType);
+		
+		int pageSize = 10;
+		int start = 1;
+		int end = pagesCount;
+		
+		if ((double) page / pageSize <= 1.0) {
+			start = 1;
+		} else {
+			start = (page / pageSize) * 10 + 1;
+			if (page % pageSize == 0) {
+				start -= 10;
+			}
+		}
+		
+		if ((start + pageSize - 1) % pageSize == 0) {
+			end = start + pageSize - 1;
+			if (end > pagesCount) {
+				end = pagesCount;
+			}
+		}
 		
 		model.addAttribute("boardType", boardType);
 		model.addAttribute("boardId", boardId);
 		model.addAttribute("page", page);
 		model.addAttribute("searchKeywordType", searchKeywordType);
 		model.addAttribute("searchKeyword", searchKeyword);
+		model.addAttribute("memberId", memberId);
 		model.addAttribute("articlesCnt", articlesCnt);
 		model.addAttribute("articles", articles);
 		model.addAttribute("pageTitle", pageTitle);
 		model.addAttribute("pagesCount", pagesCount);
 		model.addAttribute("boards", boards);
+		model.addAttribute("start", start);
+		model.addAttribute("end", end);
 
 		return "usr/article/list";
 		
 	}
-	
+
 }

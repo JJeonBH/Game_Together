@@ -24,13 +24,6 @@ public class Article {
 	private String writerNickname;
 	private String boardName;
 	private boolean actorCanChangeData;
-	
-	public String formatUpdateDate() {
-		
-		String formatUpdateDate = this.updateDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd. HH:mm"));
-		
-		return formatUpdateDate;
-		
-	}
+	private String formatRegDate;
 	
 }

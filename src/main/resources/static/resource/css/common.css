@@ -231,3 +231,9 @@ a:hover > .main-image {
     top: 85%;
     left: 17%;
 }
+
+/* 글 상세보기 제목에서 영어 띄어쓰기 없이 쓰면 영역 벗어나는 것 줄바꿈 되게 */
+.detail-title {
+	word-wrap: break-word;
+	word-break: break-word;
+}

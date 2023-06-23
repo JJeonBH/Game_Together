@@ -16,41 +16,41 @@
 				<if test = "email != null and email != ''">
 					, email = #{email}
 				</if>
-				, cellphoneNum = #{cellphoneNum};
+				, cellphoneNum = #{cellphoneNum}
 	</insert>
 	
 	<select id="getLastInsertId" resultType="int">
-		SELECT LAST_INSERT_ID();
+		SELECT LAST_INSERT_ID()
 	</select>
 	
 	<select id="getMemberById" resultType="Member">
 		SELECT *
 			FROM `member`
-			WHERE id = #{id};
+			WHERE id = #{id}
 	</select>
 	
 	<select id="getMemberByLoginId" resultType="Member">
 		SELECT *
 			FROM `member`
-			WHERE loginId = #{loginId};
+			WHERE loginId = #{loginId}
 	</select>
 	
 	<select id="getMemberByNickname" resultType="Member">
 		SELECT *
 			FROM `member`
-			WHERE nickname = #{nickname};
+			WHERE nickname = #{nickname}
 	</select>
 	
 	<select id="getMemberByEmail" resultType="Member">
 		SELECT *
 			FROM `member`
-			WHERE email = #{email};
+			WHERE email = #{email}
 	</select>
 	
 	<select id="getMemberByCellphoneNum" resultType="Member">
 		SELECT *
 			FROM `member`
-			WHERE cellphoneNum = #{cellphoneNum};
+			WHERE cellphoneNum = #{cellphoneNum}
 	</select>
 
 </mapper>

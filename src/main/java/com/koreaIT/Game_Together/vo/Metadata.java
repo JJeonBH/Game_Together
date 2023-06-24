@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Metadata {
 	
-//	private String dataVersion;
-//	private String matchId;
 	private List<String> participants;
 
 }

@@ -130,7 +130,7 @@ public class UsrArticleController {
 			@RequestParam(defaultValue = "0") int memberId) {
 		
 		if (page <= 0) {
-			return rq.returnMain("페이지번호가 올바르지 않습니다");
+			return rq.jsHistoryBack("페이지번호가 올바르지 않습니다.", true);
 		}
 		
 		int articlesCnt;
@@ -148,10 +148,10 @@ public class UsrArticleController {
 				pageTitle = "내가 쓴 글";
 			}
 		} else {
-			Board board = boardService.getBoardById(boardId);
+			Board board = boardService.getBoardByIdAndType(boardId, boardType);
 			
 			if (board == null) {
-				return rq.returnMain("존재하지 않는 게시판입니다.");
+				return rq.jsHistoryBack("존재하지 않는 게시판입니다.", true);
 			}
 			
 			articlesCnt = articleService.getArticlesCntByBoardId(boardId, searchKeywordType, searchKeyword);
@@ -165,26 +165,18 @@ public class UsrArticleController {
 
 		int pagesCount = (int) Math.ceil((double) articlesCnt / itemsInAPage);
 		
+		if (page > pagesCount) {
+			page = pagesCount;
+		}
+		
 		List<Board> boards = boardService.getBoardsByBoardType(boardType);
 		
 		int pageSize = 10;
-		int start = 1;
-		int end = pagesCount;
+		int startPage = ((page - 1) / pageSize) * pageSize + 1;
+		int endPage = startPage + pageSize - 1;
 		
-		if ((double) page / pageSize <= 1.0) {
-			start = 1;
-		} else {
-			start = (page / pageSize) * 10 + 1;
-			if (page % pageSize == 0) {
-				start -= 10;
-			}
-		}
-		
-		if ((start + pageSize - 1) % pageSize == 0) {
-			end = start + pageSize - 1;
-			if (end > pagesCount) {
-				end = pagesCount;
-			}
+		if (endPage > pagesCount) {
+			endPage = pagesCount;
 		}
 		
 		model.addAttribute("boardType", boardType);
@@ -198,8 +190,8 @@ public class UsrArticleController {
 		model.addAttribute("pageTitle", pageTitle);
 		model.addAttribute("pagesCount", pagesCount);
 		model.addAttribute("boards", boards);
-		model.addAttribute("start", start);
-		model.addAttribute("end", end);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
 
 		return "usr/article/list";
 		

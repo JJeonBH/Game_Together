@@ -32,10 +32,10 @@
 			</ul>
 		</div>
 		<div class="w-3/4 ml-6 p-6">
-			<div class="mb-2">
+			<div class="mb-3">
 				<a href="list?boardType=${boardType}&boardId=${boardId}&memberId=${memberId}"><span class="text-3xl">${pageTitle}</span></a>
 			</div>
-			<div class="mb-2 flex justify-between items-center">
+			<div class="mb-3 flex justify-between items-center">
 				<div>${articlesCnt}개의 글</div>
 				<div>
 					<form>
@@ -48,12 +48,12 @@
 							<option value="writerNickname">작성자</option>
 							<option value="title,body">제목 + 내용</option>
 						</select>
-						<input class="ml-1 input input-bordered input-info" name="searchKeyword" placeholder="검색어를 입력해주세요" maxlength="20" value="${searchKeyword}"/>
+						<input class="ml-1 input input-bordered input-info" name="searchKeyword" placeholder="검색어를 입력해 주세요." maxlength="20" value="${searchKeyword}"/>
 						<button class="ml-1 btn-text-color btn btn-info btn-sm">검색</button>
 					</form>
 				</div>
 			</div>
-			<div class="table-box-type-2 mb-2">
+			<div class="table-box-type-2 mb-4">
 				<table class="w-full">
 					<colgroup>
 						<col width="80"/>
@@ -98,15 +98,12 @@
 				</table>
 			</div>
 			<c:if test="${Request.loginedMemberId != 0}">
-				<div class="mb-2 flex justify-end">
+				<div class="mb-4 flex justify-end">
 					<a href="write?boardType=${boardType}" class="btn-text-color btn btn-info btn-sm"><span>글쓰기</span></a>	
 				</div>
 			</c:if>
 			<div class="mb-2 flex justify-center">
-				<div class="join">
-<%-- 					<c:set var="pageMenuLen" value="5" /> --%>
-<%-- 					<c:set var="startPage" value="${page - pageMenuLen >= 1 ? page - pageMenuLen : 1}" /> --%>
-<%-- 					<c:set var="endPage" value="${page + pageMenuLen <= pagesCount ? page + pageMenuLen : pagesCount}" /> --%>
+				<div>
 					<c:choose>
 						<c:when test="${memberId == 0}">
 							<c:set var="pageBaseUri" value="list?boardType=${boardType}&boardId=${boardId}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}" />
@@ -115,26 +112,31 @@
 							<c:set var="pageBaseUri" value="list?boardType=${boardType}&boardId=${boardId}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}&memberId=${memberId}" />
 						</c:otherwise>
 					</c:choose>
-					<c:if test="${page == 1}">
-						<a class="join-item btn btn-sm btn-disabled">«</a>
-						<a class="join-item btn btn-sm btn-disabled">&lt;</a>
-					</c:if>
 					<c:if test="${page > 1}">
-						<a class="join-item btn btn-sm" href="${pageBaseUri}&page=1">«</a>
-						<a class="join-item btn btn-sm" href="${pageBaseUri}&page=${page - 1}">&lt;</a>
+						<a href="${pageBaseUri}&page=1" class="hover:text-blue-600 mx-1">«</a>
+						<a href="${pageBaseUri}&page=${page - 1}" class="hover:text-blue-600 mx-1">&lt;</a>
+						<span class="text-gray-300 mx-2">|</span>
 					</c:if>
-					<c:forEach begin="${start}" end="${end}" var="i">
-						<a class="join-item btn btn-sm ${page == i ? 'btn-active' : ''}" href="${pageBaseUri}&page=${i}">${i}</a>
+					<c:forEach begin="${startPage}" end="${endPage}" var="i">
+						<a href="${pageBaseUri}&page=${i}" class="${page == i ? 'text-blue-600 border border-blue-600 p-1' : ''} mx-1 hover:underline">${i}</a>
 					</c:forEach>
 					<c:if test="${page < pagesCount}">
-						<a class="join-item btn btn-sm" href="${pageBaseUri}&page=${page + 1}">&gt;</a>
-						<a class="join-item btn btn-sm" href="${pageBaseUri}&page=${pagesCount}">»</a>
-					</c:if>
-					<c:if test="${page == pagesCount}">
-						<a class="join-item btn btn-sm btn-disabled">&gt;</a>
-						<a class="join-item btn btn-sm btn-disabled">»</a>
+						<span class="text-gray-300 mx-2">|</span>
+						<a href="${pageBaseUri}&page=${page + 1}" class="hover:text-blue-600 mx-1">&gt;</a>
+						<a href="${pageBaseUri}&page=${pagesCount}" class="hover:text-blue-600 mx-1">»</a>
 					</c:if>
 				</div>
+			</div>
+			<div class="flex justify-center">
+				<form onsubmit="submitListPageForm(this, ${pagesCount}); return false;">
+					<input type="hidden" name="boardType" value="${boardType}"/>
+					<input type="hidden" name="boardId" value="${boardId}"/>
+					<input type="hidden" name="searchKeywordType" value="${searchKeywordType}"/>
+					<input type="hidden" name="searchKeyword" value="${searchKeyword}"/>
+					<input type="hidden" name="memberId" value="${memberId}"/>
+					<input type="text" name="page" class="input input-bordered input-info input-xs w-14" placeholder="페이지"/>
+					<button class="btn btn-info btn-xs text-white hover:text-black ml-1">이동</button>
+				</form>
 			</div>
 		</div>
 	</section>

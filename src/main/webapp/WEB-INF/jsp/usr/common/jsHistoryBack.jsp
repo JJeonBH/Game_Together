@@ -3,12 +3,15 @@
 <script>
 
 	let msg = '${msg}'.trim();
+	let isHistoryBack = ${isHistoryBack};
 	
 	// falsy
 	if (msg) {
 		alert(msg);
 	}
 	
-	location.replace('/');
+	if (isHistoryBack) {
+		history.back();
+	}
 	
 </script>

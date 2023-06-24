@@ -63,6 +63,36 @@ $('select[data-value]').each(function(index, item) {
 	
 });
 
+//	게시물 리스트에서 페이지 입력해서 이동
+function submitListPageForm(form, pagesCount) {
+	
+	form.page.value = form.page.value.trim();
+	
+	if (form.page.value.length == 0) {
+		alert("페이지를 입력해 주세요.");
+		return;
+	}
+	
+	const regex = /^[0-9]+$/;
+	
+	if (!regex.test(form.page.value)) {
+		alert("(부호 없이)숫자만 입력해 주세요.")
+		form.page.value = '';
+		return;
+	}
+	
+	if (form.page.value < 1) {
+		form.page.value = 1;
+	}
+	
+	if (form.page.value > pagesCount) {
+		form.page.value = pagesCount;
+	}
+	
+	form.submit();
+	
+}
+
 //	소환사 검색시 유효성 검사
 function submitSummonerSearchForm(form) {
 	

@@ -21,6 +21,10 @@ public class BoardService {
 	public Board getBoardById(int boardId) {
 		return boardRepository.getBoardById(boardId);
 	}
+	
+	public Board getBoardByIdAndType(int boardId, String boardType) {
+		return boardRepository.getBoardByIdAndType(boardId, boardType);
+	}
 
 	public List<Board> getBoardsByBoardType(String boardType) {
 		return boardRepository.getBoardsByBoardType(boardType);

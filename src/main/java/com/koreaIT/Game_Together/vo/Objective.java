@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Objective {
 	
-//	private boolean first;
 	private int kills;
 	
 }

@@ -12,7 +12,6 @@ public class Objectives {
 	private Objective baron;
 	private Objective champion;
 	private Objective dragon;
-//	private Objective inhibitor;
 	private Objective tower;
 	
 }

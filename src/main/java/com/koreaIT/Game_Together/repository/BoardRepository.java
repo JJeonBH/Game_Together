@@ -10,6 +10,8 @@ import com.koreaIT.Game_Together.vo.Board;
 public interface BoardRepository {
 
 	public Board getBoardById(int boardId);
+	
+	public Board getBoardByIdAndType(int boardId, String boardType);
 
 	public List<Board> getBoardsByBoardType(String boardType);
 	

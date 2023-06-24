@@ -81,12 +81,21 @@ public class Request {
 		
 	}
 	
-	public String returnMain(String msg) {
+	public String jsReplace(String msg, String uri) {
 		
 		request.setAttribute("msg", msg);
+		request.setAttribute("uri", uri);
 		
-		return "usr/common/js";
+		return "usr/common/jsReplace";
 		
+	}
+	
+	public String jsHistoryBack(String msg, boolean isHistoryBack) {
+		
+		request.setAttribute("msg", msg);
+		request.setAttribute("isHistoryBack", isHistoryBack);
+		
+		return "usr/common/jsHistoryBack";
 	}
 
 }

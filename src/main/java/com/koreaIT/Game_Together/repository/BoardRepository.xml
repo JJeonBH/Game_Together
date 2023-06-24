@@ -10,6 +10,14 @@
 			AND delStatus = 0
 	</select>
 	
+	<select id="getBoardByIdAndType" resultType="Board">
+		SELECT *
+			FROM board
+			WHERE id = #{boardId}
+			AND type = #{boardType}
+			AND delStatus = 0
+	</select>
+	
 	<select id="getBoardsByBoardType" resultType="Board">
 		SELECT *
 			FROM board

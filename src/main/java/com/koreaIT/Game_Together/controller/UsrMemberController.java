@@ -70,7 +70,7 @@ public class UsrMemberController {
 	public String showProfile(Model model) {
 		
 		if (rq.getLoginedMember() == null) {
-			return rq.returnMain("세션이 만료되었습니다. 다시 로그인 해주세요.");
+			return rq.jsReplace("세션이 만료되었습니다. 다시 로그인 해주세요.", "/");
 		}
 		
 		String regDate = Util.formatDate(rq.getLoginedMember().getRegDate());

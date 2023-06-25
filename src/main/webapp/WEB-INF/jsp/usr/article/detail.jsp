@@ -32,18 +32,18 @@
 				</c:forEach>
 			</ul>
 		</div>
-		<div class="w-3/4 bg-red-200 ml-6 p-6 rounded-lg">
+		<div class="w-3/4 ml-6 p-6 rounded-lg">
 			<div>
-				<div class="flex justify-between">
+				<div class="flex justify-between items-center border-b border-gray-200 pb-2">
 					<div><a href="list?boardType=${boardType}&boardId=${article.boardId}" class="text-green-500" >${article.boardName}</a></div>
 					<div class="flex">
 						<c:if test="${article.nextArticleId != 0}">
-							<div><a href="detail?articleId=${article.nextArticleId}&boardType=${boardType}&boardId=${boardId}&page=${page}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}&memberId=${memberId}" class="btn-text-color btn btn-info btn-sm">△다음글</a></div>
+							<div><a href="detail?articleId=${article.nextArticleId}&boardType=${boardType}&boardId=${boardId}&page=${page}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}&memberId=${memberId}" class="btn btn-info btn-sm text-white hover:text-black">△다음글</a></div>
 						</c:if>
 						<c:if test="${article.previousArticleId != 0}">
-							<div><a href="detail?articleId=${article.previousArticleId}&boardType=${boardType}&boardId=${boardId}&page=${page}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}&memberId=${memberId}" class="btn-text-color btn btn-info btn-sm ml-2">▽이전글</a></div>
+							<div><a href="detail?articleId=${article.previousArticleId}&boardType=${boardType}&boardId=${boardId}&page=${page}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}&memberId=${memberId}" class="btn btn-info btn-sm text-white hover:text-black ml-2">▽이전글</a></div>
 						</c:if>
-						<div><a href="list?boardType=${boardType}&boardId=${boardId}&page=${page}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}&memberId=${memberId}" class="btn-text-color btn btn-info btn-sm ml-2">목록</a></div>
+						<div><a href="list?boardType=${boardType}&boardId=${boardId}&page=${page}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}&memberId=${memberId}" class="btn btn-info btn-sm text-white hover:text-black ml-2">목록</a></div>
 					</div>
 				</div>
 				<div class="my-4">

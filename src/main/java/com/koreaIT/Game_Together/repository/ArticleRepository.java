@@ -13,7 +13,7 @@ public interface ArticleRepository {
 	
 	public int getLastInsertId();
 	
-	public Article getForPrintArticle(int articleId);
+	public Article getForPrintArticle(int articleId, String boardType, int boardId, String searchKeywordType, String searchKeyword, int memberId);
 	
 	public int increaseViewCount(int articleId);
 	

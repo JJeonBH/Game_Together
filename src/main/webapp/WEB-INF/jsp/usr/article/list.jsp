@@ -87,7 +87,7 @@
 										<c:otherwise><span>${article.id}</span></c:otherwise>
 									</c:choose>
 								</td>
-								<td><a href="detail?articleId=${article.id}&boardType=${boardType}" class="hover:underline">${article.title}</a></td>
+								<td><a href="detail?articleId=${article.id}&boardType=${boardType}&boardId=${boardId}&page=${page}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}&memberId=${memberId}" class="hover:underline">${article.title}</a></td>
 								<td><span class="hover:underline">${article.writerNickname}</span></td>
 								<td class="text-center"><span>${article.formatRegDate}</span></td>
 								<td class="text-center"><span>${article.viewCount}</span></td>

@@ -18,15 +18,48 @@
 	</select>
 	
 	<select id="getForPrintArticle" resultType="Article">
-		SELECT A.*
-			, M.nickname AS writerNickname
-			, B.name AS boardName
-			FROM article AS A
-			INNER JOIN `member` AS M
-			ON A.memberId = M.id
-			INNER JOIN board AS B
-			ON A.boardId = B.id
-			WHERE A.id = #{articleId}
+		SELECT AMB.*
+			FROM (
+				SELECT A.*
+					, M.nickname AS writerNickname
+					, B.name AS boardName
+					, IFNULL(LAG(A.id) OVER(ORDER BY A.id), 0) AS previousArticleId
+					, IFNULL(LEAD(A.id) OVER(ORDER BY A.id), 0) AS nextArticleId
+					FROM article AS A
+					INNER JOIN `member` AS M
+					ON A.memberId = M.id
+					INNER JOIN board AS B
+					ON A.boardId = B.id
+					WHERE 1 = 1
+					AND B.type = #{boardType}
+					<if test="boardId != 0">
+						AND A.boardId = #{boardId}
+					</if>
+					<if test="searchKeyword != ''">
+						<choose>
+							<when test="searchKeywordType == 'title'">
+								AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+							</when>
+							<when test="searchKeywordType == 'body'">
+								AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+							</when>
+							<when test="searchKeywordType == 'writerNickname'">
+								AND M.nickname LIKE CONCAT('%', #{searchKeyword}, '%')
+							</when>
+							<otherwise>
+								AND (
+									A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+									OR A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+								)
+							</otherwise>
+						</choose>
+					</if>
+					<if test="memberId != 0">
+						AND A.memberId = #{memberId}
+					</if>
+					ORDER BY A.id DESC
+			) AS AMB
+			WHERE AMB.id = #{articleId}
 	</select>
 	
 	<update id="increaseViewCount">
@@ -96,7 +129,7 @@
 	
 	<select id="getArticlesByBoardType" resultType="Article">
 	    SELECT A.*
-	    	, M.nickname AS writerNickname
+    		, M.nickname AS writerNickname
 	    	, B.name AS boardName
 	        FROM article AS A
 	        INNER JOIN `member` AS M

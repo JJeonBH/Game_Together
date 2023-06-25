@@ -25,5 +25,7 @@ public class Article {
 	private String boardName;
 	private boolean actorCanChangeData;
 	private String formatRegDate;
+	private int previousArticleId;
+	private int nextArticleId;
 	
 }

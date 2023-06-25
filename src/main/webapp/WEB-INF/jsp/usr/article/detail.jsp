@@ -34,8 +34,17 @@
 		</div>
 		<div class="w-3/4 bg-red-200 ml-6 p-6 rounded-lg">
 			<div>
-				<div>
-					<a class="text-green-500" href="list?boardType=${boardType}&boardId=${article.boardId}">${article.boardName}</a>
+				<div class="flex justify-between">
+					<div><a href="list?boardType=${boardType}&boardId=${article.boardId}" class="text-green-500" >${article.boardName}</a></div>
+					<div class="flex">
+						<c:if test="${article.nextArticleId != 0}">
+							<div><a href="detail?articleId=${article.nextArticleId}&boardType=${boardType}&boardId=${boardId}&page=${page}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}&memberId=${memberId}" class="btn-text-color btn btn-info btn-sm">△다음글</a></div>
+						</c:if>
+						<c:if test="${article.previousArticleId != 0}">
+							<div><a href="detail?articleId=${article.previousArticleId}&boardType=${boardType}&boardId=${boardId}&page=${page}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}&memberId=${memberId}" class="btn-text-color btn btn-info btn-sm ml-2">▽이전글</a></div>
+						</c:if>
+						<div><a href="list?boardType=${boardType}&boardId=${boardId}&page=${page}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}&memberId=${memberId}" class="btn-text-color btn btn-info btn-sm ml-2">목록</a></div>
+					</div>
 				</div>
 				<div class="my-4">
 					<span class="text-3xl detail-title">${article.title}</span>
@@ -66,10 +75,10 @@
 				</div>
 			</div>
 			<div class="border-b border-blue-400 my-8"></div>
-			<div>
+			<div class="flex justify-end">
 				<c:if test="${article.actorCanChangeData}">
-					<span><a class="btn-text-color btn btn-info btn-sm" href="modify?id=${article.id}">수정</a></span>
-					<span><a class="btn-text-color btn btn-info btn-sm" href="doDelete?id=${article.id}" onclick="if(!confirm('정말 삭제하시겠습니까?')) {return false;}">삭제</a></span>
+					<span><a href="modify?id=${article.id}" class="btn-text-color btn btn-info btn-sm">수정</a></span>
+					<span><a href="doDelete?id=${article.id}" class="btn-text-color btn btn-info btn-sm ml-2" onclick="if(!confirm('정말 삭제하시겠습니까?')) {return false;}">삭제</a></span>
 				</c:if>
 			</div>
 		</div>

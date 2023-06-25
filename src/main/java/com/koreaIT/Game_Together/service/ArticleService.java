@@ -27,9 +27,9 @@ public class ArticleService {
 		return articleRepository.getLastInsertId();
 	}
 	
-	public Article getForPrintArticle(int articleId) {
+	public Article getForPrintArticle(int articleId, String boardType, int boardId, String searchKeywordType, String searchKeyword, int memberId) {
 		
-		Article article = articleRepository.getForPrintArticle(articleId);
+		Article article = articleRepository.getForPrintArticle(articleId, boardType, boardId, searchKeywordType, searchKeyword, memberId);
 		
 		return article;
 		

@@ -71,12 +71,16 @@ public class UsrArticleController {
 
 		int articleId = articleService.getLastInsertId();
 
-		return Util.jsAlertReplace("", String.format("detail?articleId=%d&boardType=%s", articleId, boardType));
+		return Util.jsAlertReplace("", String.format("detail?articleId=%d&boardType=%s&boardId=%d", articleId, boardType, boardId));
 		
 	}
 	
 	@RequestMapping("/usr/article/detail")
-	public String showDetail(HttpServletRequest req, HttpServletResponse resp, Model model, int articleId, String boardType) {
+	public String showDetail(HttpServletRequest req, HttpServletResponse resp, Model model, int articleId, String boardType, int boardId,
+			@RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "title") String searchKeywordType,
+			@RequestParam(defaultValue = "") String searchKeyword,
+			@RequestParam(defaultValue = "0") int memberId) {
 		
 		Cookie oldCookie = null;
 		Cookie[] cookies = req.getCookies();
@@ -105,7 +109,11 @@ public class UsrArticleController {
 			resp.addCookie(newCookie);
 		}
 		
-		Article article = articleService.getForPrintArticle(articleId);
+		Article article = articleService.getForPrintArticle(articleId, boardType, boardId, searchKeywordType, searchKeyword, memberId);
+		
+		if (article == null) {
+			return rq.jsHistoryBack("존재하지 않는 게시물입니다.", true);
+		}
 		
 		article.setFormatRegDate(Util.formatRegDateVer1(article.getRegDate()));
 
@@ -115,7 +123,12 @@ public class UsrArticleController {
 
 		model.addAttribute("article", article);
 		model.addAttribute("boardType", boardType);
+		model.addAttribute("boardId", boardId);
 		model.addAttribute("boards", boards);
+		model.addAttribute("page", page);
+		model.addAttribute("searchKeywordType", searchKeywordType);
+		model.addAttribute("searchKeyword", searchKeyword);
+		model.addAttribute("memberId", memberId);
 
 		return "usr/article/detail";
 		
@@ -124,7 +137,7 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/list")
 	public String showList(Model model, String boardType,
 			@RequestParam(defaultValue = "0") int boardId,
-			@RequestParam(defaultValue = "1") int page, 
+			@RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "title") String searchKeywordType,
 			@RequestParam(defaultValue = "") String searchKeyword,
 			@RequestParam(defaultValue = "0") int memberId) {

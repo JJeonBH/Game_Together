@@ -64,7 +64,8 @@
 					</div>
 					<div>
 						<span>댓글 1</span>
-						<span class="ml-2">추천 1</span>
+						<span class="text-gray-300 mx-2">|</span>
+						<span>추천 ${article.sumReactionPoint}</span>
 					</div>
 				</div>
 			</div>

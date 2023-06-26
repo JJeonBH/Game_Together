@@ -45,6 +45,17 @@ CREATE TABLE board(
 	delDate DATETIME COMMENT '삭제 날짜'
 );
 
+# reactionPoint 테이블 생성
+CREATE TABLE reactionPoint(
+	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+    memberId INT UNSIGNED NOT NULL,
+    relTypeCode VARCHAR(20) NOT NULL COMMENT '관련 데이터 타입 코드 (article, reply, ...)',
+    relId INT UNSIGNED NOT NULL COMMENT '관련 데이터 번호',
+	`point` TINYINT NOT NULL DEFAULT 0
+);
+
 # member 테스트 데이터
 INSERT INTO `member`
 SET regDate = NOW(),
@@ -229,15 +240,89 @@ updateDate = NOW(),
 `code` = 'test',
 `name` = '테스트 게시판';
 
+# reactionPoint 테스트 데이터
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+relTypeCode = 'article',
+relId = 2,
+`point` = 1;
+
+# reactionPoint 테스트 데이터
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+relTypeCode = 'article',
+relId = 3,
+`point` = 1;
+
+# reactionPoint 테스트 데이터
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'article',
+relId = 1,
+`point` = 1;
+
+# reactionPoint 테스트 데이터
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'article',
+relId = 4,
+`point` = 1;
+
+# reactionPoint 테스트 데이터
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 3,
+relTypeCode = 'article',
+relId = 1,
+`point` = 1;
+
+# reactionPoint 테스트 데이터
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'article',
+relId = 5,
+`point` = 1;
+
+# reactionPoint 테스트 데이터
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 3,
+relTypeCode = 'article',
+relId = 5,
+`point` = 1;
+
+# reactionPoint 테스트 데이터
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'article',
+relId = 6,
+`point` = 1;
+
 # 테이블 구조
 DESC `member`;
 DESC article;
 DESC board;
+DESC reactionPoint;
 
 # 테이블 조회
 SELECT * FROM `member`;
 SELECT * FROM article;
 SELECT * FROM board;
+SELECT * FROM reactionPoint;
 
 SELECT LAST_INSERT_ID();
 

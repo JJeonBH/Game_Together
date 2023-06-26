@@ -237,3 +237,8 @@ a:hover > .main-image {
 	word-wrap: break-word;
 	word-break: break-word;
 }
+
+/* 글 상세보기 최소 높이 지정 */
+.toast-ui {
+	min-height: 200px;
+}

@@ -17,8 +17,10 @@
 		SELECT LAST_INSERT_ID()
 	</select>
 	
+	<!-- 서브쿼리, 조인 -->
 	<select id="getForPrintArticle" resultType="Article">
 		SELECT AMB.*
+			, IFNULL(SUM(RP.point), 0) AS sumReactionPoint
 			FROM (
 				SELECT A.*
 					, M.nickname AS writerNickname
@@ -59,6 +61,9 @@
 					</if>
 					ORDER BY A.id DESC
 			) AS AMB
+			LEFT JOIN reactionPoint AS RP
+			ON RP.relTypeCode = 'article'
+			AND RP.relId = AMB.id
 			WHERE AMB.id = #{articleId}
 	</select>
 	
@@ -129,74 +134,94 @@
 			</if>
 	</select>
 	
+	<!-- WITH AS, 조인 -->
 	<select id="getArticlesByBoardType" resultType="Article">
-	    SELECT A.*
-    		, M.nickname AS writerNickname
-	    	, B.name AS boardName
-	        FROM article AS A
-	        INNER JOIN `member` AS M
-	        ON A.memberId = M.id
-	        INNER JOIN board AS B
-			ON A.boardId = B.id
-			WHERE 1 = 1
-			AND B.type = #{boardType}
-			<if test="searchKeyword != ''">
-				<choose>
-					<when test="searchKeywordType == 'title'">
-						AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
-					</when>
-					<when test="searchKeywordType == 'body'">
-						AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
-					</when>
-					<when test="searchKeywordType == 'writerNickname'">
-						AND M.nickname LIKE CONCAT('%', #{searchKeyword}, '%')
-					</when>
-					<otherwise>
-						AND (
-							A.title LIKE CONCAT('%', #{searchKeyword}, '%')
-							OR A.body LIKE CONCAT('%', #{searchKeyword}, '%')
-						)
-					</otherwise>
-				</choose>
-			</if>
-			<if test="memberId != 0">
-				AND A.memberId = #{memberId}
-			</if>
-			ORDER BY A.id DESC
+		WITH AMB AS (
+			SELECT A.*
+	    		, M.nickname AS writerNickname
+		    	, B.name AS boardName
+		        FROM article AS A
+		        INNER JOIN `member` AS M
+		        ON A.memberId = M.id
+		        INNER JOIN board AS B
+				ON A.boardId = B.id
+				WHERE 1 = 1
+				AND B.type = #{boardType}
+				<if test="searchKeyword != ''">
+					<choose>
+						<when test="searchKeywordType == 'title'">
+							AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+						</when>
+						<when test="searchKeywordType == 'body'">
+							AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+						</when>
+						<when test="searchKeywordType == 'writerNickname'">
+							AND M.nickname LIKE CONCAT('%', #{searchKeyword}, '%')
+						</when>
+						<otherwise>
+							AND (
+								A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+								OR A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+							)
+						</otherwise>
+					</choose>
+				</if>
+				<if test="memberId != 0">
+					AND A.memberId = #{memberId}
+				</if>
+		)
+		SELECT AMB.*
+			, IFNULL(SUM(RP.point), 0) AS sumReactionPoint
+			FROM AMB
+			LEFT JOIN reactionPoint AS RP
+			ON RP.relTypeCode = 'article'
+			AND RP.relId = AMB.id
+			GROUP BY AMB.id
+			ORDER BY AMB.id DESC
 			LIMIT #{limitStart}, #{itemsInAPage}
 	</select>
 	
+	<!-- WITH AS, 조인 -->
 	<select id="getArticlesByBoardId" resultType="Article">
-	    SELECT A.*
-	    	, M.nickname AS writerNickname
-	    	, B.name AS boardName
-	        FROM article AS A
-	        INNER JOIN `member` AS M
-	        ON A.memberId = M.id
-	        INNER JOIN board AS B
-			ON A.boardId = B.id
-			WHERE 1 = 1
-			AND A.boardId = #{boardId}
-			<if test="searchKeyword != ''">
-				<choose>
-					<when test="searchKeywordType == 'title'">
-						AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
-					</when>
-					<when test="searchKeywordType == 'body'">
-						AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
-					</when>
-					<when test="searchKeywordType == 'writerNickname'">
-						AND M.nickname LIKE CONCAT('%', #{searchKeyword}, '%')
-					</when>
-					<otherwise>
-						AND (
-							A.title LIKE CONCAT('%', #{searchKeyword}, '%')
-							OR A.body LIKE CONCAT('%', #{searchKeyword}, '%')
-						)
-					</otherwise>
-				</choose>
-			</if>
-			ORDER BY A.id DESC
+		WITH AMB AS (
+			SELECT A.*
+		    	, M.nickname AS writerNickname
+		    	, B.name AS boardName
+		        FROM article AS A
+		        INNER JOIN `member` AS M
+		        ON A.memberId = M.id
+		        INNER JOIN board AS B
+				ON A.boardId = B.id
+				WHERE 1 = 1
+				AND A.boardId = #{boardId}
+				<if test="searchKeyword != ''">
+					<choose>
+						<when test="searchKeywordType == 'title'">
+							AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+						</when>
+						<when test="searchKeywordType == 'body'">
+							AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+						</when>
+						<when test="searchKeywordType == 'writerNickname'">
+							AND M.nickname LIKE CONCAT('%', #{searchKeyword}, '%')
+						</when>
+						<otherwise>
+							AND (
+								A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+								OR A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+							)
+						</otherwise>
+					</choose>
+				</if>
+		)
+		SELECT AMB.*
+			, IFNULL(SUM(RP.point), 0) AS sumReactionPoint
+			FROM AMB
+			LEFT JOIN reactionPoint AS RP
+			ON RP.relTypeCode = 'article'
+			AND RP.relId = AMB.id
+			GROUP BY AMB.id
+			ORDER BY AMB.id DESC
 			LIMIT #{limitStart}, #{itemsInAPage}
 	</select>
 

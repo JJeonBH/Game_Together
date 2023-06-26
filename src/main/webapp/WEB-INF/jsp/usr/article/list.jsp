@@ -75,7 +75,7 @@
 							<th>작성자</th>
 							<th>작성일</th>
 							<th>조회</th>
-							<th>좋아요</th>
+							<th>추천</th>
 						</tr>
 					</thead>
 					<tbody class="text-sm">
@@ -91,7 +91,7 @@
 								<td><span class="hover:underline">${article.writerNickname}</span></td>
 								<td class="text-center"><span>${article.formatRegDate}</span></td>
 								<td class="text-center"><span>${article.viewCount}</span></td>
-								<td class="text-center"><span>0</span></td>
+								<td class="text-center"><span>${article.sumReactionPoint}</span></td>
 							</tr>
 						</c:forEach>
 					</tbody>

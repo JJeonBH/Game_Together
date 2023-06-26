@@ -27,5 +27,6 @@ public class Article {
 	private String formatRegDate;
 	private int previousArticleId;
 	private int nextArticleId;
+	private int sumReactionPoint;
 	
 }

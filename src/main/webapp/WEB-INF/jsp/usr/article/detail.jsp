@@ -107,7 +107,7 @@
 				<div>
 					<c:if test="${article.actorCanChangeData}">
 						<span><a href="modify?id=${article.id}" class="btn btn-info btn-sm text-white hover:text-black">수정</a></span>
-						<span><a href="doDelete?id=${article.id}" class="btn btn-info btn-sm text-white hover:text-black ml-2" onclick="if(!confirm('정말 삭제하시겠습니까?')) {return false;}">삭제</a></span>
+						<span><a href="doDelete?id=${article.id}" class="btn btn-info btn-sm text-white hover:text-black" onclick="if(!confirm('정말 삭제하시겠습니까?')) {return false;}">삭제</a></span>
 					</c:if>
 				</div>
 				<div class="flex">
@@ -158,7 +158,14 @@
 					<div>❤️추천 ${article.sumReactionPoint}</div>
 				</c:if>
 				<c:if test="${Request.loginedMemberId != 0}">
-					<button id="reactionPointBtn" class="btn btn-info btn-sm text-white hover:text-black"></button>
+					<c:choose>
+						<c:when test="${Request.loginedMemberId == article.memberId}">
+							<div>❤️추천 ${article.sumReactionPoint}</div>
+						</c:when>
+						<c:otherwise>
+							<button id="reactionPointBtn" class="btn btn-info btn-sm text-white hover:text-black"></button>
+						</c:otherwise>
+					</c:choose>
 				</c:if>
 			</div>
 			<div class="border-b border-blue-400 my-4"></div>

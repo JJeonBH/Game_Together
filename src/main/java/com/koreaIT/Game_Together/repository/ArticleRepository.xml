@@ -65,6 +65,7 @@
 			ON RP.relTypeCode = 'article'
 			AND RP.relId = AMB.id
 			WHERE AMB.id = #{articleId}
+			GROUP BY AMB.id
 	</select>
 	
 	<update id="increaseViewCount">

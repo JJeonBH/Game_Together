@@ -15,7 +15,7 @@
 		});
 		
 		$('form').find('div.toast-ui-editor').on('input', function(event) {
-			if(event) {
+			if (event) {
 				isFormChanged = true;
 			}
 		});

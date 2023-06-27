@@ -53,7 +53,7 @@ CREATE TABLE reactionPoint(
     memberId INT UNSIGNED NOT NULL,
     relTypeCode VARCHAR(20) NOT NULL COMMENT '관련 데이터 타입 코드 (article, reply, ...)',
     relId INT UNSIGNED NOT NULL COMMENT '관련 데이터 번호',
-	`point` TINYINT NOT NULL DEFAULT 0
+	`point` TINYINT NOT NULL DEFAULT 1
 );
 
 # member 테스트 데이터
@@ -246,8 +246,7 @@ SET regDate = NOW(),
 updateDate = NOW(),
 memberId = 1,
 relTypeCode = 'article',
-relId = 2,
-`point` = 1;
+relId = 2;
 
 # reactionPoint 테스트 데이터
 INSERT INTO reactionPoint
@@ -255,8 +254,7 @@ SET regDate = NOW(),
 updateDate = NOW(),
 memberId = 1,
 relTypeCode = 'article',
-relId = 3,
-`point` = 1;
+relId = 3;
 
 # reactionPoint 테스트 데이터
 INSERT INTO reactionPoint
@@ -264,8 +262,7 @@ SET regDate = NOW(),
 updateDate = NOW(),
 memberId = 2,
 relTypeCode = 'article',
-relId = 1,
-`point` = 1;
+relId = 1;
 
 # reactionPoint 테스트 데이터
 INSERT INTO reactionPoint
@@ -273,8 +270,7 @@ SET regDate = NOW(),
 updateDate = NOW(),
 memberId = 2,
 relTypeCode = 'article',
-relId = 4,
-`point` = 1;
+relId = 4;
 
 # reactionPoint 테스트 데이터
 INSERT INTO reactionPoint
@@ -282,8 +278,7 @@ SET regDate = NOW(),
 updateDate = NOW(),
 memberId = 3,
 relTypeCode = 'article',
-relId = 1,
-`point` = 1;
+relId = 1;
 
 # reactionPoint 테스트 데이터
 INSERT INTO reactionPoint
@@ -291,8 +286,7 @@ SET regDate = NOW(),
 updateDate = NOW(),
 memberId = 2,
 relTypeCode = 'article',
-relId = 5,
-`point` = 1;
+relId = 5;
 
 # reactionPoint 테스트 데이터
 INSERT INTO reactionPoint
@@ -300,8 +294,7 @@ SET regDate = NOW(),
 updateDate = NOW(),
 memberId = 3,
 relTypeCode = 'article',
-relId = 5,
-`point` = 1;
+relId = 5;
 
 # reactionPoint 테스트 데이터
 INSERT INTO reactionPoint
@@ -309,8 +302,7 @@ SET regDate = NOW(),
 updateDate = NOW(),
 memberId = 2,
 relTypeCode = 'article',
-relId = 6,
-`point` = 1;
+relId = 6;
 
 # 테이블 구조
 DESC `member`;

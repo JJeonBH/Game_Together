@@ -4,6 +4,76 @@
 <c:set var="pageTitle" value="${article.title}" />
 <%@ include file="../common/head.jsp" %>
 <%@ include file="../common/toastUiEditorLib.jsp" %>
+<script>
+
+	function getReactionPoint() {
+		
+		$.get('../reactionPoint/getReactionPoint', {
+			relTypeCode : 'article',
+			relId : ${article.id}
+		}, function(data) {
+			
+			let reactionPointBtn = $('#reactionPointBtn');
+			
+			if (data.data1.sumReactionPoint == 0) {
+				reactionPointBtn.empty();
+				reactionPointBtn.html('🤍추천 ${article.sumReactionPoint}');
+				reactionPointBtn.attr('onclick', 'doInsertReactionPoint()')
+			} else {
+				reactionPointBtn.empty();
+				reactionPointBtn.html('❤️추천 ${article.sumReactionPoint}');
+				reactionPointBtn.attr('onclick', 'doDeleteReactionPoint()')
+			}
+			
+		}, 'json');
+		
+	}
+	
+	function doInsertReactionPoint() {
+		
+		$.get('../reactionPoint/doInsertReactionPoint', {
+			relTypeCode : 'article',
+			relId : ${article.id}
+		}, function(data) {
+			
+			let reactionPointBtn = $('#reactionPointBtn');
+			let recommendation = $('#recommendation');
+			
+			reactionPointBtn.empty();
+			recommendation.empty();
+			reactionPointBtn.html('❤️추천 ' + data);
+			recommendation.html('추천 ' + data)
+			reactionPointBtn.attr('onclick', 'doDeleteReactionPoint()')
+			
+		}, 'json');
+		
+	}
+	
+	function doDeleteReactionPoint() {
+		
+		$.get('../reactionPoint/doDeleteReactionPoint', {
+			relTypeCode : 'article',
+			relId : ${article.id}
+		}, function(data) {
+			
+			let reactionPointBtn = $('#reactionPointBtn');
+			let recommendation = $('#recommendation');
+			
+			reactionPointBtn.empty();
+			recommendation.empty();
+			reactionPointBtn.html('🤍추천 ' + data);
+			recommendation.html('추천 ' + data)
+			reactionPointBtn.attr('onclick', 'doInsertReactionPoint()')
+			
+		}, 'json');
+		
+	}
+	
+	$(function() {
+		getReactionPoint();
+	})
+	
+</script>
 	<section class="mt-6 mb-20 mx-20 min-w-1000 flex">
 		<div class="w-64 p-6 text-lg">
 			<c:if test="${Request.loginedMemberId != 0}">
@@ -33,18 +103,26 @@
 			</ul>
 		</div>
 		<div class="w-3/4 ml-6 p-6 rounded-lg">
+			<div class="flex justify-between items-center border-b border-gray-200 pb-4">
+				<div>
+					<c:if test="${article.actorCanChangeData}">
+						<span><a href="modify?id=${article.id}" class="btn btn-info btn-sm text-white hover:text-black">수정</a></span>
+						<span><a href="doDelete?id=${article.id}" class="btn btn-info btn-sm text-white hover:text-black ml-2" onclick="if(!confirm('정말 삭제하시겠습니까?')) {return false;}">삭제</a></span>
+					</c:if>
+				</div>
+				<div class="flex">
+					<c:if test="${article.nextArticleId != 0}">
+						<div><a href="detail?articleId=${article.nextArticleId}&boardType=${boardType}&boardId=${boardId}&page=${page}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}&memberId=${memberId}" class="btn btn-info btn-sm text-white hover:text-black">△다음글</a></div>
+					</c:if>
+					<c:if test="${article.previousArticleId != 0}">
+						<div><a href="detail?articleId=${article.previousArticleId}&boardType=${boardType}&boardId=${boardId}&page=${page}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}&memberId=${memberId}" class="btn btn-info btn-sm text-white hover:text-black ml-2">▽이전글</a></div>
+					</c:if>
+					<div><a href="list?boardType=${boardType}&boardId=${boardId}&page=${page}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}&memberId=${memberId}" class="btn btn-info btn-sm text-white hover:text-black ml-2">목록</a></div>
+				</div>
+			</div>
 			<div>
-				<div class="flex justify-between items-center border-b border-gray-200 pb-2">
+				<div class="my-4">
 					<div><a href="list?boardType=${boardType}&boardId=${article.boardId}" class="text-green-500" >${article.boardName}</a></div>
-					<div class="flex">
-						<c:if test="${article.nextArticleId != 0}">
-							<div><a href="detail?articleId=${article.nextArticleId}&boardType=${boardType}&boardId=${boardId}&page=${page}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}&memberId=${memberId}" class="btn btn-info btn-sm text-white hover:text-black">△다음글</a></div>
-						</c:if>
-						<c:if test="${article.previousArticleId != 0}">
-							<div><a href="detail?articleId=${article.previousArticleId}&boardType=${boardType}&boardId=${boardId}&page=${page}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}&memberId=${memberId}" class="btn btn-info btn-sm text-white hover:text-black ml-2">▽이전글</a></div>
-						</c:if>
-						<div><a href="list?boardType=${boardType}&boardId=${boardId}&page=${page}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}&memberId=${memberId}" class="btn btn-info btn-sm text-white hover:text-black ml-2">목록</a></div>
-					</div>
 				</div>
 				<div class="my-4">
 					<span class="text-3xl detail-title">${article.title}</span>
@@ -65,7 +143,7 @@
 					<div>
 						<span>댓글 1</span>
 						<span class="text-gray-300 mx-2">|</span>
-						<span>추천 ${article.sumReactionPoint}</span>
+						<span id="recommendation">추천 ${article.sumReactionPoint}</span>
 					</div>
 				</div>
 			</div>
@@ -75,13 +153,15 @@
 					<script type="text/x-template">${article.body}</script>
 				</div>
 			</div>
-			<div class="border-b border-blue-400 my-8"></div>
-			<div class="flex justify-end">
-				<c:if test="${article.actorCanChangeData}">
-					<span><a href="modify?id=${article.id}" class="btn-text-color btn btn-info btn-sm">수정</a></span>
-					<span><a href="doDelete?id=${article.id}" class="btn-text-color btn btn-info btn-sm ml-2" onclick="if(!confirm('정말 삭제하시겠습니까?')) {return false;}">삭제</a></span>
+			<div>
+				<c:if test="${Request.loginedMemberId == 0}">
+					<div>❤️추천 ${article.sumReactionPoint}</div>
+				</c:if>
+				<c:if test="${Request.loginedMemberId != 0}">
+					<button id="reactionPointBtn" class="btn btn-info btn-sm text-white hover:text-black"></button>
 				</c:if>
 			</div>
+			<div class="border-b border-blue-400 my-4"></div>
 		</div>
 	</section>
 <%@ include file="../common/foot.jsp" %>

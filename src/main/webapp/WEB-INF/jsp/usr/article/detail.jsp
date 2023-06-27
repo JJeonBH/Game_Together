@@ -13,7 +13,7 @@
 			relId : ${article.id}
 		}, function(data) {
 			
-			let reactionPointBtn = $('#reactionPointBtn');
+			let reactionPointBtn = $('#reactionPoint-btn');
 			
 			if (data.data1.sumReactionPoint == 0) {
 				reactionPointBtn.empty();
@@ -36,13 +36,15 @@
 			relId : ${article.id}
 		}, function(data) {
 			
-			let reactionPointBtn = $('#reactionPointBtn');
-			let recommendation = $('#recommendation');
+			let reactionPointBtn = $('#reactionPoint-btn');
+			let recommendationCnt = $('#recommendation-count');
 			
 			reactionPointBtn.empty();
-			recommendation.empty();
+			recommendationCnt.empty();
+			
 			reactionPointBtn.html('❤️추천 ' + data);
-			recommendation.html('추천 ' + data)
+			recommendationCnt.html('추천 ' + data);
+			
 			reactionPointBtn.attr('onclick', 'doDeleteReactionPoint()')
 			
 		}, 'json');
@@ -56,14 +58,50 @@
 			relId : ${article.id}
 		}, function(data) {
 			
-			let reactionPointBtn = $('#reactionPointBtn');
-			let recommendation = $('#recommendation');
+			let reactionPointBtn = $('#reactionPoint-btn');
+			let recommendationCnt = $('#recommendation-count');
 			
 			reactionPointBtn.empty();
-			recommendation.empty();
+			recommendationCnt.empty();
+			
 			reactionPointBtn.html('🤍추천 ' + data);
-			recommendation.html('추천 ' + data)
+			recommendationCnt.html('추천 ' + data);
+			
 			reactionPointBtn.attr('onclick', 'doInsertReactionPoint()')
+			
+		}, 'json');
+		
+	}
+	
+	function replyWrite() {
+		
+		let replyBody = $('textarea[name=body]').val().trim();
+		
+		if (replyBody.length < 2) {
+			alert('2글자 이상 입력해 주세요.');
+			$('textarea[name=body]').focus();
+			return;
+		}
+		
+		$.get('../reply/doWrite', {
+			relTypeCode : 'article',
+			relId : ${article.id},
+			body : replyBody
+		}, function(data) {
+			
+			let replyBox = $('#reply-box');
+			let replyCnt = $('#reply-count');
+			
+			let append = `<div class="border-b border-gray-300 p-4">`;
+			append += `<div class="font-semibold"><span>\${data.data1.writerNickname}</span></div>`;
+			append += `<div class="my-2"><span>\${data.data1.forPrintBody}</span></div>`;
+			append += `<div class="text-xs text-gray-400"><span>\${data.data1.formatRegDate}</span></div>`;
+			append += `</div>`;
+			
+			replyBox.append(append);
+			replyCnt.empty();
+			replyCnt.html('댓글 ' + data.data2);
+			$('textarea[name=body]').val('');
 			
 		}, 'json');
 		
@@ -125,7 +163,7 @@
 					<div><a href="list?boardType=${boardType}&boardId=${article.boardId}" class="text-green-500" >${article.boardName}</a></div>
 				</div>
 				<div class="my-4">
-					<span class="text-3xl detail-title">${article.title}</span>
+					<h1 class="text-3xl detail-title">${article.title}</h1>
 				</div>
 				<div class="flex justify-between items-center">
 					<div class="flex">
@@ -141,9 +179,9 @@
 						</div>
 					</div>
 					<div>
-						<span>댓글 1</span>
+						<span id="reply-count">댓글 ${repliesCnt}</span>
 						<span class="text-gray-300 mx-2">|</span>
-						<span id="recommendation">추천 ${article.sumReactionPoint}</span>
+						<span id="recommendation-count">추천 ${article.sumReactionPoint}</span>
 					</div>
 				</div>
 			</div>
@@ -163,12 +201,37 @@
 							<div>❤️추천 ${article.sumReactionPoint}</div>
 						</c:when>
 						<c:otherwise>
-							<button id="reactionPointBtn" class="btn btn-info btn-sm text-white hover:text-black"></button>
+							<button id="reactionPoint-btn" class="btn btn-info btn-sm text-white hover:text-black"></button>
 						</c:otherwise>
 					</c:choose>
 				</c:if>
 			</div>
 			<div class="border-b border-blue-400 my-4"></div>
+			<div>
+				<h2 class="text-lg my-4">댓글</h2>
+				<div id="reply-box">
+					<c:forEach var="reply" items="${replies}">
+						<div class="border-b border-gray-300 p-4">
+							<div class="font-semibold"><span>${reply.writerNickname}</span></div>
+							<div class="my-2"><span>${reply.getForPrintBody()}</span></div>
+							<div class="text-xs text-gray-400"><span>${reply.formatRegDate}</span></div>
+						</div>
+					</c:forEach>
+				</div>
+				<c:if test="${Request.loginedMemberId != 0}">
+					<div class="mt-2">
+						<div class="border border-blue-400 rounded-lg p-4">
+							<div class="mb-2">
+								<span>${Request.loginedMember.nickname}</span>
+							</div>
+							<textarea class="textarea textarea-info w-full" name="body" placeholder="댓글을 남겨보세요."></textarea>
+							<div class="flex justify-end">
+								<div class="btn btn-info btn-sm text-white hover:text-black" onclick="replyWrite();">등록</div>
+							</div>
+						</div>
+					</div>
+				</c:if>
+			</div>
 		</div>
 	</section>
 <%@ include file="../common/foot.jsp" %>

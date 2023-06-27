@@ -262,6 +262,7 @@
 				previewStyle: 'tab',
 				initialValue: initialValue,
 				initialEditType: 'wysiwyg',
+				hideModeSwitch: true,
 				height: '350px',
 			 	theme: theme,
 				plugins: [
@@ -330,7 +331,7 @@
 	});
 	
 	//	글쓰기 유효성 검사
-	function submitWriteForm(form) {
+	function submitArticleWriteForm(form) {
 		
 		if (form.boardId.value == '') {
 			alert("게시판을 선택해 주세요.");

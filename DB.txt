@@ -51,9 +51,20 @@ CREATE TABLE reactionPoint(
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
     memberId INT UNSIGNED NOT NULL,
-    relTypeCode VARCHAR(20) NOT NULL COMMENT '관련 데이터 타입 코드 (article, reply, ...)',
+    relTypeCode VARCHAR(20) NOT NULL COMMENT '관련 데이터 타입 코드 (article(게시물에 추천), reply(댓글에 추천), ...)',
     relId INT UNSIGNED NOT NULL COMMENT '관련 데이터 번호',
 	`point` TINYINT NOT NULL DEFAULT 1
+);
+
+# reply 테이블 생성
+CREATE TABLE reply(
+	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+    memberId INT UNSIGNED NOT NULL,
+    relTypeCode VARCHAR(20) NOT NULL COMMENT '관련 데이터 타입 코드 (article(게시물에 댓글), reply(댓글에 댓글), ...)',
+    relId INT UNSIGNED NOT NULL COMMENT '관련 데이터 번호',
+	`body` TEXT NOT NULL
 );
 
 # member 테스트 데이터
@@ -304,17 +315,91 @@ memberId = 2,
 relTypeCode = 'article',
 relId = 6;
 
+# reply 테스트 데이터
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+relTypeCode = 'article',
+relId = 1,
+`body` = '공지 꼭 읽어주세요.';
+
+# reply 테스트 데이터
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'article',
+relId = 1,
+`body` = '확인!!';
+
+# reply 테스트 데이터
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 3,
+relTypeCode = 'article',
+relId = 1,
+`body` = '확인했습니다.';
+
+# reply 테스트 데이터
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'article',
+relId = 4,
+`body` = '심각하네요!';
+
+# reply 테스트 데이터
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 3,
+relTypeCode = 'article',
+relId = 2,
+`body` = '무플 방지!';
+
+# reply 테스트 데이터
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 3,
+relTypeCode = 'article',
+relId = 5,
+`body` = '1빠';
+
+# reply 테스트 데이터
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'article',
+relId = 5,
+`body` = '늦었네~ 2빠';
+
+# reply 테스트 데이터
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+relTypeCode = 'article',
+relId = 2,
+`body` = '반갑습니다. ^^';
+
 # 테이블 구조
 DESC `member`;
 DESC article;
 DESC board;
 DESC reactionPoint;
+DESC reply;
 
 # 테이블 조회
 SELECT * FROM `member`;
 SELECT * FROM article;
 SELECT * FROM board;
 SELECT * FROM reactionPoint;
+SELECT * FROM reply;
 
 SELECT LAST_INSERT_ID();
 

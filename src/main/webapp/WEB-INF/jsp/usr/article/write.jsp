@@ -64,7 +64,7 @@
 				<span>글쓰기</span>
 			</div>
 			<div>
-				<form class="w-full" action="doWrite" method="post" onsubmit="submitWriteForm(this); return false;">
+				<form class="w-full" action="doWrite" method="post" onsubmit="submitArticleWriteForm(this); return false;">
 					<input type="hidden" name="body" />
 					<input type="hidden" name="boardType" value="${boardType}" />
 					<div class="mb-3">

@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.koreaIT.Game_Together.service.ArticleService;
 import com.koreaIT.Game_Together.service.BoardService;
+import com.koreaIT.Game_Together.service.ReplyService;
 import com.koreaIT.Game_Together.util.Util;
 import com.koreaIT.Game_Together.vo.Article;
 import com.koreaIT.Game_Together.vo.Board;
+import com.koreaIT.Game_Together.vo.Reply;
 import com.koreaIT.Game_Together.vo.Request;
 
 @Controller
@@ -26,12 +28,14 @@ public class UsrArticleController {
 
 	private ArticleService articleService;
 	private BoardService boardService;
+	private ReplyService replyService;
 	private Request rq;
 	
 	@Autowired
-	public UsrArticleController(ArticleService articleService, BoardService boardService, Request rq) {
+	public UsrArticleController(ArticleService articleService, BoardService boardService, ReplyService replyService, Request rq) {
 		this.articleService = articleService;
 		this.boardService = boardService;
+		this.replyService = replyService;
 		this.rq = rq;
 	}
 	
@@ -109,6 +113,14 @@ public class UsrArticleController {
 			resp.addCookie(newCookie);
 		}
 		
+		List<Reply> replies = replyService.getReplies("article", articleId);
+		
+		for (Reply reply : replies) {
+			reply.setFormatRegDate(Util.formatRegDateVer1(reply.getRegDate()));
+		}
+		
+		int repliesCnt = replyService.getRepliesCnt("article", articleId);
+		
 		Article article = articleService.getForPrintArticle(articleId, boardType, boardId, searchKeywordType, searchKeyword, memberId);
 		
 		if (article == null) {
@@ -129,6 +141,8 @@ public class UsrArticleController {
 		model.addAttribute("searchKeywordType", searchKeywordType);
 		model.addAttribute("searchKeyword", searchKeyword);
 		model.addAttribute("memberId", memberId);
+		model.addAttribute("replies", replies);
+		model.addAttribute("repliesCnt", repliesCnt);
 
 		return "usr/article/detail";
 		

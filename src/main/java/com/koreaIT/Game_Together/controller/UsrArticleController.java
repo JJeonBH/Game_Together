@@ -84,7 +84,8 @@ public class UsrArticleController {
 			@RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "title") String searchKeywordType,
 			@RequestParam(defaultValue = "") String searchKeyword,
-			@RequestParam(defaultValue = "0") int memberId) {
+			@RequestParam(defaultValue = "0") int memberId,
+			@RequestParam(defaultValue = "0") int event) {
 		
 		Cookie oldCookie = null;
 		Cookie[] cookies = req.getCookies();
@@ -119,13 +120,13 @@ public class UsrArticleController {
 			reply.setFormatRegDate(Util.formatRegDateVer1(reply.getRegDate()));
 		}
 		
-		int repliesCnt = replyService.getRepliesCnt("article", articleId);
-		
 		Article article = articleService.getForPrintArticle(articleId, boardType, boardId, searchKeywordType, searchKeyword, memberId);
 		
 		if (article == null) {
 			return rq.jsHistoryBack("존재하지 않는 게시물입니다.", true);
 		}
+		
+		article.setRepliesCnt(replyService.getRepliesCnt("article", articleId));
 		
 		article.setFormatRegDate(Util.formatRegDateVer1(article.getRegDate()));
 
@@ -142,7 +143,7 @@ public class UsrArticleController {
 		model.addAttribute("searchKeyword", searchKeyword);
 		model.addAttribute("memberId", memberId);
 		model.addAttribute("replies", replies);
-		model.addAttribute("repliesCnt", repliesCnt);
+		model.addAttribute("event", event);
 
 		return "usr/article/detail";
 		
@@ -188,6 +189,7 @@ public class UsrArticleController {
 		
 		for (Article article : articles) {
 			article.setFormatRegDate(Util.formatRegDateVer2(article.getRegDate()));
+			article.setRepliesCnt(replyService.getRepliesCnt("article", article.getId()));
 		}
 
 		int pagesCount = (int) Math.ceil((double) articlesCnt / itemsInAPage);

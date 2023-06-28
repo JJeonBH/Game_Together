@@ -87,7 +87,12 @@
 										<c:otherwise><span>${article.id}</span></c:otherwise>
 									</c:choose>
 								</td>
-								<td><a href="detail?articleId=${article.id}&boardType=${boardType}&boardId=${boardId}&page=${page}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}&memberId=${memberId}" class="hover:underline">${article.title}</a></td>
+								<td>
+									<a href="detail?articleId=${article.id}&boardType=${boardType}&boardId=${boardId}&page=${page}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}&memberId=${memberId}" class="hover:underline">${article.title}</a>
+									<c:if test="${article.repliesCnt != 0}">
+										<a href="detail?articleId=${article.id}&boardType=${boardType}&boardId=${boardId}&page=${page}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}&memberId=${memberId}&event=${1}" class="hover:underline text-red-500">[${article.repliesCnt}]</a>
+									</c:if>
+								</td>
 								<td><span class="hover:underline">${article.writerNickname}</span></td>
 								<td class="text-center"><span>${article.formatRegDate}</span></td>
 								<td class="text-center"><span>${article.viewCount}</span></td>

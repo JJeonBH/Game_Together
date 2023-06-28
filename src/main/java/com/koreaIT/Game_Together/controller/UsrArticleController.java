@@ -114,11 +114,7 @@ public class UsrArticleController {
 			resp.addCookie(newCookie);
 		}
 		
-		List<Reply> replies = replyService.getReplies("article", articleId);
-		
-		for (Reply reply : replies) {
-			reply.setFormatRegDate(Util.formatRegDateVer1(reply.getRegDate()));
-		}
+		List<Reply> replies = replyService.getReplies(rq.getLoginedMemberId(), "article", articleId);
 		
 		Article article = articleService.getForPrintArticle(articleId, boardType, boardId, searchKeywordType, searchKeyword, memberId);
 		

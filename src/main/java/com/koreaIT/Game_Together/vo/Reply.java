@@ -21,6 +21,7 @@ public class Reply {
 	
 	private String writerNickname;
 	private String formatRegDate;
+	private boolean actorCanChangeData;
 	
 	public String getForPrintBody() {
 		return this.body.replaceAll("\n", "<br>");

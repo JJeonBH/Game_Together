@@ -136,8 +136,8 @@ html[data-theme="night"] .top-bar > .menu-box > ul > li.theme-toggle > .theme-to
 	color: black;
 }
 
-/* 드랍다운 메뉴아이템 */
-.dropdown-content {
+/* 탑바 드랍다운 메뉴아이템 */
+nav.menu-box > ul > li > div.dropdown > ul.dropdown-content {
 	left: 0;
 	top: 100%;
 	color: black;

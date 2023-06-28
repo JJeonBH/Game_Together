@@ -29,8 +29,6 @@ public class UsrReplyController {
 
 		Reply reply = replyService.writeReply(rq.getLoginedMemberId(), relTypeCode, relId, body);
 		
-		reply.setFormatRegDate(Util.formatRegDateVer1(reply.getRegDate()));
-		
 		int changedRepliesCnt = replyService.getRepliesCnt(relTypeCode, relId);
 		
 		ResultData<Reply> replyRD = ResultData.resultFrom("S-1", "댓글 등록", "reply", reply);

@@ -94,7 +94,18 @@
 			let replyCnt = $('#reply-count');
 			
 			let append = `<div class="border-b border-gray-300 p-4">`;
+			append += `<div class="flex justify-between items-center">`;
 			append += `<div class="font-semibold"><span>\${data.data1.writerNickname}</span></div>`;
+			append += `<div class="dropdown">`;
+			append += `<button class="btn btn-circle btn-ghost btn-sm mr-8">`;
+			append += `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>`;
+			append += `</button>`;
+			append += `<ul tabindex="0" class="menu menu-compact dropdown-content p-2 shadow bg-base-100 rounded-box w-20">`;
+			append += `<li><a>수정</a></li>`;
+			append += `<li><a>삭제</a></li>`;
+			append += `</ul>`;
+			append += `</div>`;
+			append += `</div>`;
 			append += `<div class="my-2"><span>\${data.data1.forPrintBody}</span></div>`;
 			append += `<div class="text-xs text-gray-400"><span>\${data.data1.formatRegDate}</span></div>`;
 			append += `</div>`;
@@ -124,17 +135,9 @@
 		
 		$(function() {
 			
-			let top;
-			
-			if (${Request.loginedMemberId == 0}) {
-				top = 50;
-			} else {
-				top = 58;
-			}
-			
 			let offset = $('#destination').offset();
 			
-			$('html').animate({scrollTop : offset.top - top}, 400);
+			$('html').animate({scrollTop : offset.top - 50}, 400);
 			
 		});
 		
@@ -257,7 +260,20 @@
 							<c:otherwise>
 								<c:forEach var="reply" items="${replies}">
 									<div class="border-b border-gray-300 p-4">
-										<div class="font-semibold"><span>${reply.writerNickname}</span></div>
+										<div class="flex justify-between items-center">
+											<div class="font-semibold"><span>${reply.writerNickname}</span></div>
+											<c:if test="${reply.actorCanChangeData}">
+												<div class="dropdown">
+													<button class="btn btn-circle btn-ghost btn-sm mr-8">
+														<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
+													</button>
+													<ul tabindex="0" class="menu menu-compact dropdown-content p-2 shadow bg-base-100 rounded-box w-20">
+												        <li><a>수정</a></li>
+												        <li><a>삭제</a></li>
+						      						</ul>
+												</div>
+											</c:if>
+										</div>
 										<div class="my-2"><span>${reply.getForPrintBody()}</span></div>
 										<div class="text-xs text-gray-400"><span>${reply.formatRegDate}</span></div>
 									</div>

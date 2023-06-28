@@ -109,6 +109,7 @@
 		
 	}
 	
+	// 	댓글수 누르면 댓글로 이동
 	$(document).ready(function() {
 		$('#reply-count').click(function() {
 			//	선택한 태그의 위치를 반환
@@ -120,10 +121,23 @@
 	
 	// 	게시물 목록에서 댓글수 누르면 상세보기에서 바로 댓글로 이동
 	if (${event == 1}) {
+		
 		$(function() {
+			
+			let top;
+			
+			if (${Request.loginedMemberId == 0}) {
+				top = 50;
+			} else {
+				top = 58;
+			}
+			
 			let offset = $('#destination').offset();
-			$('html').animate({scrollTop : offset.top - 58}, 100);
+			
+			$('html').animate({scrollTop : offset.top - top}, 400);
+			
 		});
+		
 	}
 	
 	$(function() {

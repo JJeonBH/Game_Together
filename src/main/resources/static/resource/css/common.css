@@ -242,3 +242,13 @@ a:hover > .main-image {
 .toast-ui {
 	min-height: 200px;
 }
+
+/* 맨위로 이동하는 버튼 처음에 안보이게, 위치 오른쪽 아래 고정 */
+.move-top-btn {
+	display: none;
+	position: fixed;
+	bottom: 1rem;
+	right: 1rem;
+	z-index: 9999;
+	cursor: pointer;
+ }

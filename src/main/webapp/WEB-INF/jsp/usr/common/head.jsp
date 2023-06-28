@@ -74,4 +74,7 @@
 				</ul>
 			</nav>
 		</div>
+		<div class="move-top-btn">
+			<i class="fa-regular fa-circle-up text-4xl"></i>
+		</div>
 	</header>

@@ -50,6 +50,22 @@ function themeApplyTo(themeName) {
 //	테마 적용
 themeInit();
 
+//	스크롤해서 내려가면 맨위로 이동하는 버튼 나오게, 올라가면 사라지게
+$(window).scroll(function() {
+	
+	if ($(this).scrollTop() > 100) {
+		$('.move-top-btn').show();
+	} else {
+		$('.move-top-btn').hide();
+	}
+	
+});
+
+//	맨위로 이동하는 버튼 누르면 맨위로 이동
+$('.move-top-btn').click(function() {
+	$('html, body').animate({scrollTop : 0}, 400);
+});
+
 //	게시물 리스트에서 게시물 검색할 때 셀렉트 값(제목, 내용, 작성자, ...) 유지
 $('select[data-value]').each(function(index, item) {
 	

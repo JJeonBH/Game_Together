@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.koreaIT.Game_Together.service.ReplyService;
-import com.koreaIT.Game_Together.util.Util;
 import com.koreaIT.Game_Together.vo.Reply;
 import com.koreaIT.Game_Together.vo.Request;
 import com.koreaIT.Game_Together.vo.ResultData;
@@ -36,6 +35,30 @@ public class UsrReplyController {
 		replyRD.setData2("changedRepliesCnt", changedRepliesCnt);
 		
 		return replyRD;
+		
+	}
+	
+	@RequestMapping("/usr/reply/doDelete")
+	@ResponseBody
+	public ResultData doDelete(int replyId, String relTypeCode, int relId) {
+		
+		Reply reply = replyService.getReplyForMD(replyId);
+		
+		ResultData actorCanMDRd = replyService.actorCanMD(rq.getLoginedMemberId(), reply);
+
+		if (actorCanMDRd.isFail()) {
+			return actorCanMDRd;
+		} else {
+			
+			replyService.deleteReply(replyId);
+			
+			int changedRepliesCnt = replyService.getRepliesCnt(relTypeCode, relId);
+			
+			actorCanMDRd.setData2("changedRepliesCnt", changedRepliesCnt);
+			
+			return actorCanMDRd;
+			
+		}
 		
 	}
 

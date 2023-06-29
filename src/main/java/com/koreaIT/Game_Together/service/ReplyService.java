@@ -35,6 +35,10 @@ public class ReplyService {
 		return reply;
 		
 	}
+	
+	public Reply getReplyForMD(int replyId) {
+		return replyRepository.getReplyForMD(replyId);
+	}
 
 	public List<Reply> getReplies(int loginedMemberId, String relTypeCode, int relId) {
 		
@@ -53,6 +57,10 @@ public class ReplyService {
 		return replyRepository.getRepliesCnt(relTypeCode, relId);
 	}
 	
+	public void deleteReply(int replyId) {
+		replyRepository.deleteReply(replyId);
+	}
+	
 	public void actorCanChangeData(int loginedMemberId, Reply reply) {
 		
 		ResultData actorCanChangeDataRd = actorCanMD(loginedMemberId, reply);
@@ -61,7 +69,7 @@ public class ReplyService {
 		
 	}
 	
-	private ResultData actorCanMD(int loginedMemberId, Reply reply) {
+	public ResultData actorCanMD(int loginedMemberId, Reply reply) {
 
 		if (reply == null) {
 			return ResultData.resultFrom("F-1", "해당 댓글은 존재하지 않습니다.");

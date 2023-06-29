@@ -93,7 +93,7 @@
 			let replyBox = $('#reply-box');
 			let replyCnt = $('#reply-count');
 			
-			let append = `<div class="border-b border-gray-300 p-4">`;
+			let append = `<div id="\${data.data1.id}" class="border-b border-gray-300 p-4">`;
 			append += `<div class="flex justify-between items-center">`;
 			append += `<div class="font-semibold"><span>\${data.data1.writerNickname}</span></div>`;
 			append += `<div class="dropdown">`;
@@ -102,7 +102,7 @@
 			append += `</button>`;
 			append += `<ul tabindex="0" class="menu menu-compact dropdown-content p-2 shadow bg-base-100 rounded-box w-20">`;
 			append += `<li><a>수정</a></li>`;
-			append += `<li><a>삭제</a></li>`;
+			append += `<li><div onclick="replyDelete(\${data.data1.id});">삭제</div></li>`;
 			append += `</ul>`;
 			append += `</div>`;
 			append += `</div>`;
@@ -115,6 +115,40 @@
 			replyCnt.empty();
 			replyCnt.html(`<i class="fa-regular fa-comment-dots"></i> <span>댓글 ` + data.data2 + `</span>`);
 			$('textarea[name=body]').val('');
+			
+		}, 'json');
+		
+	}
+	
+	function replyDelete(replyId) {
+		
+		if (confirm('정말 삭제하시겠습니까?') == false) {
+			return;
+		}
+		
+		$.get('../reply/doDelete', {
+			replyId : replyId,
+			relTypeCode : 'article',
+			relId : ${article.id}
+		}, function(data) {
+			
+			let replyBox = $('#reply-box');
+			let replyCnt = $('#reply-count');
+			
+			if (data.fail) {
+				alert(data.msg);
+			} else {
+				$('#' + replyId).remove();
+				if (data.data2 == 0) {
+					let append = `<div id="no-reply" class="border-b border-gray-300 p-4 text-center">`;
+					append += `<span><i class="fa-regular fa-comment-dots text-2xl"></i></span>`;
+					append += `<div><span>등록된 댓글이 없습니다.</span></div>`;
+					append += `</div>`;
+					replyBox.append(append);
+				}
+				replyCnt.empty();
+				replyCnt.html(`<i class="fa-regular fa-comment-dots"></i> <span>댓글 ` + data.data2 + `</span>`);
+			}
 			
 		}, 'json');
 		
@@ -259,7 +293,7 @@
 							</c:when>
 							<c:otherwise>
 								<c:forEach var="reply" items="${replies}">
-									<div class="border-b border-gray-300 p-4">
+									<div id="${reply.id}" class="border-b border-gray-300 p-4">
 										<div class="flex justify-between items-center">
 											<div class="font-semibold"><span>${reply.writerNickname}</span></div>
 											<c:if test="${reply.actorCanChangeData}">
@@ -269,7 +303,7 @@
 													</button>
 													<ul tabindex="0" class="menu menu-compact dropdown-content p-2 shadow bg-base-100 rounded-box w-20">
 												        <li><a>수정</a></li>
-												        <li><a>삭제</a></li>
+												        <li><div onclick="replyDelete(${reply.id});">삭제</div></li>
 						      						</ul>
 												</div>
 											</c:if>

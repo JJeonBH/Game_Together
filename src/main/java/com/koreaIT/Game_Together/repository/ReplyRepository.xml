@@ -26,6 +26,12 @@
 			WHERE R.id = #{replyId}
 	</select>
 	
+	<select id="getReplyForMD" resultType="Reply">
+		SELECT *
+			FROM reply
+			WHERE id = #{replyId}
+	</select>
+	
 	<select id="getReplies" resultType="Reply">
 		SELECT R.*
 			, M.nickname AS writerNickname
@@ -43,5 +49,10 @@
 			WHERE relTypeCode = #{relTypeCode}
 			AND relId = #{relId}
 	</select>
+	
+	<delete id="deleteReply">
+		DELETE FROM reply
+			WHERE id = #{replyId}
+	</delete>
 
 </mapper>

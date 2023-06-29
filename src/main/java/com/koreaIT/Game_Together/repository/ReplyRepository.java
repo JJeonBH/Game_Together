@@ -15,8 +15,12 @@ public interface ReplyRepository {
 
 	public Reply getReplyById(int replyId);
 
+	public Reply getReplyForMD(int replyId);
+	
 	public List<Reply> getReplies(String relTypeCode, int relId);
 
 	public int getRepliesCnt(String relTypeCode, int relId);
+
+	public void deleteReply(int replyId);
 
 }

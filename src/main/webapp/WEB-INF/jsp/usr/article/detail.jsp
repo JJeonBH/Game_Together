@@ -101,7 +101,7 @@
 			append += `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>`;
 			append += `</button>`;
 			append += `<ul tabindex="0" class="menu menu-compact dropdown-content p-2 shadow bg-base-100 rounded-box w-20">`;
-			append += `<li><a>수정</a></li>`;
+			append += `<li><div onclick="getReplyModifyForm(\${data.data1.id});">수정</div></li>`;
 			append += `<li><div onclick="replyDelete(\${data.data1.id});">삭제</div></li>`;
 			append += `</ul>`;
 			append += `</div>`;
@@ -132,13 +132,15 @@
 			relId : ${article.id}
 		}, function(data) {
 			
-			let replyBox = $('#reply-box');
-			let replyCnt = $('#reply-count');
-			
 			if (data.fail) {
 				alert(data.msg);
 			} else {
+				
+				let replyBox = $('#reply-box');
+				let replyCnt = $('#reply-count');
+				
 				$('#' + replyId).remove();
+				
 				if (data.data2 == 0) {
 					let append = `<div id="no-reply" class="border-b border-gray-300 p-4 text-center">`;
 					append += `<span><i class="fa-regular fa-comment-dots text-2xl"></i></span>`;
@@ -146,8 +148,112 @@
 					append += `</div>`;
 					replyBox.append(append);
 				}
+				
 				replyCnt.empty();
 				replyCnt.html(`<i class="fa-regular fa-comment-dots"></i> <span>댓글 ` + data.data2 + `</span>`);
+				
+			}
+			
+		}, 'json');
+		
+	}
+	
+	originalReplyModifyForm = null;
+	originalReplyId = null;
+	
+	function getReplyModifyForm(replyId) {
+		
+		if (originalReplyModifyForm != null) {
+			replyModify_cancle(originalReplyId);
+		}
+		
+		$.get('../reply/getReplyContent', {
+			replyId : replyId
+		}, function(data) {
+			
+			if (data.fail) {
+				alert(data.msg);
+			} else {
+				
+				let replyContent = $('#' + replyId);
+				
+				originalReplyModifyForm = replyContent.html();
+				originalReplyId = replyId;
+				
+				let append = `<div>`;
+				append += `<div class="border border-blue-400 rounded-lg p-4">`;
+				append += `<div class="mb-2">`;
+				append += `<span class="font-semibold">\${data.data1.writerNickname}</span>`;
+				append += `</div>`;
+				append += `<textarea class="textarea textarea-info w-full" name="modifyBody" placeholder="댓글을 남겨보세요.">\${data.data1.body}</textarea>`;
+				append += `<div class="flex justify-end">`;	
+				append += `<div class="btn btn-info btn-sm text-white hover:text-black" onclick="replyModify(\${data.data1.id});">수정</div>`;
+				append += `<div class="btn btn-info btn-sm text-white hover:text-black ml-1" onclick="replyModify_cancle(\${data.data1.id});">취소</div>`;		
+				append += `</div>`;
+				append += `</div>`;
+				append += `</div>`;
+				
+				replyContent.empty();
+				replyContent.append(append);
+				
+			}
+			
+		}, 'json');
+		
+	}
+	
+	function replyModify_cancle(replyId) {
+		
+		let replyContent = $('#' + replyId);
+		replyContent.html(originalReplyModifyForm);
+		
+		originalReplyModifyForm = null;
+		originalReplyId = null;
+		
+	}
+	
+	function replyModify(replyId) {
+		
+		let replyModifyBody = $('textarea[name=modifyBody]').val().trim();
+		
+		if (replyModifyBody.length < 2) {
+			alert('2글자 이상 입력해 주세요.');
+			$('textarea[name=modifyBody]').focus();
+			return;
+		}
+		
+		$.get('../reply/doModify', {
+			replyId : replyId,
+			body : replyModifyBody
+		}, function(data) {
+			
+			if (data.fail) {
+				alert(data.msg);
+			} else {
+				
+				let replyContent = $('#' + replyId);
+				
+				let append = `<div class="flex justify-between items-center">`;
+				append += `<div class="font-semibold"><span>\${data.data1.writerNickname}</span></div>`;
+				append += `<div class="dropdown">`;
+				append += `<button class="btn btn-circle btn-ghost btn-sm mr-8">`;
+				append += `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>`;
+				append += `</button>`;
+				append += `<ul tabindex="0" class="menu menu-compact dropdown-content p-2 shadow bg-base-100 rounded-box w-20">`;
+				append += `<li><div onclick="getReplyModifyForm(\${data.data1.id});">수정</div></li>`;
+				append += `<li><div onclick="replyDelete(\${data.data1.id});">삭제</div></li>`;
+				append += `</ul>`;
+				append += `</div>`;
+				append += `</div>`;
+				append += `<div class="my-2"><span>\${data.data1.forPrintBody}</span></div>`;
+				append += `<div class="text-xs text-gray-400"><span>\${data.data1.formatRegDate}</span></div>`;
+				
+				replyContent.empty();
+				replyContent.append(append);
+				
+				originalReplyModifyForm = null;
+				originalReplyId = null;
+				
 			}
 			
 		}, 'json');
@@ -302,7 +408,7 @@
 														<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
 													</button>
 													<ul tabindex="0" class="menu menu-compact dropdown-content p-2 shadow bg-base-100 rounded-box w-20">
-												        <li><a>수정</a></li>
+												        <li><div onclick="getReplyModifyForm(${reply.id});">수정</div></li>
 												        <li><div onclick="replyDelete(${reply.id});">삭제</div></li>
 						      						</ul>
 												</div>

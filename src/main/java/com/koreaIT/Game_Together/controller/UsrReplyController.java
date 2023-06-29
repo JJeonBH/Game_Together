@@ -38,6 +38,7 @@ public class UsrReplyController {
 		
 	}
 	
+	@SuppressWarnings("rawtypes")
 	@RequestMapping("/usr/reply/doDelete")
 	@ResponseBody
 	public ResultData doDelete(int replyId, String relTypeCode, int relId) {
@@ -58,6 +59,44 @@ public class UsrReplyController {
 			
 			return actorCanMDRd;
 			
+		}
+		
+	}
+	
+	@RequestMapping("/usr/reply/doModify")
+	@ResponseBody
+	public ResultData<Reply> doModify(int replyId, String body) {
+		
+		Reply reply = replyService.getReplyForMD(replyId);
+		
+		@SuppressWarnings("rawtypes")
+		ResultData actorCanMDRd = replyService.actorCanMD(rq.getLoginedMemberId(), reply);
+		
+		if (actorCanMDRd.isFail()) {
+			return ResultData.resultFrom(actorCanMDRd.getResultCode(), actorCanMDRd.getMsg());
+		} else {
+			
+			replyService.modifyReply(replyId, body);
+			
+			return ResultData.resultFrom(actorCanMDRd.getResultCode(), actorCanMDRd.getMsg(), "reply", replyService.getReplyById(replyId));
+			
+		}
+		
+	}
+	
+	@RequestMapping("/usr/reply/getReplyContent")
+	@ResponseBody
+	public ResultData<Reply> getReplyContent(int replyId) {
+		
+		Reply reply = replyService.getReplyById(replyId);
+		
+		@SuppressWarnings("rawtypes")
+		ResultData actorCanMDRd = replyService.actorCanMD(rq.getLoginedMemberId(), reply);
+		
+		if (actorCanMDRd.isFail()) {
+			return ResultData.resultFrom(actorCanMDRd.getResultCode(), actorCanMDRd.getMsg());
+		} else {
+			return ResultData.resultFrom(actorCanMDRd.getResultCode(), actorCanMDRd.getMsg(), "reply", reply);
 		}
 		
 	}

@@ -43,6 +43,9 @@ public class GtWebMvcConfigurer implements WebMvcConfigurer {
 		ir.addPathPatterns("/usr/reactionPoint/doInsertReactionPoint");
 		ir.addPathPatterns("/usr/reactionPoint/doDeleteReactionPoint");
 		ir.addPathPatterns("/usr/reply/doWrite");
+		ir.addPathPatterns("/usr/reply/doDelete");
+		ir.addPathPatterns("/usr/reply/doModify");
+		ir.addPathPatterns("/usr/reply/getReplyContent");
 		
 		ir = registry.addInterceptor(needLogoutInterceptor);
 		ir.addPathPatterns("/usr/member/join");

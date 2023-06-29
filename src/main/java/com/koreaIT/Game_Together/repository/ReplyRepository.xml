@@ -54,5 +54,12 @@
 		DELETE FROM reply
 			WHERE id = #{replyId}
 	</delete>
+	
+	<update id="modifyReply">
+		UPDATE reply
+			SET updateDate = NOW()
+				, `body` = #{body}
+			WHERE id = #{replyId}
+	</update>
 
 </mapper>

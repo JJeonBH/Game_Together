@@ -36,6 +36,16 @@ public class ReplyService {
 		
 	}
 	
+	public Reply getReplyById(int replyId) {
+		
+		Reply reply = replyRepository.getReplyById(replyId);
+		
+		reply.setFormatRegDate(Util.formatRegDateVer1(reply.getRegDate()));
+		
+		return reply;
+		
+	}
+	
 	public Reply getReplyForMD(int replyId) {
 		return replyRepository.getReplyForMD(replyId);
 	}
@@ -61,14 +71,20 @@ public class ReplyService {
 		replyRepository.deleteReply(replyId);
 	}
 	
+	public void modifyReply(int replyId, String body) {
+		replyRepository.modifyReply(replyId, body);
+	}
+	
 	public void actorCanChangeData(int loginedMemberId, Reply reply) {
 		
+		@SuppressWarnings("rawtypes")
 		ResultData actorCanChangeDataRd = actorCanMD(loginedMemberId, reply);
 		
 		reply.setActorCanChangeData(actorCanChangeDataRd.isSuccess());
 		
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public ResultData actorCanMD(int loginedMemberId, Reply reply) {
 
 		if (reply == null) {
@@ -82,5 +98,5 @@ public class ReplyService {
 		return ResultData.resultFrom("S-1", "가능");
 		
 	}
-	
+
 }

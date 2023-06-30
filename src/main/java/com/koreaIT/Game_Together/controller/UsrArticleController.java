@@ -22,6 +22,7 @@ import com.koreaIT.Game_Together.vo.Article;
 import com.koreaIT.Game_Together.vo.Board;
 import com.koreaIT.Game_Together.vo.Reply;
 import com.koreaIT.Game_Together.vo.Request;
+import com.koreaIT.Game_Together.vo.ResultData;
 
 @Controller
 public class UsrArticleController {
@@ -219,6 +220,66 @@ public class UsrArticleController {
 		model.addAttribute("endPage", endPage);
 
 		return "usr/article/list";
+		
+	}
+	
+	@RequestMapping("/usr/article/modify")
+	public String modify(Model model, int articleId, String boardType) {
+		
+		Article article = articleService.getArticleById(articleId);
+		
+		@SuppressWarnings("rawtypes")
+		ResultData actorCanMDRd = articleService.actorCanMD(rq.getLoginedMemberId(), article);
+		
+		if (actorCanMDRd.isFail()) {
+			return rq.jsHistoryBack(actorCanMDRd.getMsg(), true);
+		}
+		
+		List<Board> boards = boardService.getBoardsByBoardType(boardType);
+		
+		model.addAttribute("article", article);
+		model.addAttribute("boardType", boardType);
+		model.addAttribute("boards", boards);
+		
+		return "usr/article/modify";
+		
+	}
+	
+	@RequestMapping("/usr/article/doModify")
+	@ResponseBody
+	public String doModify(Model model, int articleId, String boardType, int boardId, String title, String body) {
+
+		Article article = articleService.getArticleById(articleId);
+		
+		@SuppressWarnings("rawtypes")
+		ResultData actorCanMDRd = articleService.actorCanMD(rq.getLoginedMemberId(), article);
+		
+		if (actorCanMDRd.isFail()) {
+			return Util.jsAlertHistoryBack(actorCanMDRd.getMsg());
+		}
+		
+		articleService.modifyArticle(articleId, boardId, title, body);
+		
+		return Util.jsAlertReplace("", String.format("detail?articleId=%d&boardType=%s&boardId=%d", articleId, boardType, boardId));
+		
+	}
+	
+	@RequestMapping("/usr/article/doDelete")
+	@ResponseBody
+	public String doDelete(int articleId, String boardType, int boardId) {
+		
+		Article article = articleService.getArticleById(articleId);
+		
+		@SuppressWarnings("rawtypes")
+		ResultData actorCanMDRd = articleService.actorCanMD(rq.getLoginedMemberId(), article);
+		
+		if (actorCanMDRd.isFail()) {
+			return Util.jsAlertHistoryBack(actorCanMDRd.getMsg());
+		}
+		
+		articleService.deleteArticle(articleId);
+		
+		return Util.jsAlertReplace("", String.format("list?boardType=%s&boardId=%d", boardType, boardId));
 		
 	}
 

@@ -68,6 +68,26 @@
 			GROUP BY AMB.id
 	</select>
 	
+	<select id="getArticleById" resultType="Article">
+		SELECT *
+			FROM article
+			WHERE id = #{articleId}
+	</select>
+	
+	<update id="modifyArticle">
+		UPDATE article
+			SET updateDate = NOW()
+				, boardId = #{boardId}
+				, title = #{title}
+				, `body` = #{body}
+			WHERE id = #{articleId}
+	</update>
+	
+	<delete id="deleteArticle">
+		DELETE FROM article
+			WHERE id = #{articleId}
+	</delete>
+	
 	<update id="increaseViewCount">
 		UPDATE article
 			SET viewCount = viewCount + 1

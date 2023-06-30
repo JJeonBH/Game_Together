@@ -33,6 +33,7 @@ public class UsrMemberController {
 	@ResponseBody
 	public String doJoin(String loginId, String loginPw, String name, String nickname, String birthday, String gender, String email, String cellphoneNum) {
 
+		@SuppressWarnings("rawtypes")
 		ResultData doJoinRd = memberService.doJoin(loginId, Util.sha256(loginPw), name, nickname, birthday, gender, email, cellphoneNum);
 		
 		return Util.jsAlertReplace(doJoinRd.getMsg(), "/");
@@ -81,6 +82,7 @@ public class UsrMemberController {
 		
 	}
 
+	@SuppressWarnings("rawtypes")
 	@RequestMapping("/usr/member/checkLogin")
 	@ResponseBody
 	public ResultData checkLogin(String loginId, String loginPw) {

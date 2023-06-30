@@ -17,12 +17,12 @@ public interface ReplyRepository {
 
 	public Reply getReplyForMD(int replyId);
 	
-	public List<Reply> getReplies(String relTypeCode, int relId);
-
-	public int getRepliesCnt(String relTypeCode, int relId);
-
+	public void modifyReply(int replyId, String body);
+	
 	public void deleteReply(int replyId);
 
-	public void modifyReply(int replyId, String body);
-
+	public int getRepliesCnt(String relTypeCode, int relId);
+	
+	public List<Reply> getReplies(String relTypeCode, int relId);
+	
 }

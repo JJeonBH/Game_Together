@@ -15,6 +15,12 @@ public interface ArticleRepository {
 	
 	public Article getForPrintArticle(int articleId, String boardType, int boardId, String searchKeywordType, String searchKeyword, int memberId);
 	
+	public Article getArticleById(int articleId);
+	
+	public void modifyArticle(int articleId, int boardId, String title, String body);
+	
+	public void deleteArticle(int articleId);
+	
 	public int increaseViewCount(int articleId);
 	
 	public int getArticlesCntByBoardType(String boardType, String searchKeywordType, String searchKeyword, int memberId);

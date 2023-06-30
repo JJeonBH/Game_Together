@@ -32,6 +32,25 @@
 			WHERE id = #{replyId}
 	</select>
 	
+	<update id="modifyReply">
+		UPDATE reply
+			SET updateDate = NOW()
+				, `body` = #{body}
+			WHERE id = #{replyId}
+	</update>
+	
+	<delete id="deleteReply">
+		DELETE FROM reply
+			WHERE id = #{replyId}
+	</delete>
+	
+	<select id="getRepliesCnt" resultType="int">
+		SELECT COUNT(*)
+			FROM reply
+			WHERE relTypeCode = #{relTypeCode}
+			AND relId = #{relId}
+	</select>
+	
 	<select id="getReplies" resultType="Reply">
 		SELECT R.*
 			, M.nickname AS writerNickname
@@ -43,23 +62,4 @@
 			ORDER BY R.id
 	</select>
 	
-	<select id="getRepliesCnt" resultType="int">
-		SELECT COUNT(*)
-			FROM reply
-			WHERE relTypeCode = #{relTypeCode}
-			AND relId = #{relId}
-	</select>
-	
-	<delete id="deleteReply">
-		DELETE FROM reply
-			WHERE id = #{replyId}
-	</delete>
-	
-	<update id="modifyReply">
-		UPDATE reply
-			SET updateDate = NOW()
-				, `body` = #{body}
-			WHERE id = #{replyId}
-	</update>
-
 </mapper>

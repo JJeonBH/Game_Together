@@ -35,26 +35,20 @@ public class ArticleService {
 		
 	}
 	
-	public void actorCanChangeData(int loginedMemberId, Article article) {
+	public Article getArticleById(int articleId) {
 		
-		ResultData actorCanChangeDataRd = actorCanMD(loginedMemberId, article);
+		Article article = articleRepository.getArticleById(articleId);
 		
-		article.setActorCanChangeData(actorCanChangeDataRd.isSuccess());
+		return article;
 		
 	}
 	
-	public ResultData actorCanMD(int loginedMemberId, Article article) {
-		
-		if(article == null) {
-			return ResultData.resultFrom("F-1", "해당 게시물은 존재하지 않습니다.");
-		}
-		
-		if (loginedMemberId != article.getMemberId()) {
-			return ResultData.resultFrom("F-2", "해당 게시물에 대한 권한이 없습니다.");	
-		}
-		
-		return ResultData.resultFrom("S-1", "가능");
-		
+	public void modifyArticle(int articleId, int boardId, String title, String body) {
+		articleRepository.modifyArticle(articleId, boardId, title, body);
+	}
+	
+	public void deleteArticle(int articleId) {
+		articleRepository.deleteArticle(articleId);
 	}
 	
 	public void increaseViewCount(int articleId) {
@@ -83,6 +77,30 @@ public class ArticleService {
 		
 		return articleRepository.getArticlesByBoardId(boardId, searchKeywordType, searchKeyword, itemsInAPage, limitStart);
 	
+	}
+	
+	public void actorCanChangeData(int loginedMemberId, Article article) {
+		
+		@SuppressWarnings("rawtypes")
+		ResultData actorCanChangeDataRd = actorCanMD(loginedMemberId, article);
+		
+		article.setActorCanChangeData(actorCanChangeDataRd.isSuccess());
+		
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public ResultData actorCanMD(int loginedMemberId, Article article) {
+		
+		if(article == null) {
+			return ResultData.resultFrom("F-1", "해당 게시물은 존재하지 않습니다.");
+		}
+		
+		if (loginedMemberId != article.getMemberId()) {
+			return ResultData.resultFrom("F-2", "해당 게시물에 대한 권한이 없습니다.");	
+		}
+		
+		return ResultData.resultFrom("S-1", "가능");
+		
 	}
 	
 }

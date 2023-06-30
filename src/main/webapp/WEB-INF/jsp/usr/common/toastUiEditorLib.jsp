@@ -365,5 +365,41 @@
 		form.submit();
 		
 	}
+	
+	//	글 수정 유효성 검사
+	function submitArticleModifyForm(form) {
+		
+		if (form.boardId.value == '') {
+			alert("게시판을 선택해 주세요.");
+			return;
+		}
+		
+		form.title.value = form.title.value.trim();
+		
+		if (form.title.value.length == 0) {
+			alert("제목을 입력해 주세요.");
+			return;
+		}
+	  
+		const editor = $(form).find('.toast-ui-editor').data('data-toast-editor');
+		const markdown = editor.getMarkdown().trim();
+	
+		if (markdown.length == 0) {
+			alert('내용을 입력해주세요');
+			return;
+		}
+		
+		if (form.title.value.length > 100) {
+			alert("제목은 최대 100자까지 입력할 수 있습니다.")
+			return;
+		}
+	  
+		form.body.value = markdown;
+		
+		isFormChanged = false;
+	  
+		form.submit();
+		
+	}
 
 </script>

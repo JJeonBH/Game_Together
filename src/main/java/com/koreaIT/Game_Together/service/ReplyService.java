@@ -49,7 +49,20 @@ public class ReplyService {
 	public Reply getReplyForMD(int replyId) {
 		return replyRepository.getReplyForMD(replyId);
 	}
-
+	
+	public void modifyReply(int replyId, String body) {
+		replyRepository.modifyReply(replyId, body);
+	}
+	
+	public void deleteReply(int replyId) {
+		replyRepository.deleteReply(replyId);
+	}
+	
+	
+	public int getRepliesCnt(String relTypeCode, int relId) {
+		return replyRepository.getRepliesCnt(relTypeCode, relId);
+	}
+	
 	public List<Reply> getReplies(int loginedMemberId, String relTypeCode, int relId) {
 		
 		List<Reply> replies = replyRepository.getReplies(relTypeCode, relId);
@@ -61,18 +74,6 @@ public class ReplyService {
 		
 		return replies;
 		
-	}
-
-	public int getRepliesCnt(String relTypeCode, int relId) {
-		return replyRepository.getRepliesCnt(relTypeCode, relId);
-	}
-	
-	public void deleteReply(int replyId) {
-		replyRepository.deleteReply(replyId);
-	}
-	
-	public void modifyReply(int replyId, String body) {
-		replyRepository.modifyReply(replyId, body);
 	}
 	
 	public void actorCanChangeData(int loginedMemberId, Reply reply) {

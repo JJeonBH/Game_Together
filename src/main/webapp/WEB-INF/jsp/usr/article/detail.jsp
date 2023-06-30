@@ -306,12 +306,12 @@
 			</c:if>
 			<ul>
 				<li class="mb-2">
-					<a href="list?boardType=${boardType}" class="hover:underline"><span>전체 게시판</span></a>
+					<a href="list?boardType=${boardType}" class="hover:underline ${boardId == 0 ? 'font-extrabold text-blue-500' : ''}"><span>전체 게시판</span></a>
 					<div class="border-b border-blue-400 my-4"></div>
 				</li>
 				<c:forEach var="board" items="${boards}">
 					<li class="mb-2">
-						<a href="list?boardType=${boardType}&boardId=${board.id}" class="hover:underline"><span>${board.name}</span></a>
+						<a href="list?boardType=${boardType}&boardId=${board.id}" class="hover:underline ${boardId == board.id ? 'font-extrabold text-blue-500' : ''}"><span>${board.name}</span></a>
 					</li>
 				</c:forEach>
 			</ul>
@@ -320,8 +320,8 @@
 			<div class="flex justify-between items-center">
 				<div>
 					<c:if test="${article.actorCanChangeData}">
-						<span><a href="modify?id=${article.id}" class="btn btn-info btn-sm text-white hover:text-black">수정</a></span>
-						<span><a href="doDelete?id=${article.id}" class="btn btn-info btn-sm text-white hover:text-black" onclick="if(!confirm('정말 삭제하시겠습니까?')) {return false;}">삭제</a></span>
+						<span><a href="modify?articleId=${article.id}&boardType=${boardType}" class="btn btn-info btn-sm text-white hover:text-black">수정</a></span>
+						<span><a href="doDelete?articleId=${article.id}&boardType=${boardType}&boardId=${boardId}" class="btn btn-info btn-sm text-white hover:text-black" onclick="if(!confirm('정말 삭제하시겠습니까?')) {return false;}">삭제</a></span>
 					</c:if>
 				</div>
 				<div class="flex">

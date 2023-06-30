@@ -38,27 +38,19 @@ public class UsrReplyController {
 		
 	}
 	
-	@SuppressWarnings("rawtypes")
-	@RequestMapping("/usr/reply/doDelete")
+	@RequestMapping("/usr/reply/getReplyContent")
 	@ResponseBody
-	public ResultData doDelete(int replyId, String relTypeCode, int relId) {
+	public ResultData<Reply> getReplyContent(int replyId) {
 		
-		Reply reply = replyService.getReplyForMD(replyId);
+		Reply reply = replyService.getReplyById(replyId);
 		
+		@SuppressWarnings("rawtypes")
 		ResultData actorCanMDRd = replyService.actorCanMD(rq.getLoginedMemberId(), reply);
-
+		
 		if (actorCanMDRd.isFail()) {
-			return actorCanMDRd;
+			return ResultData.resultFrom(actorCanMDRd.getResultCode(), actorCanMDRd.getMsg());
 		} else {
-			
-			replyService.deleteReply(replyId);
-			
-			int changedRepliesCnt = replyService.getRepliesCnt(relTypeCode, relId);
-			
-			actorCanMDRd.setData2("changedRepliesCnt", changedRepliesCnt);
-			
-			return actorCanMDRd;
-			
+			return ResultData.resultFrom(actorCanMDRd.getResultCode(), actorCanMDRd.getMsg(), "reply", reply);
 		}
 		
 	}
@@ -84,21 +76,29 @@ public class UsrReplyController {
 		
 	}
 	
-	@RequestMapping("/usr/reply/getReplyContent")
+	@SuppressWarnings("rawtypes")
+	@RequestMapping("/usr/reply/doDelete")
 	@ResponseBody
-	public ResultData<Reply> getReplyContent(int replyId) {
+	public ResultData doDelete(int replyId, String relTypeCode, int relId) {
 		
-		Reply reply = replyService.getReplyById(replyId);
+		Reply reply = replyService.getReplyForMD(replyId);
 		
-		@SuppressWarnings("rawtypes")
 		ResultData actorCanMDRd = replyService.actorCanMD(rq.getLoginedMemberId(), reply);
-		
+
 		if (actorCanMDRd.isFail()) {
-			return ResultData.resultFrom(actorCanMDRd.getResultCode(), actorCanMDRd.getMsg());
+			return actorCanMDRd;
 		} else {
-			return ResultData.resultFrom(actorCanMDRd.getResultCode(), actorCanMDRd.getMsg(), "reply", reply);
+			
+			replyService.deleteReply(replyId);
+			
+			int changedRepliesCnt = replyService.getRepliesCnt(relTypeCode, relId);
+			
+			actorCanMDRd.setData2("changedRepliesCnt", changedRepliesCnt);
+			
+			return actorCanMDRd;
+			
 		}
 		
 	}
-
+	
 }

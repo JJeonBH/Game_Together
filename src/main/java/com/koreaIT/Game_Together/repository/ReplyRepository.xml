@@ -62,4 +62,10 @@
 			ORDER BY R.id
 	</select>
 	
+	<delete id="deleteReplies">
+		DELETE FROM reply
+			WHERE relTypeCode = #{relTypeCode}
+			AND relId = #{relId}
+	</delete>
+	
 </mapper>

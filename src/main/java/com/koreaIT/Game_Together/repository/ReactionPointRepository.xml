@@ -33,5 +33,11 @@
     		WHERE relTypeCode = #{relTypeCode}
     		AND relId = #{relId}
 	</select>
+	
+	<delete id="deleteReactionPoints">
+		DELETE FROM reactionPoint
+			WHERE relTypeCode = #{relTypeCode}
+			AND relId = #{relId}
+	</delete>
 
 </mapper>

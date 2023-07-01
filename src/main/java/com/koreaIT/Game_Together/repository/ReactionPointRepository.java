@@ -15,4 +15,6 @@ public interface ReactionPointRepository {
 
 	public int getChangedReactionPoint(String relTypeCode, int relId);
 
+	public void deleteReactionPoints(String relTypeCode, int relId);
+
 }

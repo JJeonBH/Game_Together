@@ -31,5 +31,9 @@ public class ReactionPointService {
 	public int getChangedReactionPoint(String relTypeCode, int relId) {
 		return reactionPointRepository.getChangedReactionPoint(relTypeCode, relId);
 	}
+
+	public void deleteReactionPoints(String relTypeCode, int relId) {
+		reactionPointRepository.deleteReactionPoints(relTypeCode, relId);
+	}
 	
 }

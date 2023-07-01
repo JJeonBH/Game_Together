@@ -24,5 +24,7 @@ public interface ReplyRepository {
 	public int getRepliesCnt(String relTypeCode, int relId);
 	
 	public List<Reply> getReplies(String relTypeCode, int relId);
+
+	public void deleteReplies(String relTypeCode, int relId);
 	
 }

@@ -76,6 +76,10 @@ public class ReplyService {
 		
 	}
 	
+	public void deleteReplies(String relTypeCode, int relId) {
+		replyRepository.deleteReplies(relTypeCode, relId);
+	}
+	
 	public void actorCanChangeData(int loginedMemberId, Reply reply) {
 		
 		@SuppressWarnings("rawtypes")

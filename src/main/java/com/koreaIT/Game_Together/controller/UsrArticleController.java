@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.koreaIT.Game_Together.service.ArticleService;
 import com.koreaIT.Game_Together.service.BoardService;
+import com.koreaIT.Game_Together.service.ReactionPointService;
 import com.koreaIT.Game_Together.service.ReplyService;
 import com.koreaIT.Game_Together.util.Util;
 import com.koreaIT.Game_Together.vo.Article;
@@ -30,13 +31,15 @@ public class UsrArticleController {
 	private ArticleService articleService;
 	private BoardService boardService;
 	private ReplyService replyService;
+	private ReactionPointService reactionPointService;
 	private Request rq;
 	
 	@Autowired
-	public UsrArticleController(ArticleService articleService, BoardService boardService, ReplyService replyService, Request rq) {
+	public UsrArticleController(ArticleService articleService, BoardService boardService, ReplyService replyService, ReactionPointService reactionPointService, Request rq) {
 		this.articleService = articleService;
 		this.boardService = boardService;
 		this.replyService = replyService;
+		this.reactionPointService = reactionPointService;
 		this.rq = rq;
 	}
 	
@@ -278,6 +281,8 @@ public class UsrArticleController {
 		}
 		
 		articleService.deleteArticle(articleId);
+		replyService.deleteReplies("article", articleId);
+		reactionPointService.deleteReactionPoints("article", articleId);
 		
 		return Util.jsAlertReplace("", String.format("list?boardType=%s&boardId=%d", boardType, boardId));
 		

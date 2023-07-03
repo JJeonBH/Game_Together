@@ -65,6 +65,9 @@
 					</c:if>
 					<c:if test="${Request.loginedMemberId != 0}">
 						<li>
+							<div class="topbar-text-link h-full flex items-center px-3 mx-1" onclick="chattingRoomOpen();">채팅방 입장</div>
+						</li>
+						<li>
 							<a href="/usr/member/profile" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>프로필</span></a>
 						</li>
 						<li>

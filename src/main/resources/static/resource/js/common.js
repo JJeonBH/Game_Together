@@ -50,6 +50,11 @@ function themeApplyTo(themeName) {
 //	테마 적용
 themeInit();
 
+//	채팅방 새로운 창으로 열기
+function chattingRoomOpen() {
+	window.open("http://127.0.0.1:8081/usr/chat/chatting", "_blank", "width=550, height=550")
+}
+
 //	스크롤해서 내려가면 맨위로 이동하는 버튼 나오게, 올라가면 사라지게
 $(window).scroll(function() {
 	

@@ -16,8 +16,8 @@
 	<%@ include file="../lol/summonerMatches.jsp" %>
 	<section class="mt-6 mx-20 text-lg min-w-1000">
 		<div class="mt-4 flex">
-			<div class="w-1/2 h-80 border border-indigo-400">공지사항</div>
-			<div class="ml-4 w-1/2 h-80 border border-indigo-400">인기글</div>
+			<div class="w-1/2 h-80 border border-indigo-400 p-2">공지사항 (게임별로 공지사항)</div>
+			<div class="ml-4 w-1/2 h-80 border border-indigo-400 p-2">인기글 (최근 한 달간 추천수 많은 글)</div>
 		</div>
 	</section>
 	<section class="mt-6 mb-20 mx-20 text-lg min-w-1000">

@@ -337,7 +337,11 @@
 			<div class="border border-gray-300 p-4 mt-2 rounded-lg">
 				<div>
 					<div class="my-4">
-						<div><a href="list?boardType=${boardType}&boardId=${article.boardId}" class="text-green-500" >${article.boardName}</a></div>
+						<div>
+							<a href="list?boardType=${boardType}&boardId=${article.boardId}" class="text-green-500" >
+								<span class="flex items-center"><img src="/resource/images/${boardType}.jpg" alt="게임 로고" width="50"> ${article.boardName}</span>
+							</a>
+						</div>
 					</div>
 					<div class="my-4">
 						<h1 class="text-3xl detail-title">${article.title}</h1>

@@ -65,7 +65,7 @@
 		</div>
 		<div class="w-7/12 mx-6">
 			<div class="ml-2 h-14 flex items-center text-3xl">
-				<span>글 수정</span>
+				<span class="flex items-center"><img src="/resource/images/${boardType}.jpg" alt="게임 로고" width="60"> 글 수정</span>
 			</div>
 			<div>
 				<form class="w-full" action="doModify" method="post" onsubmit="submitArticleModifyForm(this); return false;">

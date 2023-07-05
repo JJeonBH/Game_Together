@@ -61,7 +61,7 @@
 		</div>
 		<div class="w-7/12 mx-6">
 			<div class="ml-2 h-14 flex items-center text-3xl">
-				<span>글쓰기</span>
+				<span class="flex items-center"><img src="/resource/images/${boardType}.jpg" alt="게임 로고" width="60"> 글쓰기</span>
 			</div>
 			<div>
 				<form class="w-full" action="doWrite" method="post" onsubmit="submitArticleWriteForm(this); return false;">

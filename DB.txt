@@ -107,6 +107,32 @@ gender = 'female',
 email = 'test2@naver.com',
 cellphoneNum = '01011131113';
 
+# member 테스트 데이터
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test3',
+loginPw = SHA2('Wjsqudgh3@', 256),
+`name` = '임꺽정',
+nickname = '임꺼억',
+birthday = '19941010',
+gender = 'male',
+email = 'test3@naver.com',
+cellphoneNum = '01011141114';
+
+# member 테스트 데이터
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test4',
+loginPw = SHA2('Wjsqudgh4@', 256),
+`name` = '임꺽순',
+nickname = '꺽순',
+birthday = '19951010',
+gender = 'female',
+email = 'test4@naver.com',
+cellphoneNum = '01011151115';
+
 # article 테스트 데이터
 INSERT INTO article
 SET regDate = NOW(),
@@ -168,7 +194,7 @@ updateDate = NOW(),
 memberId = 3,
 boardId = 7,
 title = '여기가 자유 게시판??',
-`body` = '안녕 난 자유인이야!!';
+`body` = '안녕!!';
 
 # article 테스트 데이터
 INSERT INTO article
@@ -408,5 +434,12 @@ INSERT INTO article
 (
     regDate, updateDate, memberId, boardId, title, `body`
 )
-SELECT NOW(), NOW(), 2, 3, CONCAT('제목_', RAND()), CONCAT('내용_', RAND())
+SELECT NOW(), NOW(), 1, 1, CONCAT('롤 제목_', RAND()), CONCAT('내용_', RAND())
+FROM article;
+
+INSERT INTO article
+(
+    regDate, updateDate, memberId, boardId, title, `body`
+)
+SELECT NOW(), NOW(), 1, 5, CONCAT('배그 제목_', RAND()), CONCAT('내용_', RAND())
 FROM article;

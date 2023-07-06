@@ -123,6 +123,11 @@ function pwCheck(input) {
 	pwMsg.empty();
 	
 	if (value.length == 0) {
+		if (name == 'loginPw') {
+			loginPw = '';
+		} else {
+			loginPwChk = '';
+		}
 		pwMsg.html('<span>필수 정보입니다.</span>');
 		return;
 	}
@@ -132,17 +137,21 @@ function pwCheck(input) {
 	
 	if (name == 'loginPw') {
 		if (!regex.test(value)) {
+			loginPw = '';
 			pwMsg.html('<span>8~16자 영문 대 소문자, 숫자, 특수문자(!@#$%^&*-?)를 사용하세요.</span>');
 			return;
 		} else if (value.search(/\s/) != -1) {
+			loginPw = '';
 			pwMsg.html('<span>비밀번호는 공백 없이 입력해 주세요.</span>');
 			return;
 		} else if (hangulcheck.test(value)) {
+			loginPw = '';
 			pwMsg.html('<span>비밀번호에 한글을 사용 할 수 없습니다.</span>');
 			return;
 		} else {
 			pwMsg.html('');
 			if(loginPw == loginPwChk) {
+				$('#loginPwChkMsg').html('');
 				validLoginPw = 1;
 			}
 			return;

@@ -44,7 +44,7 @@ public class UsrArticleController {
 	}
 	
 	@RequestMapping("/usr/article/write")
-	public String join(Model model, String boardType) {
+	public String write(Model model, String boardType) {
 		
 		List<Board> boards = boardService.getBoardsByBoardType(boardType);
 		

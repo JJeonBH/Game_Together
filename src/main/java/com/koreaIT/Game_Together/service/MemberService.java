@@ -17,6 +17,7 @@ public class MemberService {
 		this.memberRepository = memberRepository;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public ResultData doJoin(String loginId, String loginPw, String name, String nickname, String birthday, String gender, String email, String cellphoneNum) {
 		
 		memberRepository.doJoin(loginId, loginPw, name, nickname, birthday, gender, email, cellphoneNum);

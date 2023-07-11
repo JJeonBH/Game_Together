@@ -4,25 +4,25 @@
 <!DOCTYPE html>
 <html data-theme="light">
 <head>
-<meta charset="UTF-8">
-<title>${pageTitle }</title>
-<!-- 파비콘 불러오기 -->
-<link rel="shortcut icon" href="/resource/images/favicon.ico" />
-<!-- 테일윈드 불러오기 -->
-<!-- 노말라이즈 -->
-<script src="https://cdn.tailwindcss.com"></script>
-<!-- 데이지 UI 불러오기 -->
-<link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.6/dist/full.css" rel="stylesheet" type="text/css" />
-<!-- 제이쿼리 불러오기 -->
-<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-<!-- 폰트어썸 불러오기 -->
-<script src="https://kit.fontawesome.com/c186b4187f.js" crossorigin="anonymous"></script>
-<!-- 구글 차트 불러오기 -->
-<script src="https://www.gstatic.com/charts/loader.js"></script>
-<!-- CSS 파일 불러오기 -->
-<link rel="stylesheet" href="/resource/css/common.css" />
-<!-- JS 파일 불러오기 -->
-<script src="/resource/js/common.js" defer="defer"></script>
+	<meta charset="UTF-8">
+	<title>${pageTitle }</title>
+	<!-- 파비콘 불러오기 -->
+	<link rel="shortcut icon" href="/resource/images/favicon.ico" />
+	<!-- 테일윈드 불러오기 -->
+	<!-- 노말라이즈 -->
+	<script src="https://cdn.tailwindcss.com"></script>
+	<!-- 데이지 UI 불러오기 -->
+	<link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.6/dist/full.css" rel="stylesheet" type="text/css" />
+	<!-- 제이쿼리 불러오기 -->
+	<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+	<!-- 폰트어썸 불러오기 -->
+	<script src="https://kit.fontawesome.com/c186b4187f.js" crossorigin="anonymous"></script>
+	<!-- 구글 차트 불러오기 -->
+	<script src="https://www.gstatic.com/charts/loader.js"></script>
+	<!-- CSS 파일 불러오기 -->
+	<link rel="stylesheet" href="/resource/css/common.css" />
+	<!-- JS 파일 불러오기 -->
+	<script src="/resource/js/common.js" defer="defer"></script>
 </head>
 <body>
 	<header class="h-10">
@@ -65,7 +65,7 @@
 					</c:if>
 					<c:if test="${Request.loginedMemberId != 0}">
 						<li>
-							<div class="topbar-text-link h-full flex items-center px-3 mx-1" onclick="chattingRoomOpen();">채팅방 입장</div>
+							<div class="topbar-text-link h-full flex items-center px-3 mx-1" onclick="ShowChatRoomList();">채팅방 목록</div>
 						</li>
 						<li>
 							<a href="/usr/member/profile" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>프로필</span></a>

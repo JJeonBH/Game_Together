@@ -1,5 +1,7 @@
 package com.koreaIT.Game_Together.vo;
 
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,10 +21,13 @@ public class Chat {
         ENTER, TALK, LEAVE;
     }
     
-    private MessageType type; //  메시지 타입
-    private String roomId; //  방 번호
-    private String sender; //  채팅을 보낸 사람
-    private String message; //  메시지
-    private String time; //  채팅 발송 시간
+    private int id;
+    private LocalDateTime regDate;
+    private int chatRoomId;
+    private int memberId;
+    private String message;
+    private MessageType messageType;
+    
+    private String memberNickname;
     
 }

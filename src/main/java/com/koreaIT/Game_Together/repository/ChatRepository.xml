@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.koreaIT.Game_Together.repository.ChatRepository">
+
+	<select id="getChatRooms" resultType="ChatRoom">
+		SELECT CR.*
+			, M.nickname AS hostNickname
+			, COUNT(CRM.id) AS currentMemberCount
+			FROM chatRoom AS CR
+			INNER JOIN `member` AS M
+			ON CR.memberId = M.id
+			INNER JOIN chatRoomMember AS CRM
+    		ON CR.id = CRM.chatRoomId
+    		GROUP BY CR.id
+			ORDER BY CR.id DESC
+	</select>
+	
+	<insert id="createChatRoom">
+		INSERT INTO chatRoom
+			SET regDate = NOW()
+				, memberId = #{loginedMemberId}
+				, `name` = #{name}
+				, maxMemberCount = #{maxMemberCount}
+	</insert>
+	
+	<select id="getLastInsertId" resultType="int">
+		SELECT LAST_INSERT_ID()
+	</select>
+	
+	<insert id="joinChatRoom">
+		INSERT INTO chatRoomMember
+			SET regDate = NOW()
+				, chatRoomId = #{chatRoomId}
+				, memberId = #{loginedMemberId}
+	</insert>
+	
+	<select id="getChatRoomById" resultType="ChatRoom">
+		SELECT CR.*
+			, M.nickname AS hostNickname
+			, COUNT(CRM.id) AS currentMemberCount
+			FROM chatRoom AS CR
+			INNER JOIN `member` AS M
+			ON CR.memberId = M.id
+			INNER JOIN chatRoomMember AS CRM
+    		ON CR.id = CRM.chatRoomId
+    		WHERE CR.id = #{chatRoomId}
+	</select>
+
+</mapper>

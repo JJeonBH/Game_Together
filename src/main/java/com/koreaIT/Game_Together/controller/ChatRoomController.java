@@ -1,5 +1,7 @@
 package com.koreaIT.Game_Together.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,57 +9,61 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.koreaIT.Game_Together.repository.ChatRepository;
+import com.koreaIT.Game_Together.service.ChatService;
 import com.koreaIT.Game_Together.vo.ChatRoom;
-
-import lombok.extern.slf4j.Slf4j;
+import com.koreaIT.Game_Together.vo.Request;
 
 @Controller
-@Slf4j
 public class ChatRoomController {
 	
-	private ChatRepository chatRepository;
+	private ChatService chatService;
+	private Request rq;
 	
-	// ChatRepository Bean 가져오기
 	@Autowired
-	public ChatRoomController(ChatRepository chatRepository) {
-		this.chatRepository = chatRepository;
+	public ChatRoomController(ChatService chatService, Request rq) {
+		this.chatService = chatService;
+		this.rq = rq;
 	}
 	
     //	채팅방 리스트 화면
     //	/usr/chat/chatRoomList 로 요청이 들어오면 전체 채팅방 리스트를 담아서 return
 	@RequestMapping("/usr/chat/chatRoomList")
     public String showChatRoomList(Model model) {
+		
+		List<ChatRoom> chatRooms = chatService.getChatRooms();
 
-        model.addAttribute("chatRoomList", chatRepository.findAllChatRoom());
-        //	model.addAttribute("user", "hey");
-        log.info("SHOW ALL ChatList {}", chatRepository.findAllChatRoom());
+        model.addAttribute("chatRooms", chatRooms);
         
         return "usr/chat/chatRoomList";
         
     }
 	
-	// 채팅방 생성
-	// 채팅방 생성 후 다시 /usr/chat/chatRoomList 로 return
+	//	채팅방 생성
+	//	채팅방 생성 후 /usr/chat/joinChatRoom 로 redirect
 	@RequestMapping("/usr/chat/createChatRoom")
-    public String createChatRoom(@RequestParam String roomName, RedirectAttributes rttr) {
+    public String createChatRoom(RedirectAttributes redirect, String name, int maxMemberCount) {
 		
-        ChatRoom room = chatRepository.createChatRoom(roomName);
-        log.info("CREATE Chat Room {}", room);
-        rttr.addFlashAttribute("roomName", room);
+        chatService.createChatRoom(rq.getLoginedMemberId(), name, maxMemberCount);
         
-        return "redirect:/usr/chat/chatRoomList";
+        int chatRoomId = chatService.getLastInsertId();
+        
+        redirect.addAttribute("chatRoomId", chatRoomId);
+        
+        return "redirect:/usr/chat/joinChatRoom";
         
     }
 	
-	// 채팅방 입장 화면
-	// 파라미터로 넘어오는 roomId 를 확인후 해당 roomId 를 기준으로
-	// 채팅방을 찾아서 클라이언트를 chatroom 으로 보낸다.
-	@RequestMapping("/usr/chat/chatRoom")
-	public String showChatRoom(Model model, String roomId) {
-	
-	    log.info("roomId {}", roomId);
-	    model.addAttribute("room", chatRepository.findChatRoomById(roomId));
+	//	채팅방 입장 화면
+	//	파라미터로 넘어오는 chatRoomId 를 확인후 해당 chatRoomId 를 기준으로
+	//	채팅방을 찾아서 클라이언트를 채팅방으로 보낸다.
+	@RequestMapping("/usr/chat/joinChatRoom")
+	public String joinChatRoom(Model model, @RequestParam("chatRoomId") int chatRoomId) {
+		
+		chatService.joinChatRoom(chatRoomId, rq.getLoginedMemberId());
+		
+		ChatRoom chatRoom = chatService.getChatRoomById(chatRoomId);
+		
+	    model.addAttribute("chatRoom", chatRoom);
 	    
 	    return "usr/chat/chatRoom";
 	    

@@ -17,10 +17,10 @@
 	<section class="text-lg min-w-900 flex justify-center mt-4">
 		<div class="table-box-type-1 w-2/3">
 			<table class="w-full">
+				<colgroup>
+					<col width="180"/>
+				</colgroup>
 				<tbody>
-					<colgroup>
-						<col width="180"/>
-					</colgroup>
 					<tr>
 						<th>아이디</th>
 						<td>${Request.loginedMember.loginId }</td>

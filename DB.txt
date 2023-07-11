@@ -67,6 +67,33 @@ CREATE TABLE reply(
 	`body` TEXT NOT NULL
 );
 
+# chat 테이블 생성
+CREATE TABLE chat(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    chatRoomId INT UNSIGNED NOT NULL,
+    memberId INT UNSIGNED NOT NULL,
+    message TEXT NOT NULL,
+    messageType VARCHAR(20) NOT NULL
+);
+
+# chatRoom 테이블 생성
+CREATE TABLE chatRoom(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    memberId INT UNSIGNED NOT NULL,
+    `name` VARCHAR(50) NOT NULL,
+    maxMemberCount INT UNSIGNED NOT NULL
+);
+
+# chatRoomMember 테이블 생성
+CREATE TABLE chatRoomMember(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    chatRoomId INT UNSIGNED NOT NULL,
+    memberId INT UNSIGNED NOT NULL
+);
+
 # member 테스트 데이터
 INSERT INTO `member`
 SET regDate = NOW(),
@@ -413,12 +440,59 @@ relTypeCode = 'article',
 relId = 2,
 `body` = '반갑습니다. ^^';
 
+# chatRoom 테스트 데이터
+INSERT INTO chatRoom
+SET regDate = NOW(),
+memberId = 1,
+`name` = '관리자방',
+maxMemberCount = 10;
+
+# chatRoom 테스트 데이터
+INSERT INTO chatRoom
+SET regDate = NOW(),
+memberId = 2,
+`name` = '유저1방',
+maxMemberCount = 8;
+
+# chatRoomMember 테스트 데이터
+INSERT INTO chatRoomMember
+SET regDate = NOW(),
+chatRoomId = 1,
+memberId = 1;
+
+# chatRoomMember 테스트 데이터
+INSERT INTO chatRoomMember
+SET regDate = NOW(),
+chatRoomId = 2,
+memberId = 2;
+
+# chatRoomMember 테스트 데이터
+INSERT INTO chatRoomMember
+SET regDate = NOW(),
+chatRoomId = 1,
+memberId = 3;
+
+# chatRoomMember 테스트 데이터
+INSERT INTO chatRoomMember
+SET regDate = NOW(),
+chatRoomId = 2,
+memberId = 4;
+
+# chatRoomMember 테스트 데이터
+INSERT INTO chatRoomMember
+SET regDate = NOW(),
+chatRoomId = 1,
+memberId = 5;
+
 # 테이블 구조
 DESC `member`;
 DESC article;
 DESC board;
 DESC reactionPoint;
 DESC reply;
+DESC chat;
+DESC chatRoom;
+DESC chatRoomMember;
 
 # 테이블 조회
 SELECT * FROM `member`;
@@ -426,6 +500,9 @@ SELECT * FROM article;
 SELECT * FROM board;
 SELECT * FROM reactionPoint;
 SELECT * FROM reply;
+SELECT * FROM chat;
+SELECT * FROM chatRoom;
+SELECT * FROM chatRoomMember;
 
 SELECT LAST_INSERT_ID();
 

@@ -4,23 +4,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>로그인</title>
-<!-- 파비콘 불러오기 -->
-<link rel="shortcut icon" href="/resource/images/favicon.ico" />
-<!-- 테일윈드 불러오기 -->
-<!-- 노말라이즈 -->
-<script src="https://cdn.tailwindcss.com"></script>
-<!-- 데이지 UI 불러오기 -->
-<link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.6/dist/full.css" rel="stylesheet" type="text/css" />
-<!-- 제이쿼리 불러오기 -->
-<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-<!-- 폰트어썸 불러오기 -->
-<script src="https://kit.fontawesome.com/c186b4187f.js" crossorigin="anonymous"></script>
-<!-- CSS 파일 불러오기 -->
-<link rel="stylesheet" href="/resource/css/common.css" />
-<!-- JS 파일 불러오기 -->
-<script src="/resource/js/login.js" defer="defer"></script>
+	<meta charset="UTF-8">
+	<title>로그인</title>
+	<!-- 파비콘 불러오기 -->
+	<link rel="shortcut icon" href="/resource/images/favicon.ico" />
+	<!-- 테일윈드 불러오기 -->
+	<!-- 노말라이즈 -->
+	<script src="https://cdn.tailwindcss.com"></script>
+	<!-- 데이지 UI 불러오기 -->
+	<link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.6/dist/full.css" rel="stylesheet" type="text/css" />
+	<!-- 제이쿼리 불러오기 -->
+	<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+	<!-- 폰트어썸 불러오기 -->
+	<script src="https://kit.fontawesome.com/c186b4187f.js" crossorigin="anonymous"></script>
+	<!-- CSS 파일 불러오기 -->
+	<link rel="stylesheet" href="/resource/css/common.css" />
+	<!-- JS 파일 불러오기 -->
+	<script src="/resource/js/login.js" defer="defer"></script>
 </head>
 <body>
 	<header class="text-lg mt-14">

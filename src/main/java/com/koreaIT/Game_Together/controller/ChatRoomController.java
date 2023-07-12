@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.koreaIT.Game_Together.service.ChatService;
 import com.koreaIT.Game_Together.vo.ChatRoom;
+import com.koreaIT.Game_Together.vo.Member;
 import com.koreaIT.Game_Together.vo.Request;
 
 @Controller
@@ -38,6 +39,12 @@ public class ChatRoomController {
         
     }
 	
+	//	채팅방 생성 페이지(제목, 최대 인원수 등 입력)
+	@RequestMapping("/usr/chat/createChatRoomForm")
+    public String createChatRoomForm() {
+        return "usr/chat/createChatRoomForm";
+    }
+	
 	//	채팅방 생성
 	//	채팅방 생성 후 /usr/chat/joinChatRoom 로 redirect
 	@RequestMapping("/usr/chat/createChatRoom")
@@ -62,8 +69,10 @@ public class ChatRoomController {
 		chatService.joinChatRoom(chatRoomId, rq.getLoginedMemberId());
 		
 		ChatRoom chatRoom = chatService.getChatRoomById(chatRoomId);
+		Member member = rq.getLoginedMember();
 		
 	    model.addAttribute("chatRoom", chatRoom);
+	    model.addAttribute("member", member);
 	    
 	    return "usr/chat/chatRoom";
 	    

@@ -13,35 +13,45 @@
 	<script src="https://cdn.tailwindcss.com"></script>
 	<!-- 데이지 UI 불러오기 -->
 	<link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.6/dist/full.css" rel="stylesheet" type="text/css" />
+	<!-- 제이쿼리 불러오기 -->
+	<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+	<!-- CSS 파일 불러오기 -->
+	<link rel="stylesheet" href="/resource/css/chat.css" />
 </head>
 <body>
-	<section>
-		<div>
-			<table>
-				<colgroup>
-					<col />
-					<col width="50"/>
-					<col width="80"/>
-				</colgroup>
-				<thead>
-					<tr>
-						<th>제목</th>
-						<th>인원</th>
-						<th>방장</th>
-					</tr>
-				</thead>
-				<tbody>
-				 	<c:forEach var="chatRoom" items="${chatRooms}">
-				 		<tr>
-				 			<td><a href="joinChatRoom?chatRoomId=${chatRoom.id}">${chatRoom.name}</a></td>
-				 			<td>${chatRoom.currentMemberCount} / ${chatRoom.maxMemberCount}</td>
-				 			<td>${chatRoom.hostNickname}</td>
-				 		</tr>
-				 	</c:forEach>
-				</tbody>
-			</table>
+	<section class="min-w-550">
+		<div class="flex justify-center text-3xl my-5">
+			<div>채팅방 목록</div>
 		</div>
-		<div>
+		<div class="flex justify-center">
+			<div class="table-box-type-1 w-4/5">
+				<table class="w-full">
+					<colgroup>
+						<col />
+						<col width="120"/>
+						<col width="120"/>
+					</colgroup>
+					<thead>
+						<tr>
+							<th>제목</th>
+							<th>인원</th>
+							<th>방장</th>
+						</tr>
+					</thead>
+					<tbody>
+					 	<c:forEach var="chatRoom" items="${chatRooms}">
+					 		<tr>
+					 			<td><a href="joinChatRoom?chatRoomId=${chatRoom.id}">${chatRoom.name}</a></td>
+					 			<td>${chatRoom.currentMemberCount} / ${chatRoom.maxMemberCount}</td>
+					 			<td>${chatRoom.hostNickname}</td>
+					 		</tr>
+					 	</c:forEach>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="flex justify-center">
+			<div class="flex justify-end w-4/5"><a href="createChatRoomForm" class="btn-text-color btn btn-info btn-sm my-4">채팅방 생성</a></div>
 		</div>
 	</section>
 </body>

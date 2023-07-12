@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+/* 폰트 불러오기 */
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 폰트 적용 */
+html > body {
+	font-family: 'GmarketSansMedium', sans-serif;
+	text-underline-position: under;
+}
+
+.w-112 {
+	width: 448px;
+}
+
+.min-w-550 {
+	min-width: 550px;
+}
+
+/* 셀렉트박스 옵션 글자 크기 */
+select > option {
+	font-size: 16px;
+}
+
+/* 채팅방 목록 테이블 행(row) 높이 */
+.table-box-type-1 > table tr {
+	height: 1rem;
+}
+
+/* 채팅방 목록 테이블 셀 테두리, 글자 정렬, 패딩 */
+.table-box-type-1 > table th, .table-box-type-1 > table td {
+	border: 1px solid #219fff;
+	padding: 10px;
+	text-align: center;
+}
+
+/* 버튼 글자색 */
+.btn-text-color {
+	color: white;
+}
+
+/* 버튼 글자색, 호버시 변경 */
+.btn-text-color:hover {
+	color: black;
+}

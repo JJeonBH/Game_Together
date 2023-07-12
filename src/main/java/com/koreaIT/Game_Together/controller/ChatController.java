@@ -1,10 +1,14 @@
 package com.koreaIT.Game_Together.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 
 import com.koreaIT.Game_Together.service.ChatService;
+import com.koreaIT.Game_Together.vo.Chat;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,34 +26,25 @@ public class ChatController {
 	}
 	
 	//	MessageMapping 을 통해 webSocket 로 들어오는 메시지를 발신 처리한다.
-	//	이때 클라이언트에서는 /pub/chat/message 로 요청하게 되고 이것을 controller 가 받아서 처리한다.
-	//	처리가 완료되면 /sub/chat/room/roomId 로 메시지가 전송된다.
-//	@MessageMapping("/chat/enterMember")
-//	public void enterMember(@Payload Chat chat, SimpMessageHeaderAccessor headerAccessor) {
-//		
-		// 채팅방 유저+1
-//		chatService.plusUserCnt(chat.getRoomId());
+	//	이때 클라이언트에서는 /pub/usr/chat/sendMessage 로 요청하게 되고 이것을 controller 가 받아서 처리한다.
+	//	처리가 완료되면 /sub/usr/chat/joinChatRoom/chatRoomId 로 메시지가 전송된다.
+	@MessageMapping("/usr/chat/enterMember")
+	public void enterMember(@Payload Chat chat, SimpMessageHeaderAccessor headerAccessor) {
 		
-		// 채팅방에 유저 추가 및 UserUUID 반환
-//		String userUUID = chatRepository.addUser(chat.getRoomId(), chat.getSender());
+		headerAccessor.getSessionAttributes().put("chatRoomId", chat.getChatRoomId());
 		
-		// 반환 결과를 socket session 에 userUUID 로 저장
-//		headerAccessor.getSessionAttributes().put("userUUID", userUUID);
-//		headerAccessor.getSessionAttributes().put("roomId", chat.getRoomId());
-//		
-//		chat.setMessage(chat.getSender() + " 님 입장!!");
-//		
-//		template.convertAndSend("/sub/chat/room/" + chat.getRoomId(), chat);
-//	
-//	}
+		chat.setMessage(chat.getMemberNickname() + " 님 입장!!");
+		
+		template.convertAndSend("/sub/usr/chat/joinChatRoom/" + chat.getChatRoomId(), chat);
+	
+	}
     
 	//	해당 유저
-//    @MessageMapping("/chat/sendMessage")
+//    @MessageMapping("/usr/chat/sendMessage")
 //    public void sendMessage(@Payload Chat chat) {
 //    	
-//        log.info("CHAT {}", chat);
 //        chat.setMessage(chat.getMessage());
-//        template.convertAndSend("/sub/chat/room/" + chat.getRoomId(), chat);
+//        template.convertAndSend("/sub/usr/chat/joinChatRoom/" + chat.getChatRoomId(), chat);
 //
 //    }
     

@@ -14,6 +14,11 @@ html > body {
 	text-underline-position: under;
 }
 
+/* 테두리를 기준으로 박스의 크기를 정함 */
+* {
+	box-sizing: border-box;
+}
+
 .w-112 {
 	width: 448px;
 }
@@ -21,6 +26,7 @@ html > body {
 .min-w-550 {
 	min-width: 550px;
 }
+
 
 /* 셀렉트박스 옵션 글자 크기 */
 select > option {
@@ -47,4 +53,34 @@ select > option {
 /* 버튼 글자색, 호버시 변경 */
 .btn-text-color:hover {
 	color: black;
+}
+
+/* 여기부터 테스트 단계, 아직 손 봐야함 */
+#chat #messageArea {
+	width: 500px;
+	height: 500px;
+	border-width: 1px;
+	border-color: #2ab1fa;
+}
+
+#chat #messageArea .event-message {
+	background-color: #d9e8ff;
+	text-align: center;
+	width: 100%;
+}
+
+#chat #messageArea .me {
+	width: 60%;
+	padding: 6px;
+	border-radius: 10px;
+	background-color : #ffe600;
+	margin : 2px 0px 2px 40%;
+}
+
+#chat #messageArea .other {
+	width: 60%;
+	padding: 6px;
+	border-radius: 10px;
+	background-color : #dedede;
+	margin : 2px 0px;
 }

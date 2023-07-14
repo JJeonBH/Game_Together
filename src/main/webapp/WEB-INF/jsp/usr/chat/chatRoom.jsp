@@ -19,15 +19,24 @@
 	<link rel="stylesheet" href="/resource/css/chat.css" />
 </head>
 <body>
-	<section>
+	<section class="min-w-550">
 		<div id="connecting" class="bg-gray-200 text-center text-2xl py-2">
         	연결중
         </div>
 		<div id="chat">
 			<input type="hidden" id="member-id" value="${member.id}">
 			<input type="hidden" id="member-nickname" value="${member.nickname}">
-			<div class="flex justify-center py-4 text-2xl font-semibold bg-blue-200">
+			<div class="flex justify-center py-4 text-2xl font-semibold">
 				<h1>${chatRoom.name}</h1>
+			</div>
+			<div class="flex justify-center">
+				<ul id="messageArea"></ul>
+			</div>
+			<div class="flex justify-center bg-red-200">
+				<form id="messageForm" class="flex justify-center">
+					<textarea id="message" class="textarea textarea-info my-2"></textarea>
+					<button class="btn-text-color btn btn-info btn-sm">보내기</button>
+				</form>
 			</div>
 		</div>
 	</section>

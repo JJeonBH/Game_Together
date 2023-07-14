@@ -1,9 +1,11 @@
 package com.koreaIT.Game_Together.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.koreaIT.Game_Together.vo.Chat.MessageType;
 import com.koreaIT.Game_Together.vo.ChatRoom;
 
 @Mapper
@@ -18,49 +20,8 @@ public interface ChatRepository {
 	public void joinChatRoom(int chatRoomId, int loginedMemberId);
 
 	public ChatRoom getChatRoomById(int chatRoomId);
-    
-	//	채팅방 인원+1
-//    public void plusUserCnt(String roomId) {
-//        ChatRoom room = chatRoomMap.get(roomId);
-//        room.setUserCount(room.getUserCount()+1);
-//    }
-    
-    //	채팅방 인원-1
-//    public void minusUserCnt(String roomId) {
-//	    ChatRoom room = chatRoomMap.get(roomId);
-//	    room.setUserCount(room.getUserCount()-1);
-//    }
-    
-    //	채팅방 유저 리스트에 유저 추가
-//    public String addUser(String roomId, String userName) {
-//    	
-//        ChatRoom room = chatRoomMap.get(roomId);
-//        String userUUID = UUID.randomUUID().toString();
 
-        // 아이디 중복 확인 후 userList 에 추가
-//        room.getUserlist().put(userUUID, userName);
-//
-//        return userUUID;
-//        
-//    }
-	
-    //	채팅방 유저 이름 중복 확인
-//    public String isDuplicateName(String roomId, String username) {
-//    	
-//        ChatRoom room = chatRoomMap.get(roomId);
-//        String tmp = username;
-
-        // 만약 userName 이 중복이라면 랜덤한 숫자를 붙임
-        // 이때 랜덤한 숫자를 붙였을 때 getUserlist 안에 있는 닉네임이라면 다시 랜덤한 숫자 붙이기!
-//        while(room.getUserlist().containsValue(tmp)){
-//            int ranNum = (int) (Math.random()*100)+1;
-//
-//            tmp = username+ranNum;
-//        }
-//
-//        return tmp;
-//        
-//    }
+	public void saveChat(LocalDateTime regDate, int chatRoomId, int memberId, String message, MessageType messageType);
     
     //	채팅방 유저 리스트 삭제
 //    public void delUser(String roomId, String userUUID) {

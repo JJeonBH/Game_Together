@@ -1,11 +1,13 @@
 package com.koreaIT.Game_Together.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.koreaIT.Game_Together.repository.ChatRepository;
+import com.koreaIT.Game_Together.vo.Chat.MessageType;
 import com.koreaIT.Game_Together.vo.ChatRoom;
 
 @Service
@@ -36,6 +38,10 @@ public class ChatService {
 
 	public ChatRoom getChatRoomById(int chatRoomId) {
 		return chatRepository.getChatRoomById(chatRoomId);
+	}
+
+	public void saveChat(LocalDateTime regDate, int chatRoomId, int memberId, String message, MessageType messageType) {
+		chatRepository.saveChat(regDate, chatRoomId, memberId, message, messageType);
 	}
 
 }

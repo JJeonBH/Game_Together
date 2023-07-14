@@ -66,8 +66,6 @@ public class ChatRoomController {
 	@RequestMapping("/usr/chat/joinChatRoom")
 	public String joinChatRoom(Model model, @RequestParam("chatRoomId") int chatRoomId) {
 		
-		chatService.joinChatRoom(chatRoomId, rq.getLoginedMemberId());
-		
 		ChatRoom chatRoom = chatService.getChatRoomById(chatRoomId);
 		Member member = rq.getLoginedMember();
 		

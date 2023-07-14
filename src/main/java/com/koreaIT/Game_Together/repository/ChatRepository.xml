@@ -46,5 +46,14 @@
     		ON CR.id = CRM.chatRoomId
     		WHERE CR.id = #{chatRoomId}
 	</select>
+	
+	<insert id="saveChat">
+		INSERT INTO chat
+			SET regDate = #{regDate}
+				, chatRoomId = #{chatRoomId}
+				, memberId = #{memberId}
+				, message = #{message}
+				, messageType = #{messageType}
+	</insert>
 
 </mapper>

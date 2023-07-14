@@ -4,6 +4,9 @@ let stompClient = null;
 let memberId = null;
 let memberNickname = null;
 let connectingElement = document.querySelector('#connecting');
+let messageForm = document.querySelector('#messageForm');
+let messageInput = document.querySelector('#message');
+let messageArea = document.querySelector('#messageArea');
 
 //	chatRoomId 파라미터 가져오기
 const url = new URL(location.href).searchParams;
@@ -34,8 +37,10 @@ function onConnected() {
     stompClient.send("/pub/usr/chat/enterMember",
         {},
         JSON.stringify({
+			"regDate" : new Date(),
             "chatRoomId" : chatRoomId,
             "memberId" : memberId,
+            "message" : memberNickname + '님이 입장하셨습니다.',
             "memberNickname" : memberNickname,
             "messageType" : 'ENTER'
         })
@@ -43,6 +48,14 @@ function onConnected() {
     
 	connectingElement.classList.add('hidden');
 
+}
+
+function onError(error) {
+	
+	alert(error);
+    connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
+    connectingElement.style.color = 'red';
+    
 }
 
 //	유저 리스트 받기
@@ -67,80 +80,65 @@ function onConnected() {
 //    })
 //}
 
-function onError(error) {
-    connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
-    connectingElement.style.color = 'red';
-}
-
-//	메시지 전송때는 JSON 형식을 메시지를 전달한다.
+//	메시지 전송때는 JSON 형식의 메시지를 전달한다.
 function sendMessage(event) {
-    var messageContent = messageInput.value.trim();
+	
+    let messageContent = messageInput.value.trim();
 
     if (messageContent && stompClient) {
-        var chatMessage = {
-            "roomId": roomId,
-            sender: username,
-            message: messageInput.value,
-            type: 'TALK'
+		
+        let chatMessage = {
+			"regDate" : new Date(),
+            "chatRoomId" : chatRoomId,
+            "memberId" : memberId,
+            "message" : messageContent,
+            "memberNickname" : memberNickname,
+            "messageType" : 'TALK'
         };
 
-        stompClient.send("/pub/chat/sendMessage", {}, JSON.stringify(chatMessage));
+        stompClient.send("/pub/usr/chat/sendMessage", {}, JSON.stringify(chatMessage));
+        
         messageInput.value = '';
+        
     }
+    
     event.preventDefault();
+    
 }
 
 //	메시지를 받을 때도 마찬가지로 JSON 타입으로 받으며,
 //	넘어온 JSON 형식의 메시지를 parse 해서 사용한다.
 function onMessageReceived(payload) {
-    //console.log("payload 들어오냐? :"+payload);
+	
     let chat = JSON.parse(payload.body);
-
+	console.log(chat);
     let messageElement = document.createElement('li');
 
     if (chat.messageType === 'ENTER') {
         messageElement.classList.add('event-message');
-        chat.content = chat.sender + chat.message;
-        getUserList();
-    } else if (chat.type === 'LEAVE') { // chatType 가 leave 라면 아래 내용
+    } else if (chat.messageType === 'LEAVE') {
         messageElement.classList.add('event-message');
-        chat.content = chat.sender + chat.message;
-        getUserList();
-
-    } else { // chatType 이 talk 라면 아래 내용용
-        messageElement.classList.add('chat-message');
-
-        var avatarElement = document.createElement('i');
-        var avatarText = document.createTextNode(chat.sender[0]);
-        avatarElement.appendChild(avatarText);
-        avatarElement.style['background-color'] = getAvatarColor(chat.sender);
-
-        messageElement.appendChild(avatarElement);
-
-        var usernameElement = document.createElement('span');
-        var usernameText = document.createTextNode(chat.sender);
-        usernameElement.appendChild(usernameText);
-        messageElement.appendChild(usernameElement);
+    } else {
+		if (memberId == chat.memberId) {
+			messageElement.classList.add('me');
+		} else {
+			messageElement.classList.add('other');
+		}
     }
-
-    var textElement = document.createElement('p');
-    var messageText = document.createTextNode(chat.message);
-    textElement.appendChild(messageText);
-
-    messageElement.appendChild(textElement);
-
-    messageArea.appendChild(messageElement);
+    
+	//	바꿀 부분(이상하게 나옴, onMessageReceived함수 전체적으로 손봐야 함)
+    let message = `<div>
+    					<span><b>${chat.memberNickname}</b></span> [${chat.regDate}]<br>
+    					<span>${chat.message}</span>
+    				</div>`;
+    
+	messageElement.append(message);
+	
+    messageArea.append(messageElement);
+    
+    //	스크롤바 하단으로 이동
     messageArea.scrollTop = messageArea.scrollHeight;
+    
 }
 
-function getAvatarColor(messageSender) {
-    var hash = 0;
-    for (var i = 0; i < messageSender.length; i++) {
-        hash = 31 * hash + messageSender.charCodeAt(i);
-    }
-
-    var index = Math.abs(hash % colors.length);
-    return colors[index];
-}
-
-//messageForm.addEventListener('submit', sendMessage, true)
+messageForm.addEventListener('submit', sendMessage, true)

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 
 import com.koreaIT.Game_Together.service.ChatService;
 import com.koreaIT.Game_Together.vo.Chat;
+import com.koreaIT.Game_Together.vo.Request;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,7 +21,7 @@ public class ChatController {
 	private ChatService chatService;
 	
 	@Autowired
-	public ChatController(SimpMessageSendingOperations template, ChatService chatService) {
+	public ChatController(SimpMessageSendingOperations template, ChatService chatService, Request rq) {
 		this.template = template;
 		this.chatService = chatService;
 	}
@@ -31,22 +32,28 @@ public class ChatController {
 	@MessageMapping("/usr/chat/enterMember")
 	public void enterMember(@Payload Chat chat, SimpMessageHeaderAccessor headerAccessor) {
 		
+		chatService.joinChatRoom(chat.getChatRoomId(), chat.getMemberId());
+		chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getMessageType());
+		
+		headerAccessor.getSessionAttributes().put("memberId", chat.getMemberId());
 		headerAccessor.getSessionAttributes().put("chatRoomId", chat.getChatRoomId());
 		
-		chat.setMessage(chat.getMemberNickname() + " 님 입장!!");
+		System.out.println(chat);
 		
 		template.convertAndSend("/sub/usr/chat/joinChatRoom/" + chat.getChatRoomId(), chat);
 	
 	}
     
-	//	해당 유저
-//    @MessageMapping("/usr/chat/sendMessage")
-//    public void sendMessage(@Payload Chat chat) {
-//    	
-//        chat.setMessage(chat.getMessage());
-//        template.convertAndSend("/sub/usr/chat/joinChatRoom/" + chat.getChatRoomId(), chat);
-//
-//    }
+    @MessageMapping("/usr/chat/sendMessage")
+    public void sendMessage(@Payload Chat chat) {
+    	
+    	chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getMessageType());
+    	
+    	System.out.println(chat);
+    	
+        template.convertAndSend("/sub/usr/chat/joinChatRoom/" + chat.getChatRoomId(), chat);
+        
+    }
     
     //	유저 퇴장 시에는 EventListener 을 통해서 유저 퇴장을 확인
 //    @EventListener

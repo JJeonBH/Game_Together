@@ -4,9 +4,9 @@ let stompClient = null;
 let memberId = null;
 let memberNickname = null;
 let connectingElement = document.querySelector('#connecting');
-let messageForm = document.querySelector('#messageForm');
-let messageInput = document.querySelector('#message');
 let messageArea = document.querySelector('#messageArea');
+let messageForm = document.querySelector('#messageForm');
+let messageInput = document.querySelector('#messageInput');
 
 //	chatRoomId 파라미터 가져오기
 const url = new URL(location.href).searchParams;
@@ -31,13 +31,12 @@ function onConnected() {
 
     //	sub 할 url => /sub/usr/chat/joinChatRoom/chatRoomId 로 구독한다
     stompClient.subscribe('/sub/usr/chat/joinChatRoom/' + chatRoomId, onMessageReceived);
-
+    
     //	서버에 memberNickname 을 가진 멤버가 들어왔다는 것을 알림
     //	/pub/usr/chat/enterMember 로 메시지를 보냄
     stompClient.send("/pub/usr/chat/enterMember",
         {},
         JSON.stringify({
-			"regDate" : new Date(),
             "chatRoomId" : chatRoomId,
             "memberId" : memberId,
             "message" : memberNickname + '님이 입장하셨습니다.',
@@ -88,7 +87,6 @@ function sendMessage(event) {
     if (messageContent && stompClient) {
 		
         let chatMessage = {
-			"regDate" : new Date(),
             "chatRoomId" : chatRoomId,
             "memberId" : memberId,
             "message" : messageContent,
@@ -111,30 +109,37 @@ function sendMessage(event) {
 function onMessageReceived(payload) {
 	
     let chat = JSON.parse(payload.body);
-	console.log(chat);
+    
     let messageElement = document.createElement('li');
 
-    if (chat.messageType === 'ENTER') {
+    if (chat.messageType == 'ENTER') {
         messageElement.classList.add('event-message');
-    } else if (chat.messageType === 'LEAVE') {
+    } else if (chat.messageType == 'LEAVE') {
         messageElement.classList.add('event-message');
     } else {
+		
 		if (memberId == chat.memberId) {
 			messageElement.classList.add('me');
 		} else {
 			messageElement.classList.add('other');
 		}
+		
+		let memberNicknameElement = document.createElement('span');
+		let memberNicknameText = document.createTextNode(chat.memberNickname);
+		
+		memberNicknameElement.appendChild(memberNicknameText);
+		messageElement.appendChild(memberNicknameElement);
+		
     }
     
-	//	바꿀 부분(이상하게 나옴, onMessageReceived함수 전체적으로 손봐야 함)
-    let message = `<div>
-    					<span><b>${chat.memberNickname}</b></span> [${chat.regDate}]<br>
-    					<span>${chat.message}</span>
-    				</div>`;
+    let contentElement = document.createElement('p');
+    let messageText = document.createTextNode(chat.message);
     
-	messageElement.append(message);
+    contentElement.appendChild(messageText);
+    
+	messageElement.appendChild(contentElement);
 	
-    messageArea.append(messageElement);
+    messageArea.appendChild(messageElement);
     
     //	스크롤바 하단으로 이동
     messageArea.scrollTop = messageArea.scrollHeight;

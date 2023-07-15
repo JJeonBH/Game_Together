@@ -19,6 +19,14 @@ html > body {
 	box-sizing: border-box;
 }
 
+.w-104 {
+	width: 416px;
+}
+
+.w-108 {
+	width:432px;
+}
+
 .w-112 {
 	width: 448px;
 }
@@ -58,15 +66,20 @@ select > option {
 /* 여기부터 테스트 단계, 아직 손 봐야함 */
 #chat #messageArea {
 	width: 500px;
-	height: 500px;
-	border-width: 1px;
-	border-color: #2ab1fa;
+	height: 450px;
+	white-space: normal;
+	overflow-y: scroll;
+	word-wrap: break-word;
+	word-break: break-word;
+	border: 1px solid #2ab1fa;
 }
 
 #chat #messageArea .event-message {
-	background-color: #d9e8ff;
+	padding: 6px;
 	text-align: center;
 	width: 100%;
+	border-top: 1px solid #96e3ff;
+	border-bottom: 1px solid #96e3ff;
 }
 
 #chat #messageArea .me {
@@ -83,4 +96,8 @@ select > option {
 	border-radius: 10px;
 	background-color : #dedede;
 	margin : 2px 0px;
+}
+
+#chat #messageForm {
+	width: 500px;
 }

@@ -21,7 +21,7 @@
 <body>
 	<section class="min-w-550">
 		<div id="connecting" class="bg-gray-200 text-center text-2xl py-2">
-        	연결중
+        	연결중..
         </div>
 		<div id="chat">
 			<input type="hidden" id="member-id" value="${member.id}">
@@ -32,10 +32,10 @@
 			<div class="flex justify-center">
 				<ul id="messageArea"></ul>
 			</div>
-			<div class="flex justify-center bg-red-200">
-				<form id="messageForm" class="flex justify-center">
-					<textarea id="message" class="textarea textarea-info my-2"></textarea>
-					<button class="btn-text-color btn btn-info btn-sm">보내기</button>
+			<div class="flex justify-center">
+				<form id="messageForm" class="flex justify-center items-center">
+					<input type="text" id="messageInput" class="input input-bordered input-info my-2 w-108 h-10" autocomplete="off"/>
+					<button class="btn-text-color btn btn-info btn-sm h-10 ml-2">보내기</button>
 				</form>
 			</div>
 		</div>

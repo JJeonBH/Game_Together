@@ -158,7 +158,14 @@
 										</div>
 										<div class="ml-1">
 											<c:set var="champAvgKDA" value="${Math.round(((champion.kills + champion.assists) / champion.deaths) * 100) / 100.0}"/>
-											<span class="${champAvgKDA < 3.0 ? 'text-gray-500' : champAvgKDA < 4.0 ? 'text-green-500' : champAvgKDA < 5.0 ? 'text-blue-500' : 'text-yellow-500'}">${champAvgKDA} 평점</span>
+											<c:choose>
+												<c:when test="${champion.deaths == 0}">
+													<span class="text-yellow-500">Perfect 평점</span>
+												</c:when>
+												<c:otherwise>
+													<span class="${champAvgKDA < 3.0 ? 'text-gray-500' : champAvgKDA < 4.0 ? 'text-green-500' : champAvgKDA < 5.0 ? 'text-blue-500' : 'text-yellow-500'}">${champAvgKDA} 평점</span>
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</c:forEach>

@@ -19,7 +19,7 @@
 	<link rel="stylesheet" href="/resource/css/chat.css" />
 </head>
 <body>
-	<section class="min-w-550">
+	<section class="min-w-800">
 		<div class="py-4 border-b border-blue-300">
 			<div class="text-center text-2xl font-bold">채팅방 생성</div>
 		</div>

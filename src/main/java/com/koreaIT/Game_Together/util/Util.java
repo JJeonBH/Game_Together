@@ -88,7 +88,7 @@ public class Util {
 		
 	}
 	
-	//	detail.jsp에서 사용
+	//	detail.jsp에서 사용 (chatRoom.jsp에서도 사용)
 	public static String formatRegDateVer1(LocalDateTime regDate) {
 		
 		String formatRegDateVer1 = regDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd. HH:mm"));
@@ -97,7 +97,7 @@ public class Util {
 		
 	}
 	
-	// list.jsp에서 사용
+	//	list.jsp에서 사용
 	public static String formatRegDateVer2(LocalDateTime regDate) {
 		
 		String formatRegDateVer2;

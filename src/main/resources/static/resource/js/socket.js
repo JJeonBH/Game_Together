@@ -4,11 +4,11 @@ let stompClient = null;
 let memberId = null;
 let memberNickname = null;
 let connectingElement = document.querySelector('#connecting');
-let messageArea = document.querySelector('#messageArea');
-let messageForm = document.querySelector('#messageForm');
-let messageInput = document.querySelector('#messageInput');
+let messageArea = document.querySelector('#message-area');
+let messageForm = document.querySelector('#message-form');
+let messageInput = document.querySelector('#message-input');
 
-//	chatRoomId 파라미터 가져오기
+//	URL 에서 chatRoomId 파라미터 값 가져오기
 const url = new URL(location.href).searchParams;
 const chatRoomId = url.get('chatRoomId');
 
@@ -17,7 +17,7 @@ window.onload = function connect(event) {
 	memberId = document.querySelector('#member-id').value.trim();
 	memberNickname = document.querySelector('#member-nickname').value.trim();
 	
-	//	연결하고자하는 Socket 의 endPoint
+	//	연결하고자 하는 Socket 의 endPoint (WebSocketStompConfig에서 정한 endPoint)
 	let socket = new SockJS('/ws-stomp');
     stompClient = Stomp.over(socket);
 	
@@ -57,9 +57,10 @@ function onError(error) {
     
 }
 
-//	유저 리스트 받기
-//	ajax 로 유저 리스트를 받으며 클라이언트가 입장/퇴장 했다는 문구가 나왔을 때마다 실행된다.
+//	채팅에 참여한 멤버 리스트 받기
+//	비동기로 멤버 리스트를 받으며 클라이언트가 입장/퇴장 했다는 문구가 나올 때마다 실행된다.
 //function getUserList() {
+//	
 //    const $list = $("#list");
 //    
 //    $.ajax({
@@ -111,11 +112,20 @@ function onMessageReceived(payload) {
     let chat = JSON.parse(payload.body);
     
     let messageElement = document.createElement('li');
+    
+    let chatFormatRegDateElement = document.createElement('span');
+	let chatFormatRegDateText = document.createTextNode(' [ ' + chat.formatRegDate + ' ] ');
+	
+	chatFormatRegDateElement.classList.add('text-sm');
+	
+	chatFormatRegDateElement.appendChild(chatFormatRegDateText);
 
     if (chat.messageType == 'ENTER') {
         messageElement.classList.add('event-message');
+		messageElement.appendChild(chatFormatRegDateElement);
     } else if (chat.messageType == 'LEAVE') {
         messageElement.classList.add('event-message');
+		messageElement.appendChild(chatFormatRegDateElement);
     } else {
 		
 		if (memberId == chat.memberId) {
@@ -125,10 +135,14 @@ function onMessageReceived(payload) {
 		}
 		
 		let memberNicknameElement = document.createElement('span');
-		let memberNicknameText = document.createTextNode(chat.memberNickname);
+		let memberNicknameText = document.createTextNode(chat.memberNickname + ' 님의 말');
+		
+		memberNicknameElement.classList.add('font-semibold');
 		
 		memberNicknameElement.appendChild(memberNicknameText);
 		messageElement.appendChild(memberNicknameElement);
+		
+		messageElement.appendChild(chatFormatRegDateElement);
 		
     }
     

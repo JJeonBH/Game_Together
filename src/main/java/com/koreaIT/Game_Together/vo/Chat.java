@@ -29,5 +29,6 @@ public class Chat {
     private MessageType messageType;
     
     private String memberNickname;
+    private String formatRegDate;
     
 }

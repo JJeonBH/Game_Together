@@ -19,24 +19,35 @@
 	<link rel="stylesheet" href="/resource/css/chat.css" />
 </head>
 <body>
-	<section class="min-w-550">
+	<section class="min-w-800">
 		<div id="connecting" class="bg-gray-200 text-center text-2xl py-2">
         	연결중..
         </div>
-		<div id="chat">
-			<input type="hidden" id="member-id" value="${member.id}">
-			<input type="hidden" id="member-nickname" value="${member.nickname}">
-			<div class="flex justify-center py-4 text-2xl font-semibold">
-				<h1>${chatRoom.name}</h1>
+		<div id="chat" class="flex justify-center">
+			<div>
+				<input type="hidden" id="member-id" value="${member.id}">
+				<input type="hidden" id="member-nickname" value="${member.nickname}">
+				<div class="flex justify-center py-4 text-2xl font-semibold h-16">
+					<h1>${chatRoom.name}</h1>
+				</div>
+				<div class="flex justify-center">
+					<ul id="message-area"></ul>
+				</div>
+				<div class="flex justify-center">
+					<form id="message-form" class="flex justify-center items-center">
+						<input type="text" id="message-input" class="input input-bordered input-info my-2 w-108 h-10" autocomplete="off"/>
+						<button class="btn-text-color btn btn-info btn-sm h-10 ml-2">보내기</button>
+					</form>
+				</div>
 			</div>
-			<div class="flex justify-center">
-				<ul id="messageArea"></ul>
-			</div>
-			<div class="flex justify-center">
-				<form id="messageForm" class="flex justify-center items-center">
-					<input type="text" id="messageInput" class="input input-bordered input-info my-2 w-108 h-10" autocomplete="off"/>
-					<button class="btn-text-color btn btn-info btn-sm h-10 ml-2">보내기</button>
-				</form>
+			<div class="ml-2">
+				<div class="h-16"></div>
+				<div id="info">
+					<div id="host" class="flex justify-center">
+						<div>방장 : ${chatRoom.hostNickname}</div>
+					</div>
+					<div id="member-list"></div>
+				</div>
 			</div>
 		</div>
 	</section>

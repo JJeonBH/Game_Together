@@ -31,8 +31,8 @@ html > body {
 	width: 448px;
 }
 
-.min-w-550 {
-	min-width: 550px;
+.min-w-800 {
+	min-width: 800px;
 }
 
 
@@ -64,7 +64,7 @@ select > option {
 }
 
 /* 여기부터 테스트 단계, 아직 손 봐야함 */
-#chat #messageArea {
+#chat #message-area {
 	width: 500px;
 	height: 450px;
 	white-space: normal;
@@ -74,7 +74,7 @@ select > option {
 	border: 1px solid #2ab1fa;
 }
 
-#chat #messageArea .event-message {
+#chat #message-area .event-message {
 	padding: 6px;
 	text-align: center;
 	width: 100%;
@@ -82,7 +82,7 @@ select > option {
 	border-bottom: 1px solid #96e3ff;
 }
 
-#chat #messageArea .me {
+#chat #message-area .me {
 	width: 60%;
 	padding: 6px;
 	border-radius: 10px;
@@ -90,7 +90,7 @@ select > option {
 	margin : 2px 0px 2px 40%;
 }
 
-#chat #messageArea .other {
+#chat #message-area .other {
 	width: 60%;
 	padding: 6px;
 	border-radius: 10px;
@@ -98,6 +98,17 @@ select > option {
 	margin : 2px 0px;
 }
 
-#chat #messageForm {
+#chat #message-form {
 	width: 500px;
+}
+
+#chat #info {
+	width: 280px;
+	height: 450px;
+	border: 1px solid #2ab1fa;
+}
+
+#chat #info #host {
+	border-bottom: 1px solid #96e3ff;
+	padding: 8px 0px;
 }

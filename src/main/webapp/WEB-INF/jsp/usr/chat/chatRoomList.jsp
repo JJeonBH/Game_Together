@@ -19,7 +19,7 @@
 	<link rel="stylesheet" href="/resource/css/chat.css" />
 </head>
 <body>
-	<section class="min-w-550">
+	<section class="min-w-800">
 		<div class="flex justify-center text-3xl my-5">
 			<div>채팅방 목록</div>
 		</div>

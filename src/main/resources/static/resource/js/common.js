@@ -52,7 +52,7 @@ themeInit();
 
 //	채팅방 목록 새로운 창으로 열기
 function ShowChatRoomList() {
-	window.open("http://127.0.0.1:8081/usr/chat/chatRoomList", "_blank", "width=600, height=600")
+	window.open("http://127.0.0.1:8081/usr/chat/chatRoomList", "_blank", "width=800, height=600")
 }
 
 //	스크롤해서 내려가면 맨위로 이동하는 버튼 나오게, 올라가면 사라지게

@@ -10,6 +10,7 @@ import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 
 import com.koreaIT.Game_Together.service.ChatService;
+import com.koreaIT.Game_Together.util.Util;
 import com.koreaIT.Game_Together.vo.Chat;
 import com.koreaIT.Game_Together.vo.Request;
 
@@ -33,6 +34,7 @@ public class ChatController {
 		
 		LocalDateTime now = LocalDateTime.now();
 		chat.setRegDate(now);
+		chat.setFormatRegDate(Util.formatRegDateVer1(chat.getRegDate()));
 		
 		chatService.joinChatRoom(chat.getChatRoomId(), chat.getMemberId());
 		chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getMessageType());
@@ -49,6 +51,7 @@ public class ChatController {
     	
     	LocalDateTime now = LocalDateTime.now();
 		chat.setRegDate(now);
+		chat.setFormatRegDate(Util.formatRegDateVer1(chat.getRegDate()));
     	
     	chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getMessageType());
     	

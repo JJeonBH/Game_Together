@@ -55,5 +55,19 @@
 				, message = #{message}
 				, messageType = #{messageType}
 	</insert>
+	
+	<select id="getMemberList" resultType="Member">
+		SELECT M.*
+			FROM `member` AS M
+			INNER JOIN chatRoomMember AS CRM
+			ON M.id = CRM.memberId
+			WHERE CRM.chatRoomId = #{chatRoomId}
+	</select>
+	
+	<delete id="exitChatRoom">
+		DELETE FROM chatRoomMember
+			WHERE chatRoomId = #{chatRoomId}
+			AND memberId = #{memberId}
+	</delete>
 
 </mapper>

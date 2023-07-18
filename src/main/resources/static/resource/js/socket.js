@@ -34,14 +34,14 @@ function onConnected() {
     
     //	서버에 memberNickname 을 가진 멤버가 들어왔다는 것을 알림
     //	/pub/usr/chat/enterMember 로 메시지를 보냄
-    stompClient.send("/pub/usr/chat/enterMember",
+    stompClient.send('/pub/usr/chat/enterMember',
         {},
         JSON.stringify({
-            "chatRoomId" : chatRoomId,
-            "memberId" : memberId,
-            "message" : memberNickname + '님이 입장하셨습니다.',
-            "memberNickname" : memberNickname,
-            "messageType" : 'ENTER'
+            'chatRoomId' : chatRoomId,
+            'memberId' : memberId,
+            'message' : memberNickname + ' 님이 입장하셨습니다.',
+            'memberNickname' : memberNickname,
+            'messageType' : 'ENTER'
         })
     )
     
@@ -57,28 +57,29 @@ function onError(error) {
     
 }
 
-//	채팅에 참여한 멤버 리스트 받기
+//	채팅방에 참여한 멤버 리스트 받기
 //	비동기로 멤버 리스트를 받으며 클라이언트가 입장/퇴장 했다는 문구가 나올 때마다 실행된다.
-//function getUserList() {
-//	
-//    const $list = $("#list");
-//    
-//    $.ajax({
-//        type: "GET",
-//        url: "/chat/userlist",
-//        data: {
-//            "roomId": roomId
-//        },
-//        success: function (data) {
-//            var users = "";
-//            for (let i = 0; i < data.length; i++) {
-//                //console.log("data[i] : "+data[i]);
-//                users += "<li class='dropdown-item'>" + data[i] + "</li>"
-//            }
-//            $list.html(users);
-//        }
-//    })
-//}
+function getMemberList() {
+	
+    let memberList = $('#member-list');
+    
+    $.ajax({
+        type: 'GET',
+        url: '/usr/chat/memberList',
+        data: {
+            'chatRoomId': chatRoomId
+        },
+        success: function (data) {
+			let members = '';
+			for (let i = 0; i < data.length; i++) {
+				members += `<li> ${data[i].nickname} </li>`;
+			}
+			memberList.empty();
+			memberList.html(members);
+        }
+    })
+    
+}
 
 //	메시지 전송때는 JSON 형식의 메시지를 전달한다.
 function sendMessage(event) {
@@ -88,14 +89,14 @@ function sendMessage(event) {
     if (messageContent && stompClient) {
 		
         let chatMessage = {
-            "chatRoomId" : chatRoomId,
-            "memberId" : memberId,
-            "message" : messageContent,
-            "memberNickname" : memberNickname,
-            "messageType" : 'TALK'
+            'chatRoomId' : chatRoomId,
+            'memberId' : memberId,
+            'message' : messageContent,
+            'memberNickname' : memberNickname,
+            'messageType' : 'TALK'
         };
 
-        stompClient.send("/pub/usr/chat/sendMessage", {}, JSON.stringify(chatMessage));
+        stompClient.send('/pub/usr/chat/sendMessage', {}, JSON.stringify(chatMessage));
         
         messageInput.value = '';
         
@@ -123,9 +124,11 @@ function onMessageReceived(payload) {
     if (chat.messageType == 'ENTER') {
         messageElement.classList.add('event-message');
 		messageElement.appendChild(chatFormatRegDateElement);
+		getMemberList();
     } else if (chat.messageType == 'LEAVE') {
         messageElement.classList.add('event-message');
 		messageElement.appendChild(chatFormatRegDateElement);
+		getMemberList();
     } else {
 		
 		if (memberId == chat.memberId) {

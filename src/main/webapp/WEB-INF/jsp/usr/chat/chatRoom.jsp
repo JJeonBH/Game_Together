@@ -46,7 +46,7 @@
 					<div id="host" class="flex justify-center">
 						<div>방장 : ${chatRoom.hostNickname}</div>
 					</div>
-					<div id="member-list"></div>
+					<ul id="member-list"></ul>
 				</div>
 			</div>
 		</div>

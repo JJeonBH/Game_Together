@@ -27,6 +27,25 @@ window.onload = function connect(event) {
 
 }
 
+window.onbeforeunload = function disconnect(event) {
+	
+	stompClient.send('/pub/usr/chat/exitMember',
+        {},
+        JSON.stringify({
+            'chatRoomId' : chatRoomId,
+            'memberId' : memberId,
+            'message' : memberNickname + ' 님이 퇴장하셨습니다.',
+            'memberNickname' : memberNickname,
+            'messageType' : 'LEAVE'
+        })
+    )
+    
+    stompClient.disconnect();
+    
+    event.preventDefault();
+	
+}
+
 function onConnected() {
 
     //	sub 할 url => /sub/usr/chat/joinChatRoom/chatRoomId 로 구독한다

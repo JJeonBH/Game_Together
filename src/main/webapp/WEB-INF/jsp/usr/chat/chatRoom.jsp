@@ -48,6 +48,9 @@
 					</div>
 					<ul id="member-list"></ul>
 				</div>
+				<div class="flex">
+					<a href="chatRoomList" class="btn-text-color btn btn-info btn-sm my-2 h-10">나가기</a>
+				</div>
 			</div>
 		</div>
 	</section>

@@ -69,5 +69,15 @@
 			WHERE chatRoomId = #{chatRoomId}
 			AND memberId = #{memberId}
 	</delete>
+	
+	<delete id="deleteChatRoom">
+		DELETE FROM chatRoom
+			WHERE id = #{chatRoomId}
+	</delete>
+	
+	<delete id="deleteChat">
+		DELETE FROM chat
+			WHERE chatRoomId = #{chatRoomId}
+	</delete>
 
 </mapper>

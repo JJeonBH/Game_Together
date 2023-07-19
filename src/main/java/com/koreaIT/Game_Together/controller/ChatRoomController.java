@@ -75,5 +75,16 @@ public class ChatRoomController {
 	    return "usr/chat/chatRoom";
 	    
 	}
+	
+	//	채팅방 삭제
+	//	채팅방 삭제 후 /usr/chat/chatRoomList 로 redirect
+	@RequestMapping("/usr/chat/deleteChatRoom")
+    public String deleteChatRoom(@RequestParam("chatRoomId") int chatRoomId) {
+		
+        chatService.deleteChatRoom(chatRoomId);
+        
+        return "redirect:/usr/chat/chatRoomList";
+        
+    }
 
 }

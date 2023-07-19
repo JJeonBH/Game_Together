@@ -19,6 +19,7 @@ import com.koreaIT.Game_Together.service.ChatService;
 import com.koreaIT.Game_Together.service.MemberService;
 import com.koreaIT.Game_Together.util.Util;
 import com.koreaIT.Game_Together.vo.Chat;
+import com.koreaIT.Game_Together.vo.ChatRoom;
 import com.koreaIT.Game_Together.vo.Member;
 
 @Controller
@@ -77,8 +78,16 @@ public class ChatController {
         //	stomp 세션에 있던 memberId 와 chatRoomId 를 확인해서 채팅방 멤버 리스트와 채팅방에서 해당 멤버를 삭제
         int memberId = (int) headerAccessor.getSessionAttributes().get("memberId");
         int chatRoomId = (int) headerAccessor.getSessionAttributes().get("chatRoomId");
-
+        
         chatService.exitChatRoom(chatRoomId, memberId);
+        ChatRoom chatRoom = chatService.getChatRoomById(chatRoomId);
+        
+        if (chatRoom.getCurrentMemberCount() == 0) {
+        	chatService.deleteChatRoom(chatRoomId);
+        	chatService.deleteChat(chatRoomId);
+        	return;
+        }
+        
         Member member = memberService.getMemberById(memberId);
 
         if (member != null) {

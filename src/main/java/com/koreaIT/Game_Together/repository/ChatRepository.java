@@ -28,4 +28,8 @@ public interface ChatRepository {
 
 	public void exitChatRoom(int chatRoomId, int memberId);
 
+	public void deleteChatRoom(int chatRoomId);
+
+	public void deleteChat(int chatRoomId);
+
 }

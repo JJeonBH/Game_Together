@@ -59,5 +59,15 @@ public class ChatService {
 	public void exitChatRoom(int chatRoomId, int memberId) {
 		chatRepository.exitChatRoom(chatRoomId, memberId);
 	}
+	
+	//	채팅방 삭제(chatRoom 테이블에서 채팅방 삭제)
+	public void deleteChatRoom(int chatRoomId) {
+		chatRepository.deleteChatRoom(chatRoomId);
+	}
+	
+	//	채팅 삭제(chat 테이블에서 채팅 삭제)
+	public void deleteChat(int chatRoomId) {
+		chatRepository.deleteChat(chatRoomId);
+	}
 
 }

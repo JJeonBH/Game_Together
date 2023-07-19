@@ -57,7 +57,7 @@ function onError(error) {
     
 }
 
-//	채팅방에 참여한 멤버 리스트 받기
+//	채팅방에 입장한 멤버 리스트 받기
 //	비동기로 멤버 리스트를 받으며 클라이언트가 입장/퇴장 했다는 문구가 나올 때마다 실행된다.
 function getMemberList() {
 	
@@ -72,7 +72,7 @@ function getMemberList() {
         success: function (data) {
 			let members = '';
 			for (let i = 0; i < data.length; i++) {
-				members += `<li> ${data[i].nickname} </li>`;
+				members += `<li class="p-1 ${data[i].id == memberId ? 'text-green-500' : ''}"> ${data[i].nickname} </li>`;
 			}
 			memberList.empty();
 			memberList.html(members);

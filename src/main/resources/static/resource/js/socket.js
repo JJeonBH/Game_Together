@@ -7,6 +7,7 @@ let connectingElement = document.querySelector('#connecting');
 let messageArea = document.querySelector('#message-area');
 let messageForm = document.querySelector('#message-form');
 let messageInput = document.querySelector('#message-input');
+let exitButton = document.querySelector('#exit-button');
 
 //	URL 에서 chatRoomId 파라미터 값 가져오기
 const url = new URL(location.href).searchParams;
@@ -27,22 +28,24 @@ window.onload = function connect(event) {
 
 }
 
-window.onbeforeunload = function disconnect(event) {
+function disconnect(event) {
 	
 	stompClient.send('/pub/usr/chat/exitMember',
-        {},
-        JSON.stringify({
-            'chatRoomId' : chatRoomId,
-            'memberId' : memberId,
-            'message' : memberNickname + ' 님이 퇴장하셨습니다.',
-            'memberNickname' : memberNickname,
-            'messageType' : 'LEAVE'
-        })
-    )
+	    {},
+	    JSON.stringify({
+	        'chatRoomId' : chatRoomId,
+	        'memberId' : memberId,
+	        'message' : memberNickname + ' 님이 퇴장하셨습니다.',
+	        'memberNickname' : memberNickname,
+	        'messageType' : 'LEAVE'
+	    })
+	)
     
     stompClient.disconnect();
     
     event.preventDefault();
+    
+	location.href = '/usr/chat/chatRoomList';
 	
 }
 
@@ -182,4 +185,18 @@ function onMessageReceived(payload) {
     
 }
 
-messageForm.addEventListener('submit', sendMessage, true)
+//	채팅방에서 새로고침하면 퇴장, 입장 반복되던 부분 안되게
+window.onkeydown = function (event) {
+	//	F5, Ctrl + F5, Ctrl + R (새로고침)
+	if ((event.keyCode == 116) || (event.ctrlKey == true && event.keyCode == 82)) {
+		event.stopPropagation();
+		if (confirm('채팅방에서 나가시겠습니까?')) {
+			location.href = '/usr/chat/chatRoomList';
+		}
+		return false;
+	}
+}
+
+messageForm.addEventListener('submit', sendMessage, true);
+exitButton.addEventListener('click', disconnect, true);
+window.addEventListener('beforeunload', disconnect, true);

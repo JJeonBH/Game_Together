@@ -89,49 +89,6 @@ public class ChatController {
     	
     }
     
-//    //	멤버 퇴장 시에는 EventListener 를 통해서 멤버 퇴장을 확인
-//    @EventListener
-//    public void webSocketDisconnectListener(SessionDisconnectEvent event) {
-//    	
-//        StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
-//        
-//        //	stomp 세션에 있던 memberId 와 chatRoomId 를 확인해서 채팅방 멤버 리스트와 채팅방에서 해당 멤버를 삭제
-//        int memberId = (int) headerAccessor.getSessionAttributes().get("memberId");
-//        int chatRoomId = (int) headerAccessor.getSessionAttributes().get("chatRoomId");
-//        
-//        chatService.exitChatRoom(chatRoomId, memberId);
-//        ChatRoom chatRoom = chatService.getChatRoomById(chatRoomId);
-//        
-//        if (chatRoom.getCurrentMemberCount() == 0) {
-//        	chatService.deleteChatRoom(chatRoomId);
-//        	chatService.deleteChat(chatRoomId);
-//        	return;
-//        }
-//        
-//        Member member = memberService.getMemberById(memberId);
-//
-//        if (member != null) {
-//        	
-//        	LocalDateTime now = LocalDateTime.now();
-//
-//        	//	builder 어노테이션 활용
-//            Chat chat = Chat.builder()
-//            		.regDate(now)
-//            		.chatRoomId(chatRoomId)
-//            		.memberId(memberId)
-//            		.message(member.getNickname() + " 님이 퇴장하셨습니다.")
-//                    .messageType(Chat.MessageType.LEAVE)
-//                    .formatRegDate(Util.formatRegDateVer1(now))
-//                    .build();
-//            
-//            chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getMessageType());
-//
-//            template.convertAndSend("/sub/usr/chat/joinChatRoom/" + chatRoomId, chat);
-//            
-//        }
-//        
-//    }
-    
     //	채팅방에 참여한 멤버 리스트 반환
     @RequestMapping("/usr/chat/memberList")
     @ResponseBody

@@ -17,6 +17,13 @@
 	<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 	<!-- CSS 파일 불러오기 -->
 	<link rel="stylesheet" href="/resource/css/chat.css" />
+	<script>
+	
+		function alreadyJoinCheck() {
+			//	이미 채팅방에 접속해 있는지 확인
+		}
+		
+	</script>
 </head>
 <body>
 	<section class="min-w-800">
@@ -41,7 +48,7 @@
 					<tbody>
 					 	<c:forEach var="chatRoom" items="${chatRooms}">
 					 		<tr>
-					 			<td><a href="joinChatRoom?chatRoomId=${chatRoom.id}">${chatRoom.name}</a></td>
+					 			<td><a href="joinChatRoom?chatRoomId=${chatRoom.id}" onclick="alreadyJoinCheck();">${chatRoom.name}</a></td>
 					 			<td>${chatRoom.currentMemberCount} / ${chatRoom.maxMemberCount}</td>
 					 			<td>${chatRoom.hostNickname}</td>
 					 		</tr>

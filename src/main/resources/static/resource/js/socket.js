@@ -28,27 +28,6 @@ window.onload = function connect(event) {
 
 }
 
-function disconnect(event) {
-	
-	stompClient.send('/pub/usr/chat/exitMember',
-	    {},
-	    JSON.stringify({
-	        'chatRoomId' : chatRoomId,
-	        'memberId' : memberId,
-	        'message' : memberNickname + ' 님이 퇴장하셨습니다.',
-	        'memberNickname' : memberNickname,
-	        'messageType' : 'LEAVE'
-	    })
-	)
-    
-    stompClient.disconnect();
-    
-    event.preventDefault();
-    
-	location.href = '/usr/chat/chatRoomList';
-	
-}
-
 function onConnected() {
 
     //	sub 할 url => /sub/usr/chat/joinChatRoom/chatRoomId 로 구독한다
@@ -77,6 +56,27 @@ function onError(error) {
     connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
     connectingElement.style.color = 'red';
     
+}
+
+async function disconnect(event) {
+	
+	await stompClient.send('/pub/usr/chat/exitMember',
+	    {},
+	    JSON.stringify({
+	        'chatRoomId' : chatRoomId,
+	        'memberId' : memberId,
+	        'message' : memberNickname + ' 님이 퇴장하셨습니다.',
+	        'memberNickname' : memberNickname,
+	        'messageType' : 'LEAVE'
+	    })
+	)
+    
+    await stompClient.disconnect();
+    
+    event.preventDefault();
+    
+	location.href = '/usr/chat/chatRoomList';
+	
 }
 
 //	채팅방에 입장한 멤버 리스트 받기

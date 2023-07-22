@@ -67,6 +67,11 @@ public class ChatRoomController {
 	public String joinChatRoom(Model model, @RequestParam("chatRoomId") int chatRoomId) {
 		
 		ChatRoom chatRoom = chatService.getChatRoomById(chatRoomId);
+		
+		if (chatRoom.getId() == 0) {
+			return rq.jsReplace("채팅방이 존재하지 않습니다.", "chatRoomList");
+		}
+		
 		Member member = rq.getLoginedMember();
 		
 	    model.addAttribute("chatRoom", chatRoom);

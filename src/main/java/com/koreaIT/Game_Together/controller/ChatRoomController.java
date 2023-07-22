@@ -66,6 +66,11 @@ public class ChatRoomController {
 	@RequestMapping("/usr/chat/joinChatRoom")
 	public String joinChatRoom(Model model, @RequestParam("chatRoomId") int chatRoomId) {
 		
+		//	URL로 채팅방 입장하는 것 막음
+		if (rq.getRequest().getHeader("REFERER") == null) {
+			return rq.jsReplace("정상적인 접근이 아닙니다.", "chatRoomList");
+		}
+		
 		ChatRoom chatRoom = chatService.getChatRoomById(chatRoomId);
 		
 		if (chatRoom.getId() == 0) {

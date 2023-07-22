@@ -24,6 +24,7 @@ public class Request {
 	private int loginedMemberId;
 	@Getter
 	private Member loginedMember;
+	@Getter
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private HttpSession httpSession;

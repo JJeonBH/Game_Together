@@ -15,6 +15,13 @@ const chatRoomId = url.get('chatRoomId');
 
 window.onload = function connect(event) {
 	
+	//	주소창 누르고 새로고침하면 퇴장, 입장 반복되던 부분 안되게
+	if (performance.navigation.type == 1) {
+		alert("정상적인 접근이 아닙니다.");
+		location.href = '/usr/chat/chatRoomList';
+		return;
+	}
+	
 	memberId = document.querySelector('#member-id').value.trim();
 	memberNickname = document.querySelector('#member-nickname').value.trim();
 	

@@ -1,6 +1,6 @@
-// 유효한 아이디, 비밀번호, 이름 등을 체크하기 위한 변수
-// 유효한 값을 입력하면 1, 유효하지 않은 값을 입력하면 0
-// 이메일은 선택적으로 입력하므로 미리 1을 넣어두고 잘못 입력하거나 중복될 때만 0이 됨
+//	유효한 아이디, 비밀번호, 이름 등을 체크하기 위한 변수
+//	유효한 값을 입력하면 1, 유효하지 않은 값을 입력하면 0
+//	이메일은 선택적으로 입력하므로 미리 1을 넣어두고 잘못 입력하거나 중복될 때만 0이 됨
 let validLoginId = 0;
 let validLoginPw = 0;
 let validName = 0;
@@ -10,7 +10,7 @@ let validGender = 0;
 let validEmail = 1;
 let validCellphoneNum = 0;
 
-// 비밀번호 일치 여부를 판단하기 위한 변수
+//	비밀번호 일치 여부를 판단하기 위한 변수
 let loginPw = '';
 let loginPwChk = '';
 
@@ -255,7 +255,7 @@ function birthdayCheck(input) {
 		return;
 	}
 	
-//	자리수 체크
+	//	자리수 체크
 	const numberOfDigits = /^[0-9]{8}$/;
 	
 	if (!numberOfDigits.test(value)) {
@@ -263,7 +263,7 @@ function birthdayCheck(input) {
 		return;
 	}
 	
-//	생년월일 제대로 입력했는지 체크
+	//	생년월일 제대로 입력했는지 체크
 	const regex = /^(19[0-9][0-9]|20\d{2})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/;
 	
 	if (!regex.test(value)) {
@@ -281,11 +281,11 @@ function birthdayCheck(input) {
 	let age14 = (year-14) + '.' + month + '.' + day;
 	value = value.replace(/(\d{4})(\d{2})(\d{2})/, '$1.$2.$3');
 	
-//	현재 날짜를 millisecond로 변환
+	//	현재 날짜를 millisecond로 변환
 	const date1 = Date.parse(today);
-//	만 14세 되는 날짜를 millisecond로 변환
+	//	만 14세 되는 날짜를 millisecond로 변환
 	const date2 = Date.parse(age14);
-//	입력 받은 날짜를 millisecond로 변환
+	//	입력 받은 날짜를 millisecond로 변환
 	const date3 = Date.parse(value);
 	
 	if (date3 > date1) {

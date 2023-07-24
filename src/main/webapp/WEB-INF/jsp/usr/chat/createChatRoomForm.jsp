@@ -17,6 +17,63 @@
 	<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 	<!-- CSS 파일 불러오기 -->
 	<link rel="stylesheet" href="/resource/css/chat.css" />
+	<script>
+	
+		//	유효한 값을 입력했는지 체크하기 위한 변수
+		//	유효한 값을 입력하면 1, 유효하지 않은 값을 입력하면 0
+		//	채팅방 비밀번호는 공개방일 때는 입력하지 않아도 되므로 미리 1을 넣어둠(페이지를 처음 열면 checked 속성 때문에 공개방으로 선택되어 있음)
+		//	비공개방 선택하면 0으로 바뀐 후에 유효한 비밀번호를 입력하면 1로 바뀜
+		let validChatRoomName = 0;
+		let validPassword = 1;
+		
+		//	채팅방 제목 20자 이내로 입력했는지 체크
+		function chatRoomNameCheck(input) {
+			
+			validChatRoomName = 0;
+			
+			input.value = input.value.trim();
+			let value = input.value;
+			let nameMsg = $('#nameMsg');
+			
+			nameMsg.empty();
+			
+			const regex = /^.{1,20}$/;
+			
+			if(!regex.test(value)) {
+				nameMsg.html('<span>채팅방 제목을 입력해 주세요. (최대 20글자)</span>');
+				return;
+			}
+			
+			validChatRoomName = 1;
+			
+		}
+		
+		$(document).ready(function() {
+			
+			//	공개방일 때는 비밀번호 입력 못하게, 비공개방일 때는 비밀번호 입력할 수 있게
+			$('input[name="status"]').change(function() {
+				
+				if ($('input[name="status"]:checked').val() == 'public') {
+					$('input[name="password"]').val('');
+					$('input[name="password"]').attr('disabled', 'disabled');
+					validPassword = 1;
+				} else {
+					$('input[name="password"]').removeAttr('disabled');
+					validPassword = 0;
+				}
+				
+			});
+			
+		});
+		
+		//	비밀번호 유효성 검사
+		function passwordCheck(input) {
+			
+			
+			
+		}
+		
+	</script>
 </head>
 <body>
 	<section class="min-w-800">
@@ -29,8 +86,9 @@
 					<label class="cursor-pointer">
 						채팅방 제목
 						<br>
-						<input class="cursor-pointer input input-bordered input-info mt-2 w-112" type="text" name="name" placeholder="채팅방 제목을 입력해 주세요."/>
+						<input class="cursor-pointer input input-bordered input-info mt-2 w-112" type="text" name="name" placeholder="채팅방 제목을 입력해 주세요." onblur="chatRoomNameCheck(this);"/>
 					</label>
+					<div id="nameMsg" class="mt-2 h-5 text-xs text-red-400"></div>
 				</div>
 				<div class="mt-4">
 					<label class="cursor-pointer">
@@ -42,6 +100,27 @@
 							</c:forEach>
 						</select>
 					</label>
+				</div>
+				<div class="mt-11">
+					<div>공개 선택</div>
+					<div class="mt-2">
+						<label class="cursor-pointer">
+							<input class="cursor-pointer" type="radio" name="status" value="public" checked="checked"/>
+							공개방
+						</label>
+						<label class="cursor-pointer ml-4">
+							<input class="cursor-pointer" type="radio" name="status" value="private"/>
+							비공개방
+						</label>
+					</div>
+				</div>
+				<div class="mt-11">
+					<label class="cursor-pointer">
+						채팅방 비밀번호
+						<br>
+						<input class="cursor-pointer input input-bordered input-info mt-2 w-56" type="text" name="password" disabled="disabled" onblur="passwordCheck(this);"/>
+					</label>
+					<div id="passwordMsg" class="mt-2 h-5 text-xs text-red-400"></div>
 				</div>
 				<div class="flex justify-end mt-4">
 					<button class="btn-text-color btn btn-info" onclick="history.back(); return false;">취소</button>

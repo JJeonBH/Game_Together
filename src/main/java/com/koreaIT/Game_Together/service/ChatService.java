@@ -27,8 +27,8 @@ public class ChatService {
 	}
 	
 	//	채팅방 만들기(chatRoom 테이블에 채팅방 저장)
-	public void createChatRoom(int loginedMemberId, String name, int maxMemberCount) {
-		chatRepository.createChatRoom(loginedMemberId, name, maxMemberCount);
+	public void createChatRoom(int loginedMemberId, String name, int maxMemberCount, String status, String password) {
+		chatRepository.createChatRoom(loginedMemberId, name, maxMemberCount, status, password);
 	}
 
 	public int getLastInsertId() {

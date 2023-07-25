@@ -83,7 +83,9 @@ CREATE TABLE chatRoom(
     regDate DATETIME NOT NULL,
     memberId INT UNSIGNED NOT NULL,
     `name` VARCHAR(50) NOT NULL,
-    maxMemberCount INT UNSIGNED NOT NULL
+    maxMemberCount INT UNSIGNED NOT NULL,
+    `status` VARCHAR(20) NOT NULL,
+    `password` VARCHAR(100)
 );
 
 # chatRoomMember 테이블 생성
@@ -445,14 +447,16 @@ INSERT INTO chatRoom
 SET regDate = NOW(),
 memberId = 1,
 `name` = '관리자방',
-maxMemberCount = 10;
+maxMemberCount = 10,
+`status` = 'public';
 
 # chatRoom 테스트 데이터
 INSERT INTO chatRoom
 SET regDate = NOW(),
 memberId = 2,
 `name` = '유저1방',
-maxMemberCount = 8;
+maxMemberCount = 8,
+`status` = 'public';
 
 # chatRoomMember 테스트 데이터
 INSERT INTO chatRoomMember

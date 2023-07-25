@@ -34,12 +34,14 @@
 			<div class="table-box-type-1 w-4/5">
 				<table class="w-full">
 					<colgroup>
+						<col width="120"/>
 						<col />
 						<col width="120"/>
 						<col width="120"/>
 					</colgroup>
 					<thead>
 						<tr>
+							<th>공개 여부</th>
 							<th>제목</th>
 							<th>인원</th>
 							<th>방장</th>
@@ -48,6 +50,7 @@
 					<tbody>
 					 	<c:forEach var="chatRoom" items="${chatRooms}">
 					 		<tr>
+					 			<td>${chatRoom.status == "public" ? "공개" : "비공개"}</td>
 					 			<td><a href="joinChatRoom?chatRoomId=${chatRoom.id}" onclick="alreadyJoinCheck();">${chatRoom.name}</a></td>
 					 			<td>${chatRoom.currentMemberCount} / ${chatRoom.maxMemberCount}</td>
 					 			<td>${chatRoom.hostNickname}</td>

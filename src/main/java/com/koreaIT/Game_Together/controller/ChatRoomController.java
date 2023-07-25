@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.koreaIT.Game_Together.service.ChatService;
+import com.koreaIT.Game_Together.util.Util;
 import com.koreaIT.Game_Together.vo.ChatRoom;
 import com.koreaIT.Game_Together.vo.Member;
 import com.koreaIT.Game_Together.vo.Request;
@@ -48,9 +49,9 @@ public class ChatRoomController {
 	//	채팅방 생성
 	//	채팅방 생성 후 /usr/chat/joinChatRoom 로 redirect
 	@RequestMapping("/usr/chat/createChatRoom")
-    public String createChatRoom(RedirectAttributes redirect, String name, int maxMemberCount) {
+    public String createChatRoom(RedirectAttributes redirect, String name, int maxMemberCount, String status, String password) {
 		
-        chatService.createChatRoom(rq.getLoginedMemberId(), name, maxMemberCount);
+		chatService.createChatRoom(rq.getLoginedMemberId(), name, maxMemberCount, status, Util.sha256(password));
         
         int chatRoomId = chatService.getLastInsertId();
         

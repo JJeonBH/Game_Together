@@ -19,6 +19,8 @@ public class ChatRoom {
 	private int memberId;
 	private String name;
 	private int maxMemberCount;
+	private String status;
+	private String password;
 	
 	private String hostNickname;
 	private int currentMemberCount;

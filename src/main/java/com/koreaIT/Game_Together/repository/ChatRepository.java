@@ -14,7 +14,7 @@ public interface ChatRepository {
 	
 	public List<ChatRoom> getChatRooms();
 
-	public void createChatRoom(int loginedMemberId, String name, int maxMemberCount);
+	public void createChatRoom(int loginedMemberId, String name, int maxMemberCount, String status, String password);
 
 	public int getLastInsertId();
 

@@ -41,16 +41,24 @@ select > option {
 	font-size: 16px;
 }
 
+/* 채팅방 목록 테이블 레이아웃 고정 */
+.table-box-type-1 > table {
+	table-layout: fixed;
+}
+
 /* 채팅방 목록 테이블 행(row) 높이 */
 .table-box-type-1 > table tr {
 	height: 1rem;
 }
 
-/* 채팅방 목록 테이블 셀 테두리, 글자 정렬, 패딩 */
+/* 채팅방 목록 테이블 셀 테두리, 패딩, 글자 정렬, 줄 바꿈 방지, 길어지면 숨겨지게 */
 .table-box-type-1 > table th, .table-box-type-1 > table td {
 	border: 1px solid #219fff;
 	padding: 10px;
 	text-align: center;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 /* 버튼 글자색 */

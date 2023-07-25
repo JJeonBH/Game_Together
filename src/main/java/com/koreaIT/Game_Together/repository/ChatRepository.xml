@@ -22,6 +22,10 @@
 				, memberId = #{loginedMemberId}
 				, `name` = #{name}
 				, maxMemberCount = #{maxMemberCount}
+				, `status` = #{status}
+				<if test = "password != null and password != ''">
+					, password = #{password}
+				</if>
 	</insert>
 	
 	<select id="getLastInsertId" resultType="int">

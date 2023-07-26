@@ -51,7 +51,16 @@
 					 	<c:forEach var="chatRoom" items="${chatRooms}">
 					 		<tr>
 					 			<td>${chatRoom.status == "public" ? "공개" : "비공개"}</td>
-					 			<td><a href="joinChatRoom?chatRoomId=${chatRoom.id}" onclick="alreadyJoinCheck();">${chatRoom.name}</a></td>
+					 			<td>
+					 				<c:choose>
+					 					<c:when test="${chatRoom.status == 'public'}">
+							 				<a href="joinChatRoom?chatRoomId=${chatRoom.id}" onclick="alreadyJoinCheck();">${chatRoom.name}</a>
+					 					</c:when>
+					 					<c:otherwise>
+					 						<a href="chatRoomPasswordCheck?chatRoomId=${chatRoom.id}" onclick="alreadyJoinCheck();">${chatRoom.name}</a>
+					 					</c:otherwise>
+					 				</c:choose>
+					 			</td>
 					 			<td>${chatRoom.currentMemberCount} / ${chatRoom.maxMemberCount}</td>
 					 			<td>${chatRoom.hostNickname}</td>
 					 		</tr>

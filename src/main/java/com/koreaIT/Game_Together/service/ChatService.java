@@ -10,6 +10,7 @@ import com.koreaIT.Game_Together.repository.ChatRepository;
 import com.koreaIT.Game_Together.vo.Chat.MessageType;
 import com.koreaIT.Game_Together.vo.ChatRoom;
 import com.koreaIT.Game_Together.vo.Member;
+import com.koreaIT.Game_Together.vo.ResultData;
 
 @Service
 public class ChatService {
@@ -68,6 +69,22 @@ public class ChatService {
 	//	채팅 삭제(chat 테이블에서 채팅 삭제)
 	public void deleteChat(int chatRoomId) {
 		chatRepository.deleteChat(chatRoomId);
+	}
+	
+	//	비공개 채팅방 입장 시 입력한 비밀번호가 일치하는지 체크
+	@SuppressWarnings("rawtypes")
+	public ResultData passwordCheck(int chatRoomId, String password) {
+		
+		ChatRoom chatRoom = chatRepository.getChatRoomById(chatRoomId);
+		
+		if (chatRoom.getId() == 0) {
+			return ResultData.resultFrom("F-1", "채팅방이 존재하지 않습니다.");
+		} else if (!chatRoom.getPassword().equals(password)) {
+			return ResultData.resultFrom("F-2", "비밀번호가 일치하지 않습니다.");
+		} else {
+			return ResultData.resultFrom("S-1", "비밀번호 일치");
+		}
+		
 	}
 
 }

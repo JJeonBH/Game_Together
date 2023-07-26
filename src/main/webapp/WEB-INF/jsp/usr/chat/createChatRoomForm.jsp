@@ -54,6 +54,7 @@
 			
 			nameMsg.empty();
 			
+			//	value 의 length 로 체크해도 되지만 정규식 써봄
 			const regex = /^.{1,20}$/;
 			
 			if(!regex.test(value)) {
@@ -97,6 +98,7 @@
 			
 			passwordMsg.empty();
 			
+			//	value 의 length 로 체크해도 되지만 정규식 써봄
 			const regex = /^.{4,8}$/;
 			
 			if(!regex.test(value)) {
@@ -116,7 +118,7 @@
 <body>
 	<section class="min-w-800">
 		<div class="py-4 border-b border-blue-300">
-			<div class="text-center text-2xl font-bold">채팅방 생성</div>
+			<div class="text-center text-2xl font-semibold">채팅방 생성</div>
 		</div>
 		<div class="my-4 flex justify-center text-lg">
 			<form action="createChatRoom" method="POST" onsubmit="submitCreateChatRoomForm(this); return false;">

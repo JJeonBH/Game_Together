@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.koreaIT.Game_Together.service.ChatService;
@@ -14,6 +15,7 @@ import com.koreaIT.Game_Together.util.Util;
 import com.koreaIT.Game_Together.vo.ChatRoom;
 import com.koreaIT.Game_Together.vo.Member;
 import com.koreaIT.Game_Together.vo.Request;
+import com.koreaIT.Game_Together.vo.ResultData;
 
 @Controller
 public class ChatRoomController {
@@ -90,12 +92,30 @@ public class ChatRoomController {
 	//	채팅방 삭제
 	//	채팅방 삭제 후 /usr/chat/chatRoomList 로 redirect
 	@RequestMapping("/usr/chat/deleteChatRoom")
-    public String deleteChatRoom(@RequestParam("chatRoomId") int chatRoomId) {
+    public String deleteChatRoom(int chatRoomId) {
 		
         chatService.deleteChatRoom(chatRoomId);
         
         return "redirect:/usr/chat/chatRoomList";
         
+    }
+	
+	//	비공개 채팅방 입장 시 비밀번호 확인하는 페이지
+	@RequestMapping("/usr/chat/chatRoomPasswordCheck")
+	public String chatRoomPasswordCheck(Model model, int chatRoomId) {
+		
+		model.addAttribute("chatRoomId", chatRoomId);
+		
+		return "usr/chat/chatRoomPasswordCheck";
+		
+	}
+	
+	//	비공개 채팅방 입장 시 입력한 비밀번호가 일치하는지 체크
+    @SuppressWarnings("rawtypes")
+	@RequestMapping("/usr/chat/passwordCheck")
+    @ResponseBody
+    public ResultData passwordCheck(int chatRoomId, String password) {
+        return chatService.passwordCheck(chatRoomId, Util.sha256(password));
     }
 
 }

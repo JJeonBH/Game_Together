@@ -57,7 +57,7 @@
 			//	value 의 length 로 체크해도 되지만 정규식 써봄
 			const regex = /^.{1,20}$/;
 			
-			if(!regex.test(value)) {
+			if (!regex.test(value)) {
 				nameMsg.html('<span>채팅방 제목을 입력해 주세요. (최대 20글자)</span>');
 				return;
 			}
@@ -101,7 +101,7 @@
 			//	value 의 length 로 체크해도 되지만 정규식 써봄
 			const regex = /^.{4,8}$/;
 			
-			if(!regex.test(value)) {
+			if (!regex.test(value)) {
 				passwordMsg.html('<span>채팅방 비밀번호를 입력해 주세요. (4 ~ 8글자)</span>');
 				return;
 			} else if (value.search(/\s/) != -1) {

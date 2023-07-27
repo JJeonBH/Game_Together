@@ -32,4 +32,6 @@ public interface ChatRepository {
 
 	public void deleteChat(int chatRoomId);
 
+	public int alreadyJoinCheck(int memberId);
+
 }

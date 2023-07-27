@@ -19,8 +19,31 @@
 	<link rel="stylesheet" href="/resource/css/chat.css" />
 	<script>
 	
-		function alreadyJoinCheck() {
-			//	이미 채팅방에 접속해 있는지 확인
+		function canJoin(chatRoomId) {
+			
+			let memberId = ${Request.loginedMemberId};
+			let can;
+			
+			$.ajax({
+		        type: 'GET',
+		        url: '/usr/chat/canJoin',
+		        async: false,
+		        data: {
+		        	'chatRoomId': chatRoomId,
+		        	'memberId': memberId
+		        },
+		        success: function (data) {
+		        	if (data.fail) {
+		        		alert(data.msg);
+		        		can = false;
+		        	} else {
+		        		can = true;
+		        	}
+		        }
+		    });
+			
+			return can;
+			
 		}
 		
 	</script>
@@ -54,10 +77,10 @@
 					 			<td>
 					 				<c:choose>
 					 					<c:when test="${chatRoom.status == 'public'}">
-							 				<a href="joinChatRoom?chatRoomId=${chatRoom.id}" onclick="alreadyJoinCheck();">${chatRoom.name}</a>
+							 				<a href="joinChatRoom?chatRoomId=${chatRoom.id}" class="hover:underline" onclick="if (canJoin(${chatRoom.id}) == false) {return false;}">${chatRoom.name}</a>
 					 					</c:when>
 					 					<c:otherwise>
-					 						<a href="chatRoomPasswordCheck?chatRoomId=${chatRoom.id}" onclick="alreadyJoinCheck();">${chatRoom.name}</a>
+					 						<a href="chatRoomPasswordCheck?chatRoomId=${chatRoom.id}" class="hover:underline" onclick="if (canJoin(${chatRoom.id}) == false) {return false;}">${chatRoom.name}</a>
 					 					</c:otherwise>
 					 				</c:choose>
 					 			</td>

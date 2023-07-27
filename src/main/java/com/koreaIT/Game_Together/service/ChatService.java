@@ -86,5 +86,25 @@ public class ChatService {
 		}
 		
 	}
+	
+	//	채팅방 입장 시 이미 다른 채팅방에 입장해 있는지, 인원수 꽉 차 있는지 체크
+	@SuppressWarnings("rawtypes")
+	public ResultData canJoin(int chatRoomId, int memberId) {
+		
+		int count = chatRepository.alreadyJoinCheck(memberId);
+		
+		if (count == 1) {
+			return ResultData.resultFrom("F-1", "이미 다른 채팅방에 입장 중입니다.");
+		}
+		
+		ChatRoom chatRoom = chatRepository.getChatRoomById(chatRoomId);
+		
+		if (chatRoom.getMaxMemberCount() == chatRoom.getCurrentMemberCount()) {
+			return ResultData.resultFrom("F-2", "채팅방 정원 초과로 채팅방에 입장할 수 없습니다.");
+		}
+		
+		return ResultData.resultFrom("S-1", "입장 가능");
+		
+	}
 
 }

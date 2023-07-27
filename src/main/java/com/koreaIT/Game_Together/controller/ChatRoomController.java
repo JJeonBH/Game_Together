@@ -117,5 +117,14 @@ public class ChatRoomController {
     public ResultData passwordCheck(int chatRoomId, String password) {
         return chatService.passwordCheck(chatRoomId, Util.sha256(password));
     }
+    
+    
+    //	채팅방 입장 시 이미 다른 채팅방에 입장해 있는지, 인원수 꽉 차 있는지 체크
+    @SuppressWarnings("rawtypes")
+	@RequestMapping("/usr/chat/canJoin")
+    @ResponseBody
+    public ResultData canJoin(int chatRoomId, int memberId) {
+    	return chatService.canJoin(chatRoomId, memberId);
+    }
 
 }

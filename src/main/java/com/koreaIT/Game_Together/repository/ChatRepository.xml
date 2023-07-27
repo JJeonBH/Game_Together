@@ -83,5 +83,11 @@
 		DELETE FROM chat
 			WHERE chatRoomId = #{chatRoomId}
 	</delete>
+	
+	<select id="alreadyJoinCheck" resultType="int">
+		SELECT COUNT(CRM.id)
+			FROM chatRoomMember AS CRM
+			WHERE memberId = #{memberId}
+	</select>
 
 </mapper>

@@ -126,5 +126,13 @@ public class ChatRoomController {
     public ResultData canJoin(int chatRoomId, int memberId) {
     	return chatService.canJoin(chatRoomId, memberId);
     }
+    
+    //	채팅방 생성 버튼 누를 때 이미 채팅방을 생성 했는지, 다른 채팅방에 입장해 있는지 체크
+    @SuppressWarnings("rawtypes")
+	@RequestMapping("/usr/chat/canCreate")
+    @ResponseBody
+    public ResultData canCreate(int memberId) {
+    	return chatService.canCreate(memberId);
+    }
 
 }

@@ -34,4 +34,6 @@ public interface ChatRepository {
 
 	public int alreadyJoinCheck(int memberId);
 
+	public int alreadyCreateCheck(int memberId);
+
 }

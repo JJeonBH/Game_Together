@@ -106,5 +106,25 @@ public class ChatService {
 		return ResultData.resultFrom("S-1", "입장 가능");
 		
 	}
+	
+	//	채팅방 생성 버튼 누를 때 이미 채팅방을 생성 했는지, 다른 채팅방에 입장해 있는지 체크
+	@SuppressWarnings("rawtypes")
+	public ResultData canCreate(int memberId) {
+		
+		int count = chatRepository.alreadyCreateCheck(memberId);
+		
+		if (count == 1) {
+			return ResultData.resultFrom("F-1", "이미 다른 채팅방을 생성했습니다.");
+		}
+		
+		count = chatRepository.alreadyJoinCheck(memberId);
+		
+		if (count == 1) {
+			return ResultData.resultFrom("F-2", "이미 다른 채팅방에 입장 중입니다.");
+		}
+		
+		return ResultData.resultFrom("S-1", "생성 가능");
+		
+	}
 
 }

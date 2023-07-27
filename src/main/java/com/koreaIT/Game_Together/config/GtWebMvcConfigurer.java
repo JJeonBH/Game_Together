@@ -54,6 +54,10 @@ public class GtWebMvcConfigurer implements WebMvcConfigurer {
 		ir.addPathPatterns("/usr/chat/createChatRoom");
 		ir.addPathPatterns("/usr/chat/joinChatRoom");
 		ir.addPathPatterns("/usr/chat/deleteChatRoom");
+		ir.addPathPatterns("/usr/chat/chatRoomPasswordCheck");
+		ir.addPathPatterns("/usr/chat/passwordCheck");
+		ir.addPathPatterns("/usr/chat/canJoin");
+		ir.addPathPatterns("/usr/chat/canCreate");
 		ir.addPathPatterns("/usr/chat/enterMember");
 		ir.addPathPatterns("/usr/chat/sendMessage");
 		ir.addPathPatterns("/usr/chat/exitMember");

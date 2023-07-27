@@ -89,5 +89,11 @@
 			FROM chatRoomMember AS CRM
 			WHERE memberId = #{memberId}
 	</select>
+	
+	<select id="alreadyCreateCheck" resultType="int">
+		SELECT COUNT(CR.id)
+			FROM chatRoom AS CR
+			WHERE memberId = #{memberId}
+	</select>
 
 </mapper>

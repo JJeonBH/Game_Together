@@ -40,7 +40,33 @@
 		        		can = true;
 		        	}
 		        }
-		    });
+		    })
+			
+			return can;
+			
+		}
+		
+		function canCreate() {
+			
+			let memberId = ${Request.loginedMemberId};
+			let can;
+			
+			$.ajax({
+		        type: 'GET',
+		        url: '/usr/chat/canCreate',
+		        async: false,
+		        data: {
+		        	'memberId': memberId
+		        },
+		        success: function (data) {
+		        	if (data.fail) {
+		        		alert(data.msg);
+		        		can = false;
+		        	} else {
+		        		can = true;
+		        	}
+		        }
+		    })
 			
 			return can;
 			
@@ -93,7 +119,7 @@
 			</div>
 		</div>
 		<div class="flex justify-center">
-			<div class="flex justify-end w-4/5"><a href="createChatRoomForm" class="btn-text-color btn btn-info btn-sm my-4">채팅방 생성</a></div>
+			<div class="flex justify-end w-4/5"><a href="createChatRoomForm" class="btn-text-color btn btn-info btn-sm my-4" onclick="if (canCreate() == false) {return false;}">채팅방 생성</a></div>
 		</div>
 	</section>
 </body>

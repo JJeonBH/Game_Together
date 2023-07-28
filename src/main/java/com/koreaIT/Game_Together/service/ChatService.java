@@ -126,5 +126,16 @@ public class ChatService {
 		return ResultData.resultFrom("S-1", "생성 가능");
 		
 	}
+	
+	//	퇴장한 멤버가 방장일 때 입장해 있는 멤버 중 가장 빨리 들어온 멤버가 자동으로 방장이 되게 함
+	public void modifyChatRoom(int chatRoomId) {
+		
+		List<Member> members = chatRepository.getMemberList(chatRoomId);
+		
+		Member member = members.get(0);
+		
+		chatRepository.modifyChatRoom(chatRoomId, member.getId());
+		
+	}
 
 }

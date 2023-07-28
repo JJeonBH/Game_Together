@@ -36,4 +36,6 @@ public interface ChatRepository {
 
 	public int alreadyCreateCheck(int memberId);
 
+	public void modifyChatRoom(int chatRoomId, int memberId);
+
 }

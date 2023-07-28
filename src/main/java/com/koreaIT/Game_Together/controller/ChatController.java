@@ -79,6 +79,11 @@ public class ChatController {
 			return;
 		}
 		
+		//	퇴장한 멤버가 방장일 때 입장해 있는 멤버 중 가장 빨리 들어온 멤버가 자동으로 방장이 되게 함
+		if (chatRoom.getMemberId() == memberId) {
+			chatService.modifyChatRoom(chatRoomId);
+		}
+		
     	LocalDateTime now = LocalDateTime.now();
     	chat.setRegDate(now);
     	chat.setFormatRegDate(Util.formatRegDateVer1(chat.getRegDate()));
@@ -94,6 +99,14 @@ public class ChatController {
     @ResponseBody
     public List<Member> memberList(int chatRoomId) {
         return chatService.getMemberList(chatRoomId);
+    }
+    
+    //	퇴장한 멤버가 방장이면 입장해 있는 멤버 중 가장 빨리 들어온 멤버가 자동으로 방장이 됨
+    //	이때 채팅방에서 방장 닉네임이 바뀌어야 하므로 채팅방 정보를 넘김
+    @RequestMapping("/usr/chat/getChatRoom")
+    @ResponseBody
+    public ChatRoom getChatRoom(int chatRoomId) {
+    	return chatService.getChatRoomById(chatRoomId);
     }
 
 }

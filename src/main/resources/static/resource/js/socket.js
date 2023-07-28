@@ -110,6 +110,28 @@ function getMemberList() {
     
 }
 
+//	비동기로 채팅방 정보를 받으며 클라이언트가 퇴장 했다는 문구가 나올 때마다 실행된다.
+//	퇴장한 멤버가 방장이면 입장해 있는 멤버 중 가장 빨리 들어온 멤버가 자동으로 방장이 됨
+//	이때 채팅방에서 방장 닉네임이 바뀌어야 하므로 받아온 채팅방 정보로 채팅방의 방장 닉네임을 새로운 방장 닉네임으로 변경
+function getChatRoom() {
+	
+	let host = $('#host');
+	
+	$.ajax({
+        type: 'GET',
+        url: '/usr/chat/getChatRoom',
+        data: {
+            'chatRoomId': chatRoomId
+        },
+        success: function (data) {
+			let hostNickname = data.hostNickname;
+			host.empty();
+			host.html('<div>방장 : ' + hostNickname + '</div>');
+        }
+    })
+	
+}
+
 //	메시지 전송때는 JSON 형식의 메시지를 전달한다.
 function sendMessage(event) {
 	
@@ -158,6 +180,7 @@ function onMessageReceived(payload) {
         messageElement.classList.add('event-message');
 		messageElement.appendChild(chatFormatRegDateElement);
 		getMemberList();
+		getChatRoom();
     } else {
 		
 		if (memberId == chat.memberId) {

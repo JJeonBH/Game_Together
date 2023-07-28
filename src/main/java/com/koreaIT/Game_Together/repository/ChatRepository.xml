@@ -95,5 +95,11 @@
 			FROM chatRoom AS CR
 			WHERE memberId = #{memberId}
 	</select>
+	
+	<update id="modifyChatRoom">
+		UPDATE chatRoom
+			SET memberId = #{memberId}
+			WHERE id = #{chatRoomId}
+	</update>
 
 </mapper>

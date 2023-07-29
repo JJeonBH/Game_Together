@@ -442,52 +442,6 @@ relTypeCode = 'article',
 relId = 2,
 `body` = '반갑습니다. ^^';
 
-# chatRoom 테스트 데이터
-INSERT INTO chatRoom
-SET regDate = NOW(),
-memberId = 1,
-`name` = '관리자방',
-maxMemberCount = 10,
-`status` = 'public';
-
-# chatRoom 테스트 데이터
-INSERT INTO chatRoom
-SET regDate = NOW(),
-memberId = 2,
-`name` = '유저1방',
-maxMemberCount = 8,
-`status` = 'public';
-
-# chatRoomMember 테스트 데이터
-INSERT INTO chatRoomMember
-SET regDate = NOW(),
-chatRoomId = 1,
-memberId = 1;
-
-# chatRoomMember 테스트 데이터
-INSERT INTO chatRoomMember
-SET regDate = NOW(),
-chatRoomId = 2,
-memberId = 2;
-
-# chatRoomMember 테스트 데이터
-INSERT INTO chatRoomMember
-SET regDate = NOW(),
-chatRoomId = 1,
-memberId = 3;
-
-# chatRoomMember 테스트 데이터
-INSERT INTO chatRoomMember
-SET regDate = NOW(),
-chatRoomId = 2,
-memberId = 4;
-
-# chatRoomMember 테스트 데이터
-INSERT INTO chatRoomMember
-SET regDate = NOW(),
-chatRoomId = 1,
-memberId = 5;
-
 # 테이블 구조
 DESC `member`;
 DESC article;

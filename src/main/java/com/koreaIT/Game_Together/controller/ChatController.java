@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.koreaIT.Game_Together.service.ChatService;
+import com.koreaIT.Game_Together.sessionmanager.WebSocketSessionManager;
 import com.koreaIT.Game_Together.util.Util;
 import com.koreaIT.Game_Together.vo.Chat;
 import com.koreaIT.Game_Together.vo.ChatRoom;
@@ -23,11 +24,13 @@ public class ChatController {
 	
 	private final SimpMessageSendingOperations template;
 	private ChatService chatService;
+	private WebSocketSessionManager webSocketSessionManager;
 	
 	@Autowired
-	public ChatController(SimpMessageSendingOperations template, ChatService chatService) {
+	public ChatController(SimpMessageSendingOperations template, ChatService chatService, WebSocketSessionManager webSocketSessionManager) {
 		this.template = template;
 		this.chatService = chatService;
+		this.webSocketSessionManager = webSocketSessionManager;
 	}
 	
 	//	MessageMapping 을 통해 webSocket 로 들어오는 메시지를 발신 처리한다.
@@ -35,7 +38,9 @@ public class ChatController {
 	//	처리가 완료되면 /sub/usr/chat/joinChatRoom/chatRoomId 로 메시지가 전송된다.
 	@MessageMapping("/usr/chat/enterMember")
 	public void enterMember(@Payload Chat chat, SimpMessageHeaderAccessor headerAccessor) {
-		
+		System.out.println(headerAccessor.getSessionId());
+		System.out.println(webSocketSessionManager.getSession(headerAccessor.getSessionId()));
+		System.out.println(webSocketSessionManager.getAllSessions());
 		LocalDateTime now = LocalDateTime.now();
 		chat.setRegDate(now);
 		chat.setFormatRegDate(Util.formatRegDateVer1(chat.getRegDate()));

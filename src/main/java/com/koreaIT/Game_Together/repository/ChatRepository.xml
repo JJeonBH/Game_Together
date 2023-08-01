@@ -37,6 +37,7 @@
 			SET regDate = NOW()
 				, chatRoomId = #{chatRoomId}
 				, memberId = #{loginedMemberId}
+				, sessionId = #{sessionId}
 	</insert>
 	
 	<select id="getChatRoomById" resultType="ChatRoom">
@@ -62,6 +63,7 @@
 	
 	<select id="getMemberList" resultType="Member">
 		SELECT M.*
+			, CRM.sessionId AS sessionId
 			FROM `member` AS M
 			INNER JOIN chatRoomMember AS CRM
 			ON M.id = CRM.memberId

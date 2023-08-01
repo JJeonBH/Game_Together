@@ -18,7 +18,7 @@ public interface ChatRepository {
 
 	public int getLastInsertId();
 
-	public void joinChatRoom(int chatRoomId, int loginedMemberId);
+	public void joinChatRoom(int chatRoomId, int loginedMemberId, String sessionId);
 
 	public ChatRoom getChatRoomById(int chatRoomId);
 

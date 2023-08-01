@@ -26,4 +26,6 @@ public class Member {
 	private int delStatus;
 	private LocalDateTime delDate;
 	
+	private String sessionId;
+	
 }

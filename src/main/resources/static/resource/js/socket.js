@@ -101,13 +101,26 @@ function getMemberList() {
         success: function (data) {
 			let members = '';
 			for (let i = 0; i < data.length; i++) {
-				members += `<li class="p-1 ${data[i].id == memberId ? 'text-green-500' : ''}"> ${data[i].nickname} </li>`;
+				members += `<li class="p-1 ${data[i].id == memberId ? 'text-green-500' : ''}">
+								<span class="cursor-pointer" onclick="showCommandList(${data[i].sessionId});">
+									${data[i].nickname}
+									<span id="${data[i].sessionId}" class="hidden">강퇴</span>
+								</span>
+							</li>`;
 			}
 			memberList.empty();
 			memberList.html(members);
         }
     })
     
+}
+
+function showCommandList(sessionId) {
+	
+	let commandListElement = sessionId;
+	
+	commandListElement.classList.remove('hidden');
+	
 }
 
 //	비동기로 채팅방 정보를 받으며 클라이언트가 퇴장 했다는 문구가 나올 때마다 실행된다.

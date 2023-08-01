@@ -38,14 +38,12 @@ public class ChatController {
 	//	처리가 완료되면 /sub/usr/chat/joinChatRoom/chatRoomId 로 메시지가 전송된다.
 	@MessageMapping("/usr/chat/enterMember")
 	public void enterMember(@Payload Chat chat, SimpMessageHeaderAccessor headerAccessor) {
-		System.out.println(headerAccessor.getSessionId());
-		System.out.println(webSocketSessionManager.getSession(headerAccessor.getSessionId()));
-		System.out.println(webSocketSessionManager.getAllSessions());
+		
 		LocalDateTime now = LocalDateTime.now();
 		chat.setRegDate(now);
 		chat.setFormatRegDate(Util.formatRegDateVer1(chat.getRegDate()));
 		
-		chatService.joinChatRoom(chat.getChatRoomId(), chat.getMemberId());
+		chatService.joinChatRoom(chat.getChatRoomId(), chat.getMemberId(), headerAccessor.getSessionId());
 		chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getMessageType());
 		
 		headerAccessor.getSessionAttributes().put("memberId", chat.getMemberId());

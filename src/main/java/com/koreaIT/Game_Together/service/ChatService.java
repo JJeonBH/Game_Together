@@ -37,8 +37,8 @@ public class ChatService {
 	}
 	
 	//	채팅방 입장(chatRoomMember 테이블에 입장한 멤버 저장)
-	public void joinChatRoom(int chatRoomId, int loginedMemberId) {
-		chatRepository.joinChatRoom(chatRoomId, loginedMemberId);
+	public void joinChatRoom(int chatRoomId, int loginedMemberId, String sessionId) {
+		chatRepository.joinChatRoom(chatRoomId, loginedMemberId, sessionId);
 	}
 	
 	//	채팅방 찾기(chatRoom 테이블에서 id로 채팅방 가져오기)

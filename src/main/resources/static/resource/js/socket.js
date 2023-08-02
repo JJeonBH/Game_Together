@@ -3,6 +3,7 @@
 let stompClient = null;
 let memberId = null;
 let memberNickname = null;
+let hostMemberId = null;
 let connectingElement = document.querySelector('#connecting');
 let messageArea = document.querySelector('#message-area');
 let messageForm = document.querySelector('#message-form');
@@ -24,6 +25,7 @@ window.onload = function connect(event) {
 	
 	memberId = document.querySelector('#member-id').value.trim();
 	memberNickname = document.querySelector('#member-nickname').value.trim();
+	hostMemberId = document.querySelector('#host-member-id').value.trim();
 	
 	//	연결하고자 하는 Socket 의 endPoint (WebSocketStompConfig에서 정한 endPoint)
 	let socket = new SockJS('/ws-stomp');
@@ -101,12 +103,36 @@ function getMemberList() {
         success: function (data) {
 			let members = '';
 			for (let i = 0; i < data.length; i++) {
-				members += `<li class="p-1 ${data[i].id == memberId ? 'text-green-500' : ''}">
-								<span class="cursor-pointer" onclick="showCommandList(${data[i].sessionId});">
-									${data[i].nickname}
-									<span id="${data[i].sessionId}" class="hidden">강퇴</span>
-								</span>
-							</li>`;
+				if (data[i].id == memberId) {
+					members += `<li class="p-1">
+									<span>
+										<span class="cursor-pointer ${data[i].id == memberId ? 'text-green-500' : ''}">${data[i].nickname}</span>
+									</span>
+								</li>`;
+				} else {
+					members += `<li class="p-1">
+									<span>
+										<span class="cursor-pointer ${data[i].id == memberId ? 'text-green-500' : ''}" onclick="showCommandList(${data[i].sessionId});">${data[i].nickname}</span>
+										<ul id="${data[i].sessionId}" class="hidden">`;
+					if (memberId == hostMemberId) {
+						members += `			<li>
+													<span class="cursor-pointer">강퇴</span>
+												</li>
+												<li>
+													<span class="cursor-pointer">귓속말 보내기</span>
+												</li>
+											</ul>
+										</span>
+									</li>`;
+					} else {
+						members += `			<li>
+													<span class="cursor-pointer">귓속말 보내기</span>
+												</li>
+											</ul>
+										</span>
+									</li>`;
+					}
+				}
 			}
 			memberList.empty();
 			memberList.html(members);
@@ -115,9 +141,23 @@ function getMemberList() {
     
 }
 
+//	멤버 리스트에 있는 멤버를 클릭할 때 강퇴, 귓속말 보내기 등의 명령어 목록 보여주기(자기 자신은 제외)
+//	클릭한 상태에서 동일한 멤버를 한번 더 클릭하면 명령어 목록 사라지게 함
+//	클릭한 상태에서 다른 멤버를 클릭하면 기존 명령어 목록 사라지고 다른 명령어 목록 보여주게 함
+let originalCommandListElement = null;
+
 function showCommandList(sessionId) {
 	
+	if (originalCommandListElement != null) {
+		originalCommandListElement.classList.add('hidden');
+		if (originalCommandListElement == sessionId) {
+			originalCommandListElement = null;
+			return;
+		}
+	}
+	
 	let commandListElement = sessionId;
+	originalCommandListElement = commandListElement;
 	
 	commandListElement.classList.remove('hidden');
 	
@@ -138,6 +178,8 @@ function getChatRoom() {
         },
         success: function (data) {
 			let hostNickname = data.hostNickname;
+			hostMemberId = data.memberId;
+			document.querySelector('#host-member-id').value = data.memberId;
 			host.empty();
 			host.html('<div>방장 : ' + hostNickname + '</div>');
         }
@@ -192,8 +234,8 @@ function onMessageReceived(payload) {
     } else if (chat.messageType == 'LEAVE') {
         messageElement.classList.add('event-message');
 		messageElement.appendChild(chatFormatRegDateElement);
-		getMemberList();
 		getChatRoom();
+		getMemberList();
     } else {
 		
 		if (memberId == chat.memberId) {

@@ -27,6 +27,7 @@
 			<div>
 				<input type="hidden" id="member-id" value="${member.id}">
 				<input type="hidden" id="member-nickname" value="${member.nickname}">
+				<input type="hidden" id="host-member-id" value="${chatRoom.memberId}">
 				<div class="flex justify-center py-4 text-2xl font-semibold h-16">
 					<h1>${chatRoom.name}</h1>
 				</div>

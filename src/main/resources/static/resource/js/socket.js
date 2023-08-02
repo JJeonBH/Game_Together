@@ -112,11 +112,11 @@ function getMemberList() {
 				} else {
 					members += `<li class="p-1">
 									<span>
-										<span class="cursor-pointer ${data[i].id == memberId ? 'text-green-500' : ''}" onclick="showCommandList(${data[i].sessionId});">${data[i].nickname}</span>
+										<span class="cursor-pointer ${data[i].id == memberId ? 'text-green-500' : ''}" onclick="showCommandList('${data[i].sessionId}');">${data[i].nickname}</span>
 										<ul id="${data[i].sessionId}" class="hidden">`;
 					if (memberId == hostMemberId) {
 						members += `			<li>
-													<span class="cursor-pointer">강퇴</span>
+													<span class="cursor-pointer" onclick="banMember('${data[i].sessionId}');">강퇴</span>
 												</li>
 												<li>
 													<span class="cursor-pointer">귓속말 보내기</span>
@@ -150,16 +150,29 @@ function showCommandList(sessionId) {
 	
 	if (originalCommandListElement != null) {
 		originalCommandListElement.classList.add('hidden');
-		if (originalCommandListElement == sessionId) {
+		if (originalCommandListElement == document.querySelector('#' + sessionId)) {
 			originalCommandListElement = null;
 			return;
 		}
 	}
 	
-	let commandListElement = sessionId;
+	let commandListElement = document.querySelector('#' + sessionId);
+	commandListElement.classList.remove('hidden');
+	
 	originalCommandListElement = commandListElement;
 	
-	commandListElement.classList.remove('hidden');
+}
+
+function banMember(sessionId) {
+	
+	stompClient.send('/pub/usr/chat/banMember',
+	    {},
+	    JSON.stringify({
+	        'chatRoomId' : chatRoomId,
+	        'sessionId' : sessionId,
+	        'messageType' : 'LEAVE'
+	    })
+	)
 	
 }
 

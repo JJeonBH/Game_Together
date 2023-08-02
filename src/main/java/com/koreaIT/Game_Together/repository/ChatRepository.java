@@ -38,4 +38,6 @@ public interface ChatRepository {
 
 	public void modifyChatRoom(int chatRoomId, int memberId);
 
+	public Member getMemberBySessionId(String sessionId);
+
 }

@@ -1,5 +1,6 @@
 package com.koreaIT.Game_Together.controller;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -92,6 +93,36 @@ public class ChatController {
     	chat.setFormatRegDate(Util.formatRegDateVer1(chat.getRegDate()));
     	
     	chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getMessageType());
+    	
+    	template.convertAndSend("/sub/usr/chat/joinChatRoom/" + chat.getChatRoomId(), chat);
+    	
+    }
+    
+    @MessageMapping("/usr/chat/banMember")
+    public void banMember(@Payload Chat chat) {
+    	
+    	String sessionId = chat.getSessionId();
+    	
+    	Member member = chatService.getMemberBySessionId(sessionId);
+    	
+    	chat.setMemberId(member.getId());
+    	
+    	chatService.exitChatRoom(chat.getChatRoomId(), chat.getMemberId());
+    	
+    	LocalDateTime now = LocalDateTime.now();
+    	chat.setRegDate(now);
+    	chat.setFormatRegDate(Util.formatRegDateVer1(chat.getRegDate()));
+    	
+    	chat.setMessage(member.getNickname() + " 님이 강퇴되었습니다.");
+    	chat.setMemberNickname(member.getNickname());
+    	
+    	chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getMessageType());
+    	
+    	try {
+			webSocketSessionManager.getSession(chat.getSessionId()).close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     	
     	template.convertAndSend("/sub/usr/chat/joinChatRoom/" + chat.getChatRoomId(), chat);
     	

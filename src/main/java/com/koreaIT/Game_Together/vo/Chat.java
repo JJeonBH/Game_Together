@@ -30,5 +30,6 @@ public class Chat {
     
     private String memberNickname;
     private String formatRegDate;
+    private String sessionId;
     
 }

@@ -138,4 +138,8 @@ public class ChatService {
 		
 	}
 
+	public Member getMemberBySessionId(String sessionId) {
+		return chatRepository.getMemberBySessionId(sessionId);
+	}
+
 }

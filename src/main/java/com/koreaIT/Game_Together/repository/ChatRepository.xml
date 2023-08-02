@@ -103,5 +103,13 @@
 			SET memberId = #{memberId}
 			WHERE id = #{chatRoomId}
 	</update>
+	
+	<select id="getMemberBySessionId" resultType="Member">
+		SELECT M.*
+			FROM `member` AS M
+			INNER JOIN chatRoomMember AS CRM
+    		ON M.id = CRM.memberId
+    		WHERE CRM.sessionId = #{sessionId}
+	</select>
 
 </mapper>

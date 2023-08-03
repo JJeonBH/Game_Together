@@ -150,13 +150,13 @@ function showCommandList(sessionId) {
 	
 	if (originalCommandListElement != null) {
 		originalCommandListElement.classList.add('hidden');
-		if (originalCommandListElement == document.querySelector('#' + sessionId)) {
+		if (originalCommandListElement == document.getElementById(sessionId)) {
 			originalCommandListElement = null;
 			return;
 		}
 	}
 	
-	let commandListElement = document.querySelector('#' + sessionId);
+	let commandListElement = document.getElementById(sessionId);
 	commandListElement.classList.remove('hidden');
 	
 	originalCommandListElement = commandListElement;

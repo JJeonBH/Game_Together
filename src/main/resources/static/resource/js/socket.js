@@ -170,7 +170,7 @@ function banMember(sessionId) {
 	    JSON.stringify({
 	        'chatRoomId' : chatRoomId,
 	        'sessionId' : sessionId,
-	        'messageType' : 'LEAVE'
+	        'messageType' : 'BAN'
 	    })
 	)
 	
@@ -240,7 +240,7 @@ function onMessageReceived(payload) {
 	
 	chatFormatRegDateElement.appendChild(chatFormatRegDateText);
 
-    if (chat.messageType == 'ENTER') {
+    if (chat.messageType == 'ENTER' || chat.messageType == 'BAN') {
         messageElement.classList.add('event-message');
 		messageElement.appendChild(chatFormatRegDateElement);
 		getMemberList();

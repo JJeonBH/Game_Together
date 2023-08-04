@@ -65,6 +65,8 @@ function onError(error) {
     connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
     connectingElement.style.color = 'red';
     
+    location.href = '/usr/chat/chatRoomList';
+    
 }
 
 async function disconnect(event) {
@@ -240,7 +242,7 @@ function onMessageReceived(payload) {
 	
 	chatFormatRegDateElement.appendChild(chatFormatRegDateText);
 
-    if (chat.messageType == 'ENTER' || chat.messageType == 'BAN') {
+    if (chat.messageType == 'ENTER') {
         messageElement.classList.add('event-message');
 		messageElement.appendChild(chatFormatRegDateElement);
 		getMemberList();
@@ -249,7 +251,16 @@ function onMessageReceived(payload) {
 		messageElement.appendChild(chatFormatRegDateElement);
 		getChatRoom();
 		getMemberList();
-    } else {
+    } else if (chat.messageType == 'BAN') {
+		if (chat.memberId == memberId) {
+			stompClient.disconnect();
+			alert(chat.memberNickname + ' 님은 방장에 의해 강제 퇴장되었습니다. 더 이상 채팅에 참여할 수 없습니다.');
+			return;
+		}
+		messageElement.classList.add('event-message');
+		messageElement.appendChild(chatFormatRegDateElement);
+		getMemberList();
+	} else {
 		
 		if (memberId == chat.memberId) {
 			messageElement.classList.add('me');

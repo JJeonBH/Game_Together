@@ -1,6 +1,5 @@
 package com.koreaIT.Game_Together.controller;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.koreaIT.Game_Together.service.ChatService;
-import com.koreaIT.Game_Together.sessionmanager.WebSocketSessionManager;
 import com.koreaIT.Game_Together.util.Util;
 import com.koreaIT.Game_Together.vo.Chat;
 import com.koreaIT.Game_Together.vo.ChatRoom;
@@ -25,13 +23,11 @@ public class ChatController {
 	
 	private final SimpMessageSendingOperations template;
 	private ChatService chatService;
-	private WebSocketSessionManager webSocketSessionManager;
 	
 	@Autowired
-	public ChatController(SimpMessageSendingOperations template, ChatService chatService, WebSocketSessionManager webSocketSessionManager) {
+	public ChatController(SimpMessageSendingOperations template, ChatService chatService) {
 		this.template = template;
 		this.chatService = chatService;
-		this.webSocketSessionManager = webSocketSessionManager;
 	}
 	
 	//	MessageMapping 을 통해 webSocket 로 들어오는 메시지를 발신 처리한다.
@@ -113,16 +109,10 @@ public class ChatController {
     	chat.setRegDate(now);
     	chat.setFormatRegDate(Util.formatRegDateVer1(chat.getRegDate()));
     	
-    	chat.setMessage(member.getNickname() + " 님이 강퇴되었습니다.");
+    	chat.setMessage(member.getNickname() + " 님이 강제 퇴장되었습니다.");
     	chat.setMemberNickname(member.getNickname());
     	
     	chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getMessageType());
-    	
-    	try {
-			webSocketSessionManager.getSession(chat.getSessionId()).close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
     	
     	template.convertAndSend("/sub/usr/chat/joinChatRoom/" + chat.getChatRoomId(), chat);
     	

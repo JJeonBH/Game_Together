@@ -18,7 +18,7 @@ public class Chat {
     //	입장과 퇴장 ENTER 과 LEAVE 의 경우 입장/퇴장 이벤트 처리가 실행되고,
     //	TALK 는 말 그대로 내용이 해당 채팅방을 SUB 하고 있는 모든 클라이언트에게 전달된다.
     public enum MessageType {
-        ENTER, TALK, LEAVE, BAN;
+        ENTER, TALK, LEAVE, BAN, WHISPER;
     }
     
     private int id;
@@ -26,10 +26,12 @@ public class Chat {
     private int chatRoomId;
     private int memberId;
     private String message;
+    private int recipientId;
     private MessageType messageType;
     
     private String memberNickname;
     private String formatRegDate;
     private String sessionId;
+    private String recipientNickname;
     
 }

@@ -13,21 +13,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.koreaIT.Game_Together.service.ChatService;
+import com.koreaIT.Game_Together.service.MemberService;
 import com.koreaIT.Game_Together.util.Util;
 import com.koreaIT.Game_Together.vo.Chat;
 import com.koreaIT.Game_Together.vo.ChatRoom;
 import com.koreaIT.Game_Together.vo.Member;
+import com.koreaIT.Game_Together.vo.ResultData;
 
 @Controller
 public class ChatController {
 	
 	private final SimpMessageSendingOperations template;
 	private ChatService chatService;
+	private MemberService memberService;
 	
 	@Autowired
-	public ChatController(SimpMessageSendingOperations template, ChatService chatService) {
+	public ChatController(SimpMessageSendingOperations template, ChatService chatService, MemberService memberService) {
 		this.template = template;
 		this.chatService = chatService;
+		this.memberService = memberService;
 	}
 	
 	//	MessageMapping 을 통해 webSocket 로 들어오는 메시지를 발신 처리한다.
@@ -41,7 +45,7 @@ public class ChatController {
 		chat.setFormatRegDate(Util.formatRegDateVer1(chat.getRegDate()));
 		
 		chatService.joinChatRoom(chat.getChatRoomId(), chat.getMemberId(), headerAccessor.getSessionId());
-		chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getMessageType());
+		chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getRecipientId(), chat.getMessageType());
 		
 		headerAccessor.getSessionAttributes().put("memberId", chat.getMemberId());
 		headerAccessor.getSessionAttributes().put("chatRoomId", chat.getChatRoomId());
@@ -53,11 +57,19 @@ public class ChatController {
     @MessageMapping("/usr/chat/sendMessage")
     public void sendMessage(@Payload Chat chat) {
     	
+    	String recipientNickname = chat.getRecipientNickname();
+    	
+    	if (recipientNickname != null) {
+    		Member member = memberService.getMemberByNickname(recipientNickname);
+    		chat.setRecipientId(member.getId());
+    		chat.setMessage(chat.getMessage().substring(chat.getMessage().indexOf(chat.getMessage().split(" ")[2])));
+    	}
+    	
     	LocalDateTime now = LocalDateTime.now();
 		chat.setRegDate(now);
 		chat.setFormatRegDate(Util.formatRegDateVer1(chat.getRegDate()));
     	
-    	chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getMessageType());
+    	chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getRecipientId(), chat.getMessageType());
     	
         template.convertAndSend("/sub/usr/chat/joinChatRoom/" + chat.getChatRoomId(), chat);
         
@@ -88,7 +100,7 @@ public class ChatController {
     	chat.setRegDate(now);
     	chat.setFormatRegDate(Util.formatRegDateVer1(chat.getRegDate()));
     	
-    	chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getMessageType());
+    	chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getRecipientId(), chat.getMessageType());
     	
     	template.convertAndSend("/sub/usr/chat/joinChatRoom/" + chat.getChatRoomId(), chat);
     	
@@ -112,7 +124,7 @@ public class ChatController {
     	chat.setMessage(member.getNickname() + " 님이 강제 퇴장되었습니다.");
     	chat.setMemberNickname(member.getNickname());
     	
-    	chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getMessageType());
+    	chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getRecipientId(), chat.getMessageType());
     	
     	template.convertAndSend("/sub/usr/chat/joinChatRoom/" + chat.getChatRoomId(), chat);
     	
@@ -131,6 +143,14 @@ public class ChatController {
     @ResponseBody
     public ChatRoom getChatRoom(int chatRoomId) {
     	return chatService.getChatRoomById(chatRoomId);
+    }
+    
+    //	귓속말 보낼 때 채팅방에 해당 닉네임을 가진 멤버가 참여 중인지 판단
+    @SuppressWarnings("rawtypes")
+	@RequestMapping("/usr/chat/getMember")
+    @ResponseBody
+    public ResultData getMember(int chatRoomId, String nickname) {
+        return chatService.getMember(chatRoomId, nickname);
     }
 
 }

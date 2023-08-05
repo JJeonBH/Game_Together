@@ -47,8 +47,8 @@ public class ChatService {
 	}
 	
 	//	채팅 저장(chat 테이블에 채팅 저장)
-	public void saveChat(LocalDateTime regDate, int chatRoomId, int memberId, String message, MessageType messageType) {
-		chatRepository.saveChat(regDate, chatRoomId, memberId, message, messageType);
+	public void saveChat(LocalDateTime regDate, int chatRoomId, int memberId, String message, int recipientId, MessageType messageType) {
+		chatRepository.saveChat(regDate, chatRoomId, memberId, message, recipientId, messageType);
 	}
 	
 	//	채팅방에 입장한 멤버 리스트 가져오기
@@ -140,6 +140,20 @@ public class ChatService {
 
 	public Member getMemberBySessionId(String sessionId) {
 		return chatRepository.getMemberBySessionId(sessionId);
+	}
+
+	//	귓속말 보낼 때 채팅방에 해당 닉네임을 가진 멤버가 참여 중인지 판단
+	@SuppressWarnings("rawtypes")
+	public ResultData getMember(int chatRoomId, String nickname) {
+		
+		Member member = chatRepository.getMember(chatRoomId, nickname);
+		
+		if (member == null) {
+			return ResultData.resultFrom("F-1", "채팅방에 존재하지 않음.");
+		}
+		
+		return ResultData.resultFrom("S-1", "채팅방에 존재함.");
+		
 	}
 
 }

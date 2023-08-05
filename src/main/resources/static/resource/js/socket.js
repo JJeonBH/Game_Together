@@ -121,14 +121,14 @@ function getMemberList() {
 													<span class="cursor-pointer" onclick="banMember('${data[i].sessionId}');">강퇴</span>
 												</li>
 												<li>
-													<span class="cursor-pointer">귓속말 보내기</span>
+													<span class="cursor-pointer" onclick="whisper('${data[i].nickname}');">귓속말 보내기</span>
 												</li>
 											</ul>
 										</span>
 									</li>`;
 					} else {
 						members += `			<li>
-													<span class="cursor-pointer">귓속말 보내기</span>
+													<span class="cursor-pointer" onclick="whisper('${data[i].nickname}');">귓속말 보내기</span>
 												</li>
 											</ul>
 										</span>
@@ -178,6 +178,12 @@ function banMember(sessionId) {
 	
 }
 
+function whisper(nickname) {
+	
+	messageInput.value = "/귓속말 " + nickname + " ";
+	
+}
+
 //	비동기로 채팅방 정보를 받으며 클라이언트가 퇴장 했다는 문구가 나올 때마다 실행된다.
 //	퇴장한 멤버가 방장이면 입장해 있는 멤버 중 가장 빨리 들어온 멤버가 자동으로 방장이 됨
 //	이때 채팅방에서 방장 닉네임이 바뀌어야 하므로 받아온 채팅방 정보로 채팅방의 방장 닉네임을 새로운 방장 닉네임으로 변경
@@ -209,22 +215,90 @@ function sendMessage(event) {
 
     if (messageContent && stompClient) {
 		
-        let chatMessage = {
-            'chatRoomId' : chatRoomId,
-            'memberId' : memberId,
-            'message' : messageContent,
-            'memberNickname' : memberNickname,
-            'messageType' : 'TALK'
-        };
+	    if (messageContent.startsWith('/귓속말')) {
+			
+			let nickname = messageContent.split(' ')[1];
+			
+			if (nickname == null || nickname == '') {
+				alert('"/귓속말 닉네임 내용"의 형식을 지켜주세요. (띄어쓰기를 잘 지켜주세요.)');
+				event.preventDefault();
+				return;
+			}
+			
+			let content = messageContent.split(' ')[2];
+			
+			if (content == null || content == '') {
+				alert('"/귓속말 닉네임 내용"의 형식을 지켜주세요. (띄어쓰기를 잘 지켜주세요.)');
+				event.preventDefault();
+				return;
+			}
+			
+			if (getMember(nickname) == false) {
+				alert('채팅방에 존재하지 않는 멤버입니다. 닉네임을 확인해주세요.');
+				event.preventDefault();
+				return;
+			}
+			
+			let chatMessage = {
+	            'chatRoomId' : chatRoomId,
+	            'memberId' : memberId,
+	            'message' : messageContent,
+	            'memberNickname' : memberNickname,
+	            'recipientNickname' : nickname,
+	            'messageType' : 'WHISPER'
+        	};
 
-        stompClient.send('/pub/usr/chat/sendMessage', {}, JSON.stringify(chatMessage));
+        	stompClient.send('/pub/usr/chat/sendMessage', {}, JSON.stringify(chatMessage));
         
-        messageInput.value = '';
+        	messageInput.value = '';
+			
+		} else {
+			
+	        let chatMessage = {
+	            'chatRoomId' : chatRoomId,
+	            'memberId' : memberId,
+	            'message' : messageContent,
+	            'memberNickname' : memberNickname,
+	            'messageType' : 'TALK'
+	        };
+	
+	        stompClient.send('/pub/usr/chat/sendMessage', {}, JSON.stringify(chatMessage));
+	        
+	        messageInput.value = '';
+	        
+		}
         
     }
     
     event.preventDefault();
     
+}
+
+//	채팅방에 파라미터로 받은 닉네임을 가진 멤버가 참여 중인지 판단
+//	참여 중이면 true 리턴, 참여 중이지 않으면 false 리턴
+function getMember(nickname) {
+	
+	let exist;
+	
+	$.ajax({
+	    type: 'GET',
+	    url: '/usr/chat/getMember',
+	    async: false,
+	    data: {
+    		'chatRoomId': chatRoomId,
+    		'nickname': nickname
+	    },
+	    success: function (data) {
+			if (data.fail) {
+				exist = false;
+			} else {
+				exist = true;
+			}
+	    }
+	})
+			
+	return exist;
+	
 }
 
 //	메시지를 받을 때도 마찬가지로 JSON 타입으로 받으며,
@@ -260,6 +334,30 @@ function onMessageReceived(payload) {
 		messageElement.classList.add('event-message');
 		messageElement.appendChild(chatFormatRegDateElement);
 		getMemberList();
+	} else if (chat.messageType == 'WHISPER') {
+		if (chat.memberId != memberId && chat.recipientId != memberId) {
+			return;
+		}
+		
+		let memberNicknameElement;
+		let memberNicknameText;
+		
+		if (memberId == chat.memberId) {
+			messageElement.classList.add('me');
+			memberNicknameElement = document.createElement('span');
+			memberNicknameText = document.createTextNode(chat.recipientNickname + ' 님에게 귓속말');
+		} else {
+			messageElement.classList.add('other');
+			memberNicknameElement = document.createElement('span');
+			memberNicknameText = document.createTextNode(chat.memberNickname + ' 님의 귓속말');
+		}
+		
+		memberNicknameElement.classList.add('font-semibold');
+			
+		memberNicknameElement.appendChild(memberNicknameText);
+		messageElement.appendChild(memberNicknameElement);
+	
+		messageElement.appendChild(chatFormatRegDateElement);
 	} else {
 		
 		if (memberId == chat.memberId) {

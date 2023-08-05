@@ -22,7 +22,7 @@ public interface ChatRepository {
 
 	public ChatRoom getChatRoomById(int chatRoomId);
 
-	public void saveChat(LocalDateTime regDate, int chatRoomId, int memberId, String message, MessageType messageType);
+	public void saveChat(LocalDateTime regDate, int chatRoomId, int memberId, String message, int recipientId, MessageType messageType);
 
 	public List<Member> getMemberList(int chatRoomId);
 
@@ -39,5 +39,7 @@ public interface ChatRepository {
 	public void modifyChatRoom(int chatRoomId, int memberId);
 
 	public Member getMemberBySessionId(String sessionId);
+
+	public Member getMember(int chatRoomId, String nickname);
 
 }

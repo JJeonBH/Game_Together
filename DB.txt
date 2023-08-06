@@ -75,6 +75,7 @@ CREATE TABLE chat(
     memberId INT UNSIGNED NOT NULL,
     message TEXT NOT NULL,
     recipientId INT UNSIGNED NOT NULL COMMENT '전체 채팅이면 0, 귓속말이면 받는 멤버의 id',
+    banMemberId INT UNSIGNED NOT NULL COMMENT '강퇴당한 멤버의 id',
     messageType VARCHAR(20) NOT NULL
 );
 

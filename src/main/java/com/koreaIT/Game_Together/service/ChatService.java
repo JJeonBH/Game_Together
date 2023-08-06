@@ -47,8 +47,8 @@ public class ChatService {
 	}
 	
 	//	채팅 저장(chat 테이블에 채팅 저장)
-	public void saveChat(LocalDateTime regDate, int chatRoomId, int memberId, String message, int recipientId, MessageType messageType) {
-		chatRepository.saveChat(regDate, chatRoomId, memberId, message, recipientId, messageType);
+	public void saveChat(LocalDateTime regDate, int chatRoomId, int memberId, String message, int recipientId, int banMemberId, MessageType messageType) {
+		chatRepository.saveChat(regDate, chatRoomId, memberId, message, recipientId, banMemberId, messageType);
 	}
 	
 	//	채팅방에 입장한 멤버 리스트 가져오기
@@ -160,6 +160,10 @@ public class ChatService {
 		
 		return ResultData.resultFrom("S-1", "채팅방에 존재함.");
 		
+	}
+
+	public void changeHost(int chatRoomId, int changeHostId) {
+		chatRepository.changeHost(chatRoomId, changeHostId);
 	}
 
 }

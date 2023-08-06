@@ -59,6 +59,7 @@
 				, memberId = #{memberId}
 				, message = #{message}
 				, recipientId = #{recipientId}
+				, banMemberId = #{banMemberId}
 				, messageType = #{messageType}
 	</insert>
 	
@@ -126,8 +127,14 @@
 		SELECT COUNT(id)
 			FROM chat
 			WHERE chatRoomId = #{chatRoomId}
-			AND memberId = #{memberId}
+			AND banMemberId = #{memberId}
 			AND messageType = 'BAN'
 	</select>
+	
+	<update id="changeHost">
+		UPDATE chatRoom
+			SET memberId = #{changeHostId}
+			WHERE id = #{chatRoomId}
+	</update>
 
 </mapper>

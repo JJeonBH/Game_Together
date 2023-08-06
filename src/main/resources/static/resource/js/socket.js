@@ -91,7 +91,7 @@ async function disconnect(event) {
 }
 
 //	채팅방에 입장한 멤버 리스트 받기
-//	비동기로 멤버 리스트를 받으며 클라이언트가 입장/퇴장 했다는 문구가 나올 때마다 실행된다.
+//	비동기로 멤버 리스트를 받으며 입장/퇴장/강퇴/위임 문구가 나올 때마다 실행된다.
 function getMemberList() {
 	
     let memberList = $('#member-list');
@@ -108,27 +108,30 @@ function getMemberList() {
 				if (data[i].id == memberId) {
 					members += `<li class="p-1">
 									<span>
-										<span class="cursor-pointer ${data[i].id == memberId ? 'text-green-500' : ''}">${data[i].nickname}</span>
+										<span class="cursor-pointer hover:underline text-green-500">${data[i].nickname}</span>
 									</span>
 								</li>`;
 				} else {
 					members += `<li class="p-1">
 									<span>
-										<span class="cursor-pointer ${data[i].id == memberId ? 'text-green-500' : ''}" onclick="showCommandList('${data[i].sessionId}');">${data[i].nickname}</span>
+										<span class="cursor-pointer hover:underline" onclick="showCommandList('${data[i].sessionId}');">${data[i].nickname}</span>
 										<ul id="${data[i].sessionId}" class="hidden">`;
 					if (memberId == hostMemberId) {
 						members += `			<li>
-													<span class="cursor-pointer" onclick="banMember('${data[i].sessionId}');">강퇴</span>
+													<span class="cursor-pointer hover:underline" onclick="if(confirm('${data[i].nickname} 님을 강퇴하시겠습니까?')) {banMember('${data[i].sessionId}');}">강퇴</span>
 												</li>
 												<li>
-													<span class="cursor-pointer" onclick="whisper('${data[i].nickname}');">귓속말 보내기</span>
+													<span class="cursor-pointer hover:underline" onclick="if(confirm('${data[i].nickname} 님에게 방장을 위임하시겠습니까?')) {changeHost('${data[i].id}', '${data[i].nickname}');}">방장 위임하기</span>
+												</li>
+												<li>
+													<span class="cursor-pointer hover:underline" onclick="whisper('${data[i].nickname}');">귓속말 보내기</span>
 												</li>
 											</ul>
 										</span>
 									</li>`;
 					} else {
 						members += `			<li>
-													<span class="cursor-pointer" onclick="whisper('${data[i].nickname}');">귓속말 보내기</span>
+													<span class="cursor-pointer hover:underline" onclick="whisper('${data[i].nickname}');">귓속말 보내기</span>
 												</li>
 											</ul>
 										</span>
@@ -171,8 +174,26 @@ function banMember(sessionId) {
 	    {},
 	    JSON.stringify({
 	        'chatRoomId' : chatRoomId,
+	        'memberId' : memberId,
+	        'memberNickname' : memberNickname,
 	        'sessionId' : sessionId,
 	        'messageType' : 'BAN'
+	    })
+	)
+	
+}
+
+function changeHost(hostId, hostNickname) {
+	
+	stompClient.send('/pub/usr/chat/changeHost',
+	    {},
+	    JSON.stringify({
+	        'chatRoomId' : chatRoomId,
+	        'memberId' : memberId,
+	        'message' : memberNickname + ' 님이 ' + hostNickname + ' 님에게 방장을 위임하셨습니다.',
+	        'memberNickname' : memberNickname,
+	        'changeHostId' : hostId,
+	        'messageType' : 'CHANGE'
 	    })
 	)
 	
@@ -320,15 +341,15 @@ function onMessageReceived(payload) {
         messageElement.classList.add('event-message');
 		messageElement.appendChild(chatFormatRegDateElement);
 		getMemberList();
-    } else if (chat.messageType == 'LEAVE') {
+    } else if (chat.messageType == 'LEAVE' || chat.messageType == 'CHANGE') {
         messageElement.classList.add('event-message');
 		messageElement.appendChild(chatFormatRegDateElement);
 		getChatRoom();
 		getMemberList();
     } else if (chat.messageType == 'BAN') {
-		if (chat.memberId == memberId) {
+		if (chat.banMemberId == memberId) {
 			stompClient.disconnect();
-			alert(chat.memberNickname + ' 님은 방장에 의해 강제 퇴장되었습니다. 더 이상 채팅에 참여할 수 없습니다.');
+			alert(chat.banMemberNickname + ' 님은 방장에 의해 강제 퇴장되었습니다. 더 이상 채팅에 참여할 수 없습니다.');
 			return;
 		}
 		messageElement.classList.add('event-message');

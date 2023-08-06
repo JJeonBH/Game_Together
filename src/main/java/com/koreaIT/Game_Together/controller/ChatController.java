@@ -45,7 +45,7 @@ public class ChatController {
 		chat.setFormatRegDate(Util.formatRegDateVer1(chat.getRegDate()));
 		
 		chatService.joinChatRoom(chat.getChatRoomId(), chat.getMemberId(), headerAccessor.getSessionId());
-		chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getRecipientId(), chat.getMessageType());
+		chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getRecipientId(), chat.getBanMemberId(), chat.getMessageType());
 		
 		headerAccessor.getSessionAttributes().put("memberId", chat.getMemberId());
 		headerAccessor.getSessionAttributes().put("chatRoomId", chat.getChatRoomId());
@@ -69,7 +69,7 @@ public class ChatController {
 		chat.setRegDate(now);
 		chat.setFormatRegDate(Util.formatRegDateVer1(chat.getRegDate()));
     	
-    	chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getRecipientId(), chat.getMessageType());
+    	chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getRecipientId(), chat.getBanMemberId(), chat.getMessageType());
     	
         template.convertAndSend("/sub/usr/chat/joinChatRoom/" + chat.getChatRoomId(), chat);
         
@@ -100,7 +100,7 @@ public class ChatController {
     	chat.setRegDate(now);
     	chat.setFormatRegDate(Util.formatRegDateVer1(chat.getRegDate()));
     	
-    	chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getRecipientId(), chat.getMessageType());
+    	chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getRecipientId(), chat.getBanMemberId(), chat.getMessageType());
     	
     	template.convertAndSend("/sub/usr/chat/joinChatRoom/" + chat.getChatRoomId(), chat);
     	
@@ -113,18 +113,33 @@ public class ChatController {
     	
     	Member member = chatService.getMemberBySessionId(sessionId);
     	
-    	chat.setMemberId(member.getId());
+    	chat.setBanMemberId(member.getId());
     	
-    	chatService.exitChatRoom(chat.getChatRoomId(), chat.getMemberId());
+    	chatService.exitChatRoom(chat.getChatRoomId(), chat.getBanMemberId());
     	
     	LocalDateTime now = LocalDateTime.now();
     	chat.setRegDate(now);
     	chat.setFormatRegDate(Util.formatRegDateVer1(chat.getRegDate()));
     	
     	chat.setMessage(member.getNickname() + " 님이 강제 퇴장되었습니다.");
-    	chat.setMemberNickname(member.getNickname());
+    	chat.setBanMemberNickname(member.getNickname());
     	
-    	chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getRecipientId(), chat.getMessageType());
+    	chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getRecipientId(), chat.getBanMemberId(), chat.getMessageType());
+    	
+    	template.convertAndSend("/sub/usr/chat/joinChatRoom/" + chat.getChatRoomId(), chat);
+    	
+    }
+    
+    @MessageMapping("/usr/chat/changeHost")
+    public void changeHost(@Payload Chat chat) {
+    	
+    	chatService.changeHost(chat.getChatRoomId(), chat.getChangeHostId());
+    	
+    	LocalDateTime now = LocalDateTime.now();
+    	chat.setRegDate(now);
+    	chat.setFormatRegDate(Util.formatRegDateVer1(chat.getRegDate()));
+    	
+    	chatService.saveChat(chat.getRegDate(), chat.getChatRoomId(), chat.getMemberId(), chat.getMessage(), chat.getRecipientId(), chat.getBanMemberId(), chat.getMessageType());
     	
     	template.convertAndSend("/sub/usr/chat/joinChatRoom/" + chat.getChatRoomId(), chat);
     	

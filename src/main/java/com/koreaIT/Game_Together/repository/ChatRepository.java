@@ -22,7 +22,7 @@ public interface ChatRepository {
 
 	public ChatRoom getChatRoomById(int chatRoomId);
 
-	public void saveChat(LocalDateTime regDate, int chatRoomId, int memberId, String message, int recipientId, MessageType messageType);
+	public void saveChat(LocalDateTime regDate, int chatRoomId, int memberId, String message, int recipientId, int banMemberId, MessageType messageType);
 
 	public List<Member> getMemberList(int chatRoomId);
 
@@ -43,5 +43,7 @@ public interface ChatRepository {
 	public Member getMember(int chatRoomId, String nickname);
 
 	public int banCheck(int chatRoomId, int memberId);
+
+	public void changeHost(int chatRoomId, int changeHostId);
 
 }

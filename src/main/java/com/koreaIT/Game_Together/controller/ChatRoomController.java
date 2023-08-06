@@ -119,7 +119,7 @@ public class ChatRoomController {
     }
     
     
-    //	채팅방 입장 시 이미 다른 채팅방에 입장해 있는지, 인원수 꽉 차 있는지 체크
+    //	채팅방 입장 시 이미 다른 채팅방에 입장해 있는지, 인원수 꽉 차 있는지, 강퇴당한 적 있는지 체크
     @SuppressWarnings("rawtypes")
 	@RequestMapping("/usr/chat/canJoin")
     @ResponseBody

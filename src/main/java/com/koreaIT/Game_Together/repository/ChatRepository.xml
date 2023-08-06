@@ -121,5 +121,13 @@
     		WHERE CRM.chatRoomId = #{chatRoomId}
     		AND M.nickname = #{nickname}
 	</select>
+	
+	<select id="banCheck" resultType="int">
+		SELECT COUNT(id)
+			FROM chat
+			WHERE chatRoomId = #{chatRoomId}
+			AND memberId = #{memberId}
+			AND messageType = 'BAN'
+	</select>
 
 </mapper>

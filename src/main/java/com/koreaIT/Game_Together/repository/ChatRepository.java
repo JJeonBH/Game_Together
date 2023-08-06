@@ -42,4 +42,6 @@ public interface ChatRepository {
 
 	public Member getMember(int chatRoomId, String nickname);
 
+	public int banCheck(int chatRoomId, int memberId);
+
 }

@@ -87,7 +87,7 @@ public class ChatService {
 		
 	}
 	
-	//	채팅방 입장 시 이미 다른 채팅방에 입장해 있는지, 인원수 꽉 차 있는지 체크
+	//	채팅방 입장 시 이미 다른 채팅방에 입장해 있는지, 인원수 꽉 차 있는지, 강퇴당한 적 있는지 체크
 	@SuppressWarnings("rawtypes")
 	public ResultData canJoin(int chatRoomId, int memberId) {
 		
@@ -101,6 +101,12 @@ public class ChatService {
 		
 		if (chatRoom.getMaxMemberCount() == chatRoom.getCurrentMemberCount()) {
 			return ResultData.resultFrom("F-2", "채팅방 정원 초과로 채팅방에 입장할 수 없습니다.");
+		}
+		
+		count = chatRepository.banCheck(chatRoomId, memberId);
+		
+		if (count == 1) {
+			return ResultData.resultFrom("F-3", "강제 퇴장된 채팅방에는 다시 입장할 수 없습니다.");
 		}
 		
 		return ResultData.resultFrom("S-1", "입장 가능");

@@ -205,14 +205,14 @@ function whisper(nickname) {
 	
 }
 
-//	비동기로 채팅방 정보를 받으며 클라이언트가 퇴장 했다는 문구가 나올 때마다 실행된다.
+//	비동기로 채팅방 정보를 받으며 퇴장/위임 했다는 문구가 나올 때마다 실행된다.
 //	퇴장한 멤버가 방장이면 입장해 있는 멤버 중 가장 빨리 들어온 멤버가 자동으로 방장이 됨
 //	이때 채팅방에서 방장 닉네임이 바뀌어야 하므로 받아온 채팅방 정보로 채팅방의 방장 닉네임을 새로운 방장 닉네임으로 변경
-function getChatRoom() {
+async function getChatRoom(getMemberList) {
 	
 	let host = $('#host');
 	
-	$.ajax({
+	await $.ajax({
         type: 'GET',
         url: '/usr/chat/getChatRoom',
         data: {
@@ -226,6 +226,8 @@ function getChatRoom() {
 			host.html('<div>방장 : ' + hostNickname + '</div>');
         }
     })
+    
+    await getMemberList();
 	
 }
 
@@ -344,8 +346,7 @@ function onMessageReceived(payload) {
     } else if (chat.messageType == 'LEAVE' || chat.messageType == 'CHANGE') {
         messageElement.classList.add('event-message');
 		messageElement.appendChild(chatFormatRegDateElement);
-		getChatRoom();
-		getMemberList();
+		getChatRoom(getMemberList);
     } else if (chat.messageType == 'BAN') {
 		if (chat.banMemberId == memberId) {
 			stompClient.disconnect();

@@ -211,6 +211,8 @@ function whisper(nickname) {
 async function getChatRoom(getMemberList) {
 	
 	let host = $('#host');
+	let buttons = $('#buttons');
+	let deleteButton = $('#delete-button');
 	
 	await $.ajax({
         type: 'GET',
@@ -219,11 +221,17 @@ async function getChatRoom(getMemberList) {
             'chatRoomId': chatRoomId
         },
         success: function (data) {
-			let hostNickname = data.hostNickname;
-			hostMemberId = data.memberId;
-			document.querySelector('#host-member-id').value = data.memberId;
-			host.empty();
-			host.html('<div>방장 : ' + hostNickname + '</div>');
+			if (data.memberId != hostMemberId) {
+				deleteButton.remove();
+				let hostNickname = data.hostNickname;
+				hostMemberId = data.memberId;
+				document.querySelector('#host-member-id').value = data.memberId;
+				host.empty();
+				host.html('<div>방장 : ' + hostNickname + '</div>');
+				if (memberId == hostMemberId) {
+					buttons.append('<button id="delete-button" class="btn-text-color btn btn-info btn-sm my-2 ml-2 h-10">채팅방 삭제</button>');
+				}
+			}
         }
     })
     

@@ -49,8 +49,11 @@
 					</div>
 					<ul id="member-list"></ul>
 				</div>
-				<div class="flex">
+				<div id="buttons" class="flex">
 					<button id="exit-button" class="btn-text-color btn btn-info btn-sm my-2 h-10">나가기</button>
+					<c:if test="${member.id == chatRoom.memberId}">
+						<button id="delete-button" class="btn-text-color btn btn-info btn-sm my-2 ml-2 h-10">채팅방 삭제</button>
+					</c:if>
 				</div>
 			</div>
 		</div>

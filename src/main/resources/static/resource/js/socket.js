@@ -65,7 +65,25 @@ function onError(error) {
     connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
     connectingElement.style.color = 'red';
     
-    location.href = '/usr/chat/chatRoomList';
+    exitChatRoom();
+    
+}
+
+function exitChatRoom() {
+	
+	$.ajax({
+        type: 'GET',
+        url: '/usr/chat/exitChatRoom',
+        data: {
+            'chatRoomId': chatRoomId,
+            'memberId': memberId
+        },
+        complete: function () {
+			if (confirm('서버와의 연결이 끊겼습니다. 채팅방에서 나가시겠습니까?')) {
+				location.href = '/usr/chat/chatRoomList';
+			}
+        }
+    })
     
 }
 
@@ -229,13 +247,26 @@ async function getChatRoom(getMemberList) {
 				host.empty();
 				host.html('<div>방장 : ' + hostNickname + '</div>');
 				if (memberId == hostMemberId) {
-					buttons.append('<button id="delete-button" class="btn-text-color btn btn-info btn-sm my-2 ml-2 h-10">채팅방 삭제</button>');
+					buttons.append(`<button id="delete-button" class="btn-text-color btn btn-info btn-sm my-2 ml-2 h-10" onclick="if(confirm('정말 채팅방을 삭제하시겠습니까?')) {deleteChatRoom();}">채팅방 삭제</button>`);
 				}
 			}
         }
     })
     
     await getMemberList();
+	
+}
+
+function deleteChatRoom() {
+	
+	stompClient.send('/pub/usr/chat/deleteChatRoom',
+	    {},
+	    JSON.stringify({
+	        'chatRoomId' : chatRoomId,
+	        'message' : '방장이 채팅방을 삭제하였습니다. 더 이상 채팅에 참여할 수 없습니다. 채팅방에서 나가시겠습니까?',
+	        'messageType' : 'DELETE'
+	    })
+	)
 	
 }
 
@@ -364,6 +395,12 @@ function onMessageReceived(payload) {
 		messageElement.classList.add('event-message');
 		messageElement.appendChild(chatFormatRegDateElement);
 		getMemberList();
+	} else if (chat.messageType == 'DELETE') {
+		stompClient.disconnect();
+		if(confirm(chat.message)) {
+			location.href = '/usr/chat/chatRoomList';
+		}
+		return;
 	} else if (chat.messageType == 'WHISPER') {
 		if (chat.memberId != memberId && chat.recipientId != memberId) {
 			return;

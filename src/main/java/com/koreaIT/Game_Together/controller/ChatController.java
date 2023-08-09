@@ -145,6 +145,17 @@ public class ChatController {
     	
     }
     
+    @MessageMapping("/usr/chat/deleteChatRoom")
+    public void deleteChatRoom(@Payload Chat chat) {
+    	
+    	chatService.exitChatRoom(chat.getChatRoomId(), chat.getMemberId());
+		chatService.deleteChat(chat.getChatRoomId());
+		chatService.deleteChatRoom(chat.getChatRoomId());
+    	
+    	template.convertAndSend("/sub/usr/chat/joinChatRoom/" + chat.getChatRoomId(), chat);
+    	
+    }
+    
     //	채팅방에 참여한 멤버 리스트 반환
     @RequestMapping("/usr/chat/memberList")
     @ResponseBody
@@ -166,6 +177,25 @@ public class ChatController {
     @ResponseBody
     public ResultData getMember(int chatRoomId, String nickname) {
         return chatService.getMember(chatRoomId, nickname);
+    }
+    
+    //	서버와의 연결이 끊기면 DB에서 데이터 삭제
+    @RequestMapping("/usr/chat/exitChatRoom")
+    public void exitChatRoom(int chatRoomId, int memberId) {
+    	
+    	chatService.exitChatRoom(chatRoomId, memberId);
+    	ChatRoom chatRoom = chatService.getChatRoomById(chatRoomId);
+    	
+		if (chatRoom.getCurrentMemberCount() == 0) {
+			chatService.deleteChatRoom(chatRoomId);
+			chatService.deleteChat(chatRoomId);
+			return;
+		}
+		
+		if (chatRoom.getMemberId() == memberId) {
+			chatService.modifyChatRoom(chatRoomId);
+		}
+		
     }
 
 }

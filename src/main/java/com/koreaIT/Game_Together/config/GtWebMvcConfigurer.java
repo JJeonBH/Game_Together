@@ -53,7 +53,6 @@ public class GtWebMvcConfigurer implements WebMvcConfigurer {
 		ir.addPathPatterns("/usr/chat/createChatRoomForm");
 		ir.addPathPatterns("/usr/chat/createChatRoom");
 		ir.addPathPatterns("/usr/chat/joinChatRoom");
-		ir.addPathPatterns("/usr/chat/deleteChatRoom");
 		ir.addPathPatterns("/usr/chat/chatRoomPasswordCheck");
 		ir.addPathPatterns("/usr/chat/passwordCheck");
 		ir.addPathPatterns("/usr/chat/canJoin");
@@ -63,9 +62,11 @@ public class GtWebMvcConfigurer implements WebMvcConfigurer {
 		ir.addPathPatterns("/usr/chat/exitMember");
 		ir.addPathPatterns("/usr/chat/banMember");
 		ir.addPathPatterns("/usr/chat/changeHost");
+		ir.addPathPatterns("/usr/chat/deleteChatRoom");
 		ir.addPathPatterns("/usr/chat/memberList");
 		ir.addPathPatterns("/usr/chat/getChatRoom");
 		ir.addPathPatterns("/usr/chat/getMember");
+		ir.addPathPatterns("/usr/chat/exitChatRoom");
 		
 		ir = registry.addInterceptor(needLogoutInterceptor);
 		ir.addPathPatterns("/usr/member/join");

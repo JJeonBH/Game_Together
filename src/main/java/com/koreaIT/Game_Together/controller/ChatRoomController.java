@@ -89,17 +89,6 @@ public class ChatRoomController {
 	    
 	}
 	
-	//	채팅방 삭제
-	//	채팅방 삭제 후 /usr/chat/chatRoomList 로 redirect
-	@RequestMapping("/usr/chat/deleteChatRoom")
-    public String deleteChatRoom(int chatRoomId) {
-		
-        chatService.deleteChatRoom(chatRoomId);
-        
-        return "redirect:/usr/chat/chatRoomList";
-        
-    }
-	
 	//	비공개 채팅방 입장 시 비밀번호 확인하는 페이지
 	@RequestMapping("/usr/chat/chatRoomPasswordCheck")
 	public String chatRoomPasswordCheck(Model model, int chatRoomId) {
@@ -117,7 +106,6 @@ public class ChatRoomController {
     public ResultData passwordCheck(int chatRoomId, String password) {
         return chatService.passwordCheck(chatRoomId, Util.sha256(password));
     }
-    
     
     //	채팅방 입장 시 이미 다른 채팅방에 입장해 있는지, 인원수 꽉 차 있는지, 강퇴당한 적 있는지 체크
     @SuppressWarnings("rawtypes")

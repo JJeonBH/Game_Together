@@ -75,7 +75,9 @@
 	<delete id="exitChatRoom">
 		DELETE FROM chatRoomMember
 			WHERE chatRoomId = #{chatRoomId}
-			AND memberId = #{memberId}
+			<if test="memberId != 0">
+				AND memberId = #{memberId}
+			</if>
 	</delete>
 	
 	<delete id="deleteChatRoom">

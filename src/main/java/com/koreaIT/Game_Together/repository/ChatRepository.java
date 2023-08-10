@@ -12,7 +12,7 @@ import com.koreaIT.Game_Together.vo.Member;
 @Mapper
 public interface ChatRepository {
 	
-	public List<ChatRoom> getChatRooms();
+	public List<ChatRoom> getChatRooms(String searchKeywordType, String searchKeyword, int itemsInAPage, int limitStart);
 
 	public void createChatRoom(int loginedMemberId, String name, int maxMemberCount, String status, String password);
 
@@ -45,5 +45,7 @@ public interface ChatRepository {
 	public int banCheck(int chatRoomId, int memberId);
 
 	public void changeHost(int chatRoomId, int changeHostId);
+
+	public int getChatRoomsCnt(String searchKeywordType, String searchKeyword);
 
 }

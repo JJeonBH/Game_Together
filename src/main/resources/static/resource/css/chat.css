@@ -71,7 +71,7 @@ select > option {
 	color: black;
 }
 
-/* 여기부터 테스트 단계, 아직 손 봐야함 */
+/* 채팅창 넓이, 높이 등 */
 #chat #message-area {
 	width: 500px;
 	height: 450px;
@@ -82,6 +82,7 @@ select > option {
 	border: 1px solid #2ab1fa;
 }
 
+/* 채팅창에서 입장, 퇴장, 강퇴, 방장 위임 메시지 */
 #chat #message-area .event-message {
 	padding: 6px;
 	text-align: center;
@@ -90,6 +91,7 @@ select > option {
 	border-bottom: 1px solid #96e3ff;
 }
 
+/* 채팅창에서 자신이 쓴 메시지(귓속말 포함) */
 #chat #message-area .me {
 	width: 60%;
 	padding: 6px;
@@ -98,6 +100,7 @@ select > option {
 	margin : 2px 0px 2px 40%;
 }
 
+/* 채팅창에서 다른 사람이 쓴 메시지(귓속말 포함) */
 #chat #message-area .other {
 	width: 60%;
 	padding: 6px;
@@ -106,25 +109,30 @@ select > option {
 	margin : 2px 0px;
 }
 
+/* 채팅 입력창 넓이 */
 #chat #message-form {
 	width: 500px;
 }
 
+/* 채팅창 오른쪽에 보이는 방장 닉네임, 참여 멤버 목록 부분 넓이, 높이 등 */
 #chat #info {
 	width: 280px;
 	height: 450px;
 	border: 1px solid #2ab1fa;
 }
 
+/* 채팅방에서 방장 닉네임 부분 */
 #chat #info #host {
 	border-bottom: 1px solid #96e3ff;
 	padding: 8px 0px;
 }
 
+/* 채팅방의 참여 멤버 목록에서 멤버 클릭시 강퇴, 방장 위임, 귓속말 보내기 버튼 부분 */
 #member-list > li > span {
 	position: relative;
 }
 
+/* 채팅방의 참여 멤버 목록에서 멤버 클릭시 강퇴, 방장 위임, 귓속말 보내기 버튼 부분 */
 #member-list > li > span > ul {
 	position: absolute;
 	left: 100%;
@@ -133,4 +141,5 @@ select > option {
 	margin-left: 5px;
 	white-space: nowrap;
 	border: 1px solid black;
+	z-index: 9999;
 }

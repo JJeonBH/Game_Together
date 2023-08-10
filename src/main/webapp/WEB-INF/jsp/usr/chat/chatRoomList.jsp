@@ -72,14 +72,48 @@
 			
 		}
 		
+		//	채팅방 리스트에서 채팅방 검색할 때 셀렉트 값(제목, 방장) 유지
+		$(function() {
+			
+			$('select[data-value]').each(function(index, item) {
+				
+				const items = $(item);
+				
+				const defaultValue = items.attr('data-value').trim();
+				
+				if (defaultValue.length > 0) {
+					items.val(defaultValue);
+				}
+				
+			});
+			
+		})
+		
 	</script>
 </head>
 <body>
 	<section class="min-w-800">
 		<div class="flex justify-center text-3xl my-5">
-			<div>채팅방 목록</div>
+			<div><a href="chatRoomList">채팅방 목록</a></div>
 		</div>
-		<div class="flex justify-center">
+		<div class="flex justify-center mb-3">
+			<div class="w-4/5">
+				<div class="flex justify-between items-center">
+					<div>${chatRoomsCnt}개의 채팅방</div>
+					<div>
+						<form>
+							<select data-value="${searchKeywordType}" class="select select-primary" name="searchKeywordType">
+								<option value="name">제목</option>
+								<option value="hostNickname">방장</option>
+							</select>
+							<input class="ml-1 input input-bordered input-info" name="searchKeyword" placeholder="검색어를 입력해 주세요." maxlength="20" value="${searchKeyword}"/>
+							<button class="ml-1 btn-text-color btn btn-info btn-sm">검색</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="flex justify-center mb-3">
 			<div class="table-box-type-1 w-4/5">
 				<table class="w-full">
 					<colgroup>
@@ -118,8 +152,26 @@
 				</table>
 			</div>
 		</div>
-		<div class="flex justify-center">
-			<div class="flex justify-end w-4/5"><a href="createChatRoomForm" class="btn-text-color btn btn-info btn-sm my-4" onclick="if (canCreate() == false) {return false;}">채팅방 생성</a></div>
+		<div class="flex justify-center mb-3">
+			<div class="w-4/5 flex justify-center items-center">
+				<c:set var="pageBaseUri" value="chatRoomList?searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}" />
+				<c:if test="${page > 1}">
+					<a href="${pageBaseUri}&page=1" class="hover:text-blue-600 mx-1">«</a>
+					<a href="${pageBaseUri}&page=${page - 1}" class="hover:text-blue-600 mx-1">&lt;</a>
+					<span class="text-gray-300 mx-2">|</span>
+				</c:if>
+				<c:forEach begin="${startPage}" end="${endPage}" var="i">
+					<a href="${pageBaseUri}&page=${i}" class="${page == i ? 'text-blue-600 border border-blue-600 p-1' : ''} mx-1 hover:underline">${i}</a>
+				</c:forEach>
+				<c:if test="${page < pagesCount}">
+					<span class="text-gray-300 mx-2">|</span>
+					<a href="${pageBaseUri}&page=${page + 1}" class="hover:text-blue-600 mx-1">&gt;</a>
+					<a href="${pageBaseUri}&page=${pagesCount}" class="hover:text-blue-600 mx-1">»</a>
+				</c:if>
+			</div>
+		</div>
+		<div class="flex justify-center mb-3">
+			<div class="flex justify-end w-4/5"><a href="createChatRoomForm" class="btn-text-color btn btn-info btn-sm" onclick="if (canCreate() == false) {return false;}">채팅방 생성</a></div>
 		</div>
 	</section>
 </body>

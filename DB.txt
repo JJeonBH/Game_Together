@@ -165,6 +165,84 @@ gender = 'female',
 email = 'test4@naver.com',
 cellphoneNum = '01011151115';
 
+# member 테스트 데이터
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test5',
+loginPw = SHA2('Wjsqudgh5@', 256),
+`name` = '임순자',
+nickname = '순자',
+birthday = '19961010',
+gender = 'female',
+email = 'test5@naver.com',
+cellphoneNum = '01011161116';
+
+# member 테스트 데이터
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test6',
+loginPw = SHA2('Wjsqudgh6@', 256),
+`name` = '임순애',
+nickname = '순애씨',
+birthday = '19971010',
+gender = 'female',
+email = 'test6@naver.com',
+cellphoneNum = '01011171117';
+
+# member 테스트 데이터
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test7',
+loginPw = SHA2('Wjsqudgh7@', 256),
+`name` = '장비',
+nickname = '삼국지',
+birthday = '19951010',
+gender = 'male',
+email = 'test7@naver.com',
+cellphoneNum = '01011181118';
+
+# member 테스트 데이터
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test8',
+loginPw = SHA2('Wjsqudgh8@', 256),
+`name` = '유비',
+nickname = '촉나라',
+birthday = '19911010',
+gender = 'male',
+email = 'test8@naver.com',
+cellphoneNum = '01011191119';
+
+# member 테스트 데이터
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test9',
+loginPw = SHA2('Wjsqudgh9@', 256),
+`name` = '김준수',
+nickname = '준수',
+birthday = '19921010',
+gender = 'male',
+email = 'test9@naver.com',
+cellphoneNum = '01011201120';
+
+# member 테스트 데이터
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test10',
+loginPw = SHA2('Wjsqudgh10@', 256),
+`name` = '김준식',
+nickname = '준식',
+birthday = '19931010',
+gender = 'male',
+email = 'test10@naver.com',
+cellphoneNum = '01011211121';
+
 # article 테스트 데이터
 INSERT INTO article
 SET regDate = NOW(),

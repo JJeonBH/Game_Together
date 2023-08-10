@@ -23,8 +23,12 @@ public class ChatService {
 	}
 	
 	//	전체 채팅방 조회
-	public List<ChatRoom> getChatRooms() {
-		return chatRepository.getChatRooms();
+	public List<ChatRoom> getChatRooms(String searchKeywordType, String searchKeyword, int itemsInAPage, int page) {
+		
+		int limitStart = (page - 1) * itemsInAPage;
+		
+		return chatRepository.getChatRooms(searchKeywordType, searchKeyword, itemsInAPage, limitStart);
+		
 	}
 	
 	//	채팅방 만들기(chatRoom 테이블에 채팅방 저장)
@@ -164,6 +168,10 @@ public class ChatService {
 
 	public void changeHost(int chatRoomId, int changeHostId) {
 		chatRepository.changeHost(chatRoomId, changeHostId);
+	}
+
+	public int getChatRoomsCnt(String searchKeywordType, String searchKeyword) {
+		return chatRepository.getChatRoomsCnt(searchKeywordType, searchKeyword);
 	}
 
 }

@@ -32,11 +32,40 @@ public class ChatRoomController {
     //	채팅방 리스트 화면
     //	/usr/chat/chatRoomList 로 요청이 들어오면 전체 채팅방 리스트를 담아서 return
 	@RequestMapping("/usr/chat/chatRoomList")
-    public String showChatRoomList(Model model) {
+    public String showChatRoomList(Model model,
+    		@RequestParam(defaultValue = "1") int page,
+    		@RequestParam(defaultValue = "name") String searchKeywordType,
+    		@RequestParam(defaultValue = "") String searchKeyword) {
 		
-		List<ChatRoom> chatRooms = chatService.getChatRooms();
-
+		if (page <= 0) {
+			page = 1;
+		}
+		
+		int chatRoomsCnt = chatService.getChatRoomsCnt(searchKeywordType, searchKeyword);
+		int itemsInAPage = 10;
+		List<ChatRoom> chatRooms = chatService.getChatRooms(searchKeywordType, searchKeyword, itemsInAPage, page);
+		int pagesCount = (int) Math.ceil((double) chatRoomsCnt / itemsInAPage);
+		
+		if (page > pagesCount) {
+			page = pagesCount;
+		}
+		
+		int pageSize = 10;
+		int startPage = ((page - 1) / pageSize) * pageSize + 1;
+		int endPage = startPage + pageSize - 1;
+		
+		if (endPage > pagesCount) {
+			endPage = pagesCount;
+		}
+		
+		model.addAttribute("page", page);
+		model.addAttribute("searchKeywordType", searchKeywordType);
+		model.addAttribute("searchKeyword", searchKeyword);
+		model.addAttribute("chatRoomsCnt", chatRoomsCnt);
         model.addAttribute("chatRooms", chatRooms);
+        model.addAttribute("pagesCount", pagesCount);
+        model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
         
         return "usr/chat/chatRoomList";
         

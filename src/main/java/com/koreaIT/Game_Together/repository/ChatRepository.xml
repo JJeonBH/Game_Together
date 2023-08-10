@@ -12,8 +12,20 @@
 			ON CR.memberId = M.id
 			INNER JOIN chatRoomMember AS CRM
     		ON CR.id = CRM.chatRoomId
+    		WHERE 1 = 1
+			<if test="searchKeyword != ''">
+				<choose>
+					<when test="searchKeywordType == 'name'">
+						AND CR.name LIKE CONCAT('%', #{searchKeyword}, '%')
+					</when>
+					<otherwise>
+						AND M.nickname LIKE CONCAT('%', #{searchKeyword}, '%')
+					</otherwise>
+				</choose>
+			</if>
     		GROUP BY CR.id
 			ORDER BY CR.id DESC
+			LIMIT #{limitStart}, #{itemsInAPage}
 	</select>
 	
 	<insert id="createChatRoom">
@@ -138,5 +150,23 @@
 			SET memberId = #{changeHostId}
 			WHERE id = #{chatRoomId}
 	</update>
+	
+	<select id="getChatRoomsCnt" resultType="int">
+		SELECT COUNT(*)
+			FROM chatRoom AS CR
+			INNER JOIN `member` AS M
+			ON CR.memberId = M.id
+			WHERE 1 = 1
+			<if test="searchKeyword != ''">
+				<choose>
+					<when test="searchKeywordType == 'name'">
+						AND CR.name LIKE CONCAT('%', #{searchKeyword}, '%')
+					</when>
+					<otherwise>
+						AND M.nickname LIKE CONCAT('%', #{searchKeyword}, '%')
+					</otherwise>
+				</choose>
+			</if>
+	</select>
 
 </mapper>

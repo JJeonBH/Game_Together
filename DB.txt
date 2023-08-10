@@ -523,6 +523,171 @@ relTypeCode = 'article',
 relId = 2,
 `body` = '반갑습니다. ^^';
 
+# chatRoom 테스트 데이터
+INSERT INTO chatRoom
+SET regDate = NOW(),
+memberId = 1,
+`name` = '관리자방',
+maxMemberCount = 10,
+`status` = 'public';
+
+# chatRoom 테스트 데이터
+INSERT INTO chatRoom
+SET regDate = NOW(),
+memberId = 2,
+`name` = '유저1방',
+maxMemberCount = 10,
+`status` = 'public';
+
+# chatRoom 테스트 데이터
+INSERT INTO chatRoom
+SET regDate = NOW(),
+memberId = 3,
+`name` = '유저2방',
+maxMemberCount = 10,
+`status` = 'public';
+
+# chatRoom 테스트 데이터
+INSERT INTO chatRoom
+SET regDate = NOW(),
+memberId = 4,
+`name` = '테스트',
+maxMemberCount = 10,
+`status` = 'public';
+
+# chatRoom 테스트 데이터
+INSERT INTO chatRoom
+SET regDate = NOW(),
+memberId = 5,
+`name` = '테스트방',
+maxMemberCount = 10,
+`status` = 'public';
+
+# chatRoom 테스트 데이터
+INSERT INTO chatRoom
+SET regDate = NOW(),
+memberId = 6,
+`name` = '테스트방1',
+maxMemberCount = 10,
+`status` = 'public';
+
+# chatRoom 테스트 데이터
+INSERT INTO chatRoom
+SET regDate = NOW(),
+memberId = 7,
+`name` = '77777',
+maxMemberCount = 10,
+`status` = 'public';
+
+# chatRoom 테스트 데이터
+INSERT INTO chatRoom
+SET regDate = NOW(),
+memberId = 8,
+`name` = '88888',
+maxMemberCount = 10,
+`status` = 'public';
+
+# chatRoom 테스트 데이터
+INSERT INTO chatRoom
+SET regDate = NOW(),
+memberId = 9,
+`name` = '99999',
+maxMemberCount = 10,
+`status` = 'public';
+
+# chatRoom 테스트 데이터
+INSERT INTO chatRoom
+SET regDate = NOW(),
+memberId = 10,
+`name` = '롤할사람?',
+maxMemberCount = 10,
+`status` = 'public';
+
+# chatRoom 테스트 데이터
+INSERT INTO chatRoom
+SET regDate = NOW(),
+memberId = 11,
+`name` = '배그하자',
+maxMemberCount = 10,
+`status` = 'public';
+
+# chatRoomMember 테스트 데이터
+INSERT INTO chatRoomMember
+SET regDate = NOW(),
+chatRoomId = 1,
+memberId = 1,
+sessionId = 1;
+
+# chatRoomMember 테스트 데이터
+INSERT INTO chatRoomMember
+SET regDate = NOW(),
+chatRoomId = 2,
+memberId = 2,
+sessionId = 2;
+
+# chatRoomMember 테스트 데이터
+INSERT INTO chatRoomMember
+SET regDate = NOW(),
+chatRoomId = 3,
+memberId = 3,
+sessionId = 3;
+
+# chatRoomMember 테스트 데이터
+INSERT INTO chatRoomMember
+SET regDate = NOW(),
+chatRoomId = 4,
+memberId = 4,
+sessionId = 4;
+
+# chatRoomMember 테스트 데이터
+INSERT INTO chatRoomMember
+SET regDate = NOW(),
+chatRoomId = 5,
+memberId = 5,
+sessionId = 5;
+
+# chatRoomMember 테스트 데이터
+INSERT INTO chatRoomMember
+SET regDate = NOW(),
+chatRoomId = 6,
+memberId = 6,
+sessionId = 6;
+
+# chatRoomMember 테스트 데이터
+INSERT INTO chatRoomMember
+SET regDate = NOW(),
+chatRoomId = 7,
+memberId = 7,
+sessionId = 7;
+
+# chatRoomMember 테스트 데이터
+INSERT INTO chatRoomMember
+SET regDate = NOW(),
+chatRoomId = 8,
+memberId = 8,
+sessionId = 8;
+
+# chatRoomMember 테스트 데이터
+INSERT INTO chatRoomMember
+SET regDate = NOW(),
+chatRoomId = 9,
+memberId = 9,
+sessionId = 9;
+
+# chatRoomMember 테스트 데이터
+INSERT INTO chatRoomMember
+SET regDate = NOW(),
+chatRoomId = 10,
+memberId = 10,
+sessionId = 10;
+
+# chatRoomMember 테스트 데이터
+INSERT INTO chatRoomMember
+SET regDate = NOW(),
+chatRoomId = 11,
+memberId = 11,
+sessionId = 11;
+
 # 테이블 구조
 DESC `member`;
 DESC article;

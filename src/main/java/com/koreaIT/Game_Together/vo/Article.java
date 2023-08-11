@@ -28,5 +28,6 @@ public class Article {
 	private int nextArticleId;
 	private int sumReactionPoint;
 	private int repliesCnt;
+	private String boardType;
 	
 }

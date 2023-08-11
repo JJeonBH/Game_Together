@@ -16,8 +16,48 @@
 	<%@ include file="../lol/summonerMatches.jsp" %>
 	<section class="mt-6 mx-20 text-lg min-w-1000">
 		<div class="mt-4 flex">
-			<div class="w-1/2 h-80 border border-indigo-400 p-2">공지사항 (게임별로 공지사항)</div>
-			<div class="ml-4 w-1/2 h-80 border border-indigo-400 p-2">인기글 (최근 한 달간 추천수 많은 글)</div>
+			<div class="w-1/2 h-80 border border-indigo-400">
+				<div class="h-1/2 border-b border-indigo-400">
+					<div class="text-lg text-blue-500 border-b border-indigo-400 p-2">
+						롤 공지사항
+					</div>
+					<c:forEach var="lolArticle" items="${lolNoticeArticles}">
+						<div class="notice flex p-1">
+							<div class="w-2/3">
+								<a href="../article/detail?articleId=${lolArticle.id}&boardType=${lolArticle.boardType}&boardId=${lolArticle.boardId}" class="hover:underline pl-1">${lolArticle.title}</a>
+							</div>
+							<div class="w-1/6 text-center">${lolArticle.writerNickname}</div>
+							<div class="w-1/6 text-center">${lolArticle.formatRegDate}</div>
+						</div>
+					</c:forEach>
+				</div>
+				<div class="h-1/2">
+					<div class="text-lg text-green-500 border-b border-indigo-400 p-2">
+						배그 공지사항
+					</div>
+					<c:forEach var="bgArticle" items="${bgNoticeArticles}">
+						<div class="notice flex p-1">
+							<div class="w-2/3">
+								<a href="../article/detail?articleId=${bgArticle.id}&boardType=${bgArticle.boardType}&boardId=${bgArticle.boardId}" class="hover:underline pl-1">${bgArticle.title}</a>
+							</div>
+							<div class="w-1/6 text-center">${bgArticle.writerNickname}</div>
+							<div class="w-1/6 text-center">${bgArticle.formatRegDate}</div>
+						</div>
+					</c:forEach>
+				</div>
+			</div>
+			<div class="ml-4 w-1/2 h-80 border border-indigo-400">
+				<div class="h-1/2 border-b border-indigo-400">
+					<div class="text-lg text-blue-500 border-b border-indigo-400 p-2">
+						롤 인기글
+					</div>
+				</div>
+				<div class="h-1/2">
+					<div class="text-lg text-green-500 border-b border-indigo-400 p-2">
+						배그 인기글
+					</div>
+				</div>
+			</div>
 		</div>
 	</section>
 	<section class="mt-6 mb-20 mx-20 text-lg min-w-1000">

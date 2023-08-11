@@ -245,5 +245,20 @@
 			ORDER BY AMB.id DESC
 			LIMIT #{limitStart}, #{itemsInAPage}
 	</select>
+	
+	<select id="getNoticeArticles" resultType="Article">
+		SELECT A.*
+			, M.nickname AS writerNickname
+			, B.type AS boardType
+			FROM article AS A
+			INNER JOIN `member` AS M
+    		ON A.memberId = M.id
+			INNER JOIN board AS B
+    		ON A.boardId = B.id
+    		WHERE B.type = #{boardType}
+    		AND B.code = 'notice'
+    		ORDER BY A.id DESC
+    		LIMIT #{limitStart}, #{itemsInAPage}
+	</select>
 
 </mapper>

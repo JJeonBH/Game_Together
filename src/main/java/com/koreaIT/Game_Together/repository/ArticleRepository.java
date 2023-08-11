@@ -31,4 +31,6 @@ public interface ArticleRepository {
 	
 	public List<Article> getArticlesByBoardId(int boardId, String searchKeywordType, String searchKeyword, int itemsInAPage, int limitStart);
 
+	public List<Article> getNoticeArticles(String boardType, int limitStart, int itemsInAPage);
+
 }

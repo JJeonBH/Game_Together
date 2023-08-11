@@ -8,7 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.koreaIT.Game_Together.service.ArticleService;
 import com.koreaIT.Game_Together.service.LOLService;
+import com.koreaIT.Game_Together.util.Util;
+import com.koreaIT.Game_Together.vo.Article;
 import com.koreaIT.Game_Together.vo.LeagueEntry;
 import com.koreaIT.Game_Together.vo.Match;
 import com.koreaIT.Game_Together.vo.MatchesData;
@@ -19,22 +22,45 @@ import com.koreaIT.Game_Together.vo.Summoner;
 public class LOLController {
 	
 	private LOLService lOLService;
+	private ArticleService articleService;
 	private int start;
 	private int count;
 	
 	@Autowired
-	public LOLController(LOLService lOLService) {
+	public LOLController(LOLService lOLService, ArticleService articleService) {
 		this.lOLService = lOLService;
+		this.articleService = articleService;
 	}
 
 	@RequestMapping("/usr/lol/search")
 	public String search(String summonerName, Model model) {
+		
+		int limitStart = 0;
+		int itemsInAPage = 3;
+		
+		String boardType = "lol";
+		
+		List<Article> lolNoticeArticles = articleService.getNoticeArticles(boardType, limitStart, itemsInAPage);
+		
+		for (Article article : lolNoticeArticles) {
+			article.setFormatRegDate(Util.formatRegDateVer2(article.getRegDate()));
+		}
+		
+		boardType = "bg";
+		
+		List<Article> bgNoticeArticles = articleService.getNoticeArticles(boardType, limitStart, itemsInAPage);
+		
+		for (Article article : bgNoticeArticles) {
+			article.setFormatRegDate(Util.formatRegDateVer2(article.getRegDate()));
+		}
 		
 		summonerName = summonerName.trim().replaceAll(" ","%20");
 		
 		Summoner summoner = lOLService.getSummonerBySummonerName(summonerName);
 		
 		if (summoner == null) {
+			model.addAttribute("lolNoticeArticles", lolNoticeArticles);
+			model.addAttribute("bgNoticeArticles", bgNoticeArticles);
 			return "usr/home/main";
 		}
 		
@@ -50,6 +76,8 @@ public class LOLController {
 		List<Match> matches = lOLService.getMatchesBySummonerPuuid(summonerPuuid, start, count);
 
 		if (matches == null) {
+			model.addAttribute("lolNoticeArticles", lolNoticeArticles);
+			model.addAttribute("bgNoticeArticles", bgNoticeArticles);
 			return "usr/home/main";
 		}
 		
@@ -69,6 +97,8 @@ public class LOLController {
 		model.addAttribute("leagueEntries", leagueEntries);
 		model.addAttribute("matches", matches);
 		model.addAttribute("matchesData", matchesData);
+		model.addAttribute("lolNoticeArticles", lolNoticeArticles);
+		model.addAttribute("bgNoticeArticles", bgNoticeArticles);
 		
 		return "usr/home/main";
 		
@@ -77,9 +107,30 @@ public class LOLController {
 	@RequestMapping("/usr/lol/searchFromMatch")
 	public String searchFromMatch(String summonerPuuid, Model model) {
 		
+		int limitStart = 0;
+		int itemsInAPage = 3;
+		
+		String boardType = "lol";
+		
+		List<Article> lolNoticeArticles = articleService.getNoticeArticles(boardType, limitStart, itemsInAPage);
+		
+		for (Article article : lolNoticeArticles) {
+			article.setFormatRegDate(Util.formatRegDateVer2(article.getRegDate()));
+		}
+		
+		boardType = "bg";
+		
+		List<Article> bgNoticeArticles = articleService.getNoticeArticles(boardType, limitStart, itemsInAPage);
+		
+		for (Article article : bgNoticeArticles) {
+			article.setFormatRegDate(Util.formatRegDateVer2(article.getRegDate()));
+		}
+		
 		Summoner summoner = lOLService.getSummonerBySummonerPuuid(summonerPuuid);
 		
 		if (summoner == null) {
+			model.addAttribute("lolNoticeArticles", lolNoticeArticles);
+			model.addAttribute("bgNoticeArticles", bgNoticeArticles);
 			return "usr/home/main";
 		}
 		
@@ -93,6 +144,8 @@ public class LOLController {
 		List<Match> matches = lOLService.getMatchesBySummonerPuuid(summonerPuuid, start, count);
 		
 		if (matches == null) {
+			model.addAttribute("lolNoticeArticles", lolNoticeArticles);
+			model.addAttribute("bgNoticeArticles", bgNoticeArticles);
 			return "usr/home/main";
 		}
 		
@@ -112,6 +165,8 @@ public class LOLController {
 		model.addAttribute("leagueEntries", leagueEntries);
 		model.addAttribute("matches", matches);
 		model.addAttribute("matchesData", matchesData);
+		model.addAttribute("lolNoticeArticles", lolNoticeArticles);
+		model.addAttribute("bgNoticeArticles", bgNoticeArticles);
 		
 		return "usr/home/main";
 		

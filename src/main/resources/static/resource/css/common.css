@@ -14,6 +14,11 @@ html > body, html > body .ProseMirror, html > body .toastui-editor-contents {
 	text-underline-position: under;
 }
 
+/* 테두리를 기준으로 박스의 크기를 정함 */
+* {
+	box-sizing: border-box;
+}
+
 /* 에디터, 뷰어 글자 크기 */
 html > body .ProseMirror, html > body .toastui-editor-contents {
 	font-size: 18px;
@@ -142,6 +147,13 @@ nav.menu-box > ul > li > div.dropdown > ul.dropdown-content {
 	top: 100%;
 	color: black;
 	font-size: 1.2rem;
+}
+
+/* 메인페이지 공지사항 줄 바꿈 방지, 길어지면 숨겨지게 */
+.notice > div {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 /* 메인페이지 이미지, 호버시 투명도 변경 */

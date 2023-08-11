@@ -102,5 +102,9 @@ public class ArticleService {
 		return ResultData.resultFrom("S-1", "가능");
 		
 	}
+
+	public List<Article> getNoticeArticles(String boardType, int limitStart, int itemsInAPage) {
+		return articleRepository.getNoticeArticles(boardType, limitStart, itemsInAPage);
+	}
 	
 }

@@ -57,6 +57,10 @@ html > body .ProseMirror, html > body .toastui-editor-contents {
 	min-width: 1000px;
 }
 
+.max-w-670 {
+	max-width: 670px;
+}
+
 /* 셀렉트박스 옵션 글자 크기 */
 select > option {
 	font-size: 16px;
@@ -151,6 +155,13 @@ nav.menu-box > ul > li > div.dropdown > ul.dropdown-content {
 
 /* 메인페이지 공지사항 줄 바꿈 방지, 길어지면 숨겨지게 */
 .notice > div {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* 메인페이지 인기글 줄 바꿈 방지, 길어지면 숨겨지게 */
+.high-reaction-point > div {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;

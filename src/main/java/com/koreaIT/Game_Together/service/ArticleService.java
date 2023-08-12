@@ -106,5 +106,9 @@ public class ArticleService {
 	public List<Article> getNoticeArticles(String boardType, int limitStart, int itemsInAPage) {
 		return articleRepository.getNoticeArticles(boardType, limitStart, itemsInAPage);
 	}
+
+	public List<Article> getHighReactionPointArticles(String boardType, int limitStart, int itemsInAPage) {
+		return articleRepository.getHighReactionPointArticles(boardType, limitStart, itemsInAPage);
+	}
 	
 }

@@ -46,11 +46,23 @@ public class LOLController {
 			article.setFormatRegDate(Util.formatRegDateVer2(article.getRegDate()));
 		}
 		
+		List<Article> lolHighReactionPointArticles = articleService.getHighReactionPointArticles(boardType, limitStart, itemsInAPage);
+		
+		for (Article article : lolHighReactionPointArticles) {
+			article.setFormatRegDate(Util.formatRegDateVer2(article.getRegDate()));
+		}
+		
 		boardType = "bg";
 		
 		List<Article> bgNoticeArticles = articleService.getNoticeArticles(boardType, limitStart, itemsInAPage);
 		
 		for (Article article : bgNoticeArticles) {
+			article.setFormatRegDate(Util.formatRegDateVer2(article.getRegDate()));
+		}
+		
+		List<Article> bgHighReactionPointArticles = articleService.getHighReactionPointArticles(boardType, limitStart, itemsInAPage);
+		
+		for (Article article : bgHighReactionPointArticles) {
 			article.setFormatRegDate(Util.formatRegDateVer2(article.getRegDate()));
 		}
 		
@@ -61,6 +73,8 @@ public class LOLController {
 		if (summoner == null) {
 			model.addAttribute("lolNoticeArticles", lolNoticeArticles);
 			model.addAttribute("bgNoticeArticles", bgNoticeArticles);
+			model.addAttribute("lolHighReactionPointArticles", lolHighReactionPointArticles);
+			model.addAttribute("bgHighReactionPointArticles", bgHighReactionPointArticles);
 			return "usr/home/main";
 		}
 		
@@ -78,6 +92,8 @@ public class LOLController {
 		if (matches == null) {
 			model.addAttribute("lolNoticeArticles", lolNoticeArticles);
 			model.addAttribute("bgNoticeArticles", bgNoticeArticles);
+			model.addAttribute("lolHighReactionPointArticles", lolHighReactionPointArticles);
+			model.addAttribute("bgHighReactionPointArticles", bgHighReactionPointArticles);
 			return "usr/home/main";
 		}
 		
@@ -99,6 +115,8 @@ public class LOLController {
 		model.addAttribute("matchesData", matchesData);
 		model.addAttribute("lolNoticeArticles", lolNoticeArticles);
 		model.addAttribute("bgNoticeArticles", bgNoticeArticles);
+		model.addAttribute("lolHighReactionPointArticles", lolHighReactionPointArticles);
+		model.addAttribute("bgHighReactionPointArticles", bgHighReactionPointArticles);
 		
 		return "usr/home/main";
 		
@@ -118,6 +136,12 @@ public class LOLController {
 			article.setFormatRegDate(Util.formatRegDateVer2(article.getRegDate()));
 		}
 		
+		List<Article> lolHighReactionPointArticles = articleService.getHighReactionPointArticles(boardType, limitStart, itemsInAPage);
+		
+		for (Article article : lolHighReactionPointArticles) {
+			article.setFormatRegDate(Util.formatRegDateVer2(article.getRegDate()));
+		}
+		
 		boardType = "bg";
 		
 		List<Article> bgNoticeArticles = articleService.getNoticeArticles(boardType, limitStart, itemsInAPage);
@@ -126,11 +150,19 @@ public class LOLController {
 			article.setFormatRegDate(Util.formatRegDateVer2(article.getRegDate()));
 		}
 		
+		List<Article> bgHighReactionPointArticles = articleService.getHighReactionPointArticles(boardType, limitStart, itemsInAPage);
+		
+		for (Article article : bgHighReactionPointArticles) {
+			article.setFormatRegDate(Util.formatRegDateVer2(article.getRegDate()));
+		}
+		
 		Summoner summoner = lOLService.getSummonerBySummonerPuuid(summonerPuuid);
 		
 		if (summoner == null) {
 			model.addAttribute("lolNoticeArticles", lolNoticeArticles);
 			model.addAttribute("bgNoticeArticles", bgNoticeArticles);
+			model.addAttribute("lolHighReactionPointArticles", lolHighReactionPointArticles);
+			model.addAttribute("bgHighReactionPointArticles", bgHighReactionPointArticles);
 			return "usr/home/main";
 		}
 		
@@ -146,6 +178,8 @@ public class LOLController {
 		if (matches == null) {
 			model.addAttribute("lolNoticeArticles", lolNoticeArticles);
 			model.addAttribute("bgNoticeArticles", bgNoticeArticles);
+			model.addAttribute("lolHighReactionPointArticles", lolHighReactionPointArticles);
+			model.addAttribute("bgHighReactionPointArticles", bgHighReactionPointArticles);
 			return "usr/home/main";
 		}
 		
@@ -167,6 +201,8 @@ public class LOLController {
 		model.addAttribute("matchesData", matchesData);
 		model.addAttribute("lolNoticeArticles", lolNoticeArticles);
 		model.addAttribute("bgNoticeArticles", bgNoticeArticles);
+		model.addAttribute("lolHighReactionPointArticles", lolHighReactionPointArticles);
+		model.addAttribute("bgHighReactionPointArticles", bgHighReactionPointArticles);
 		
 		return "usr/home/main";
 		

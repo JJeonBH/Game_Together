@@ -260,5 +260,31 @@
     		ORDER BY A.id DESC
     		LIMIT #{limitStart}, #{itemsInAPage}
 	</select>
+	
+	<select id="getHighReactionPointArticles" resultType="Article">
+		WITH AMB AS (
+    		SELECT A.*
+		        , M.nickname AS writerNickname
+		        , B.type AS boardType
+		        FROM article AS A
+		        INNER JOIN `member` AS M
+		        ON A.memberId = M.id
+		        INNER JOIN board AS B
+		        ON A.boardId = B.id
+		        WHERE B.type = #{boardType}
+		        AND B.code = 'free'
+		        AND A.regDate BETWEEN DATE_ADD(NOW(), INTERVAL -1 MONTH) AND NOW()
+		)
+		SELECT AMB.*
+    		, IFNULL(SUM(RP.point), 0) AS sumReactionPoint
+		    FROM AMB
+		    LEFT JOIN reactionPoint AS RP
+		    ON RP.relTypeCode = 'article'
+		    AND RP.relId = AMB.id
+		    GROUP BY AMB.id
+		    HAVING sumReactionPoint >= 1
+		    ORDER BY sumReactionPoint DESC
+		    LIMIT #{limitStart}, #{itemsInAPage}
+	</select>
 
 </mapper>

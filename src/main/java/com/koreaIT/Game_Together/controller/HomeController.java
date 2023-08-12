@@ -35,6 +35,12 @@ public class HomeController {
 			article.setFormatRegDate(Util.formatRegDateVer2(article.getRegDate()));
 		}
 		
+		List<Article> lolHighReactionPointArticles = articleService.getHighReactionPointArticles(boardType, limitStart, itemsInAPage);
+		
+		for (Article article : lolHighReactionPointArticles) {
+			article.setFormatRegDate(Util.formatRegDateVer2(article.getRegDate()));
+		}
+		
 		boardType = "bg";
 		
 		List<Article> bgNoticeArticles = articleService.getNoticeArticles(boardType, limitStart, itemsInAPage);
@@ -43,8 +49,16 @@ public class HomeController {
 			article.setFormatRegDate(Util.formatRegDateVer2(article.getRegDate()));
 		}
 		
+		List<Article> bgHighReactionPointArticles = articleService.getHighReactionPointArticles(boardType, limitStart, itemsInAPage);
+		
+		for (Article article : bgHighReactionPointArticles) {
+			article.setFormatRegDate(Util.formatRegDateVer2(article.getRegDate()));
+		}
+		
 		model.addAttribute("lolNoticeArticles", lolNoticeArticles);
 		model.addAttribute("bgNoticeArticles", bgNoticeArticles);
+		model.addAttribute("lolHighReactionPointArticles", lolHighReactionPointArticles);
+		model.addAttribute("bgHighReactionPointArticles", bgHighReactionPointArticles);
 		
 		return "usr/home/main";
 		

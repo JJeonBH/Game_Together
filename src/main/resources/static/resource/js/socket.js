@@ -397,7 +397,7 @@ function onMessageReceived(payload) {
 		getMemberList();
 	} else if (chat.messageType == 'DELETE') {
 		stompClient.disconnect();
-		if(confirm(chat.message)) {
+		if (confirm(chat.message)) {
 			location.href = '/usr/chat/chatRoomList';
 		}
 		return;

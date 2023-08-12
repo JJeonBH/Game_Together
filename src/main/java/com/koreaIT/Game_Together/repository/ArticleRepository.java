@@ -33,4 +33,6 @@ public interface ArticleRepository {
 
 	public List<Article> getNoticeArticles(String boardType, int limitStart, int itemsInAPage);
 
+	public List<Article> getHighReactionPointArticles(String boardType, int limitStart, int itemsInAPage);
+
 }

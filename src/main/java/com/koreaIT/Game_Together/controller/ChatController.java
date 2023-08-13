@@ -151,6 +151,10 @@ public class ChatController {
     	chatService.exitChatRoom(chat.getChatRoomId(), chat.getMemberId());
 		chatService.deleteChat(chat.getChatRoomId());
 		chatService.deleteChatRoom(chat.getChatRoomId());
+		
+		LocalDateTime now = LocalDateTime.now();
+    	chat.setRegDate(now);
+    	chat.setFormatRegDate(Util.formatRegDateVer1(chat.getRegDate()));
     	
     	template.convertAndSend("/sub/usr/chat/joinChatRoom/" + chat.getChatRoomId(), chat);
     	

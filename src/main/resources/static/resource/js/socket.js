@@ -263,7 +263,7 @@ function deleteChatRoom() {
 	    {},
 	    JSON.stringify({
 	        'chatRoomId' : chatRoomId,
-	        'message' : '방장이 채팅방을 삭제하였습니다. 더 이상 채팅에 참여할 수 없습니다. 채팅방에서 나가시겠습니까?',
+	        'message' : '방장이 채팅방을 삭제하였습니다. 더 이상 채팅에 참여할 수 없습니다.',
 	        'messageType' : 'DELETE'
 	    })
 	)
@@ -396,11 +396,8 @@ function onMessageReceived(payload) {
 		messageElement.appendChild(chatFormatRegDateElement);
 		getMemberList();
 	} else if (chat.messageType == 'DELETE') {
-		stompClient.disconnect();
-		if (confirm(chat.message)) {
-			location.href = '/usr/chat/chatRoomList';
-		}
-		return;
+		messageElement.classList.add('event-message');
+		messageElement.appendChild(chatFormatRegDateElement);
 	} else if (chat.messageType == 'WHISPER') {
 		if (chat.memberId != memberId && chat.recipientId != memberId) {
 			return;
@@ -448,6 +445,10 @@ function onMessageReceived(payload) {
     let contentElement = document.createElement('p');
     let messageText = document.createTextNode(chat.message);
     
+    if (chat.messageType == 'DELETE') {
+		contentElement.classList.add('text-red-500');
+	}
+    
     contentElement.appendChild(messageText);
     
 	messageElement.appendChild(contentElement);
@@ -456,6 +457,10 @@ function onMessageReceived(payload) {
     
     //	스크롤바 하단으로 이동
     messageArea.scrollTop = messageArea.scrollHeight;
+    
+    if (chat.messageType == 'DELETE') {
+		stompClient.disconnect();
+	}
     
 }
 

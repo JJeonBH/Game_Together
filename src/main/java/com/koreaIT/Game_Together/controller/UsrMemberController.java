@@ -81,7 +81,56 @@ public class UsrMemberController {
 		return "usr/member/profile";
 		
 	}
+	
+	@RequestMapping("/usr/member/passwordCheck")
+	public String passwordCheck() {
+		
+		if (rq.getLoginedMember() == null) {
+			return rq.jsReplace("세션이 만료되었습니다. 다시 로그인 해주세요.", "/");
+		}
+		
+		return "usr/member/passwordCheck";
+		
+	}
 
+	@SuppressWarnings("rawtypes")
+	@RequestMapping("/usr/member/doPasswordCheck")
+	@ResponseBody
+	public ResultData doPasswordCheck(String loginPw) {
+		
+		if (!rq.getLoginedMember().getLoginPw().equals(Util.sha256(loginPw))) {
+			return ResultData.resultFrom("F-1", "비밀번호가 틀렸습니다.");
+		}
+		
+		return ResultData.resultFrom("S-1", "비밀번호 일치");
+		
+	}
+	
+	@RequestMapping("/usr/member/modify")
+	public String modify(Model model) {
+		
+		String regDate = Util.formatDate(rq.getLoginedMember().getRegDate());
+		
+		model.addAttribute("regDate", regDate);
+		
+		return "usr/member/modify";
+		
+	}
+	
+	@RequestMapping("/usr/member/nicknameDupCheckForChange")
+	@ResponseBody
+	public ResultData<String> nicknameDupCheckForChange(String nickname) {
+		
+		Member member = memberService.getMemberByNickname(nickname);
+		
+		if (member != null) {
+			return ResultData.resultFrom("F-1", "이미 사용중인 닉네임입니다.", "nickname", nickname);
+		}
+		
+		return ResultData.resultFrom("S-1", "사용 가능한 닉네임입니다.", "nickname", nickname);
+		
+	}
+	
 	@SuppressWarnings("rawtypes")
 	@RequestMapping("/usr/member/checkLogin")
 	@ResponseBody

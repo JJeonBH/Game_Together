@@ -11,7 +11,7 @@
 		</div>
 		<div class="flex-grow"></div>
 		<div class="mr-14">
-			<a href="checkPassword" class="btn btn-outline btn-md text-black"><span>개인정보 수정</span></a>
+			<a href="passwordCheck" class="btn btn-outline btn-md text-black"><span>개인정보 수정</span></a>
 		</div>
 	</section>
 	<section class="text-lg min-w-900 flex justify-center mt-4">
@@ -23,36 +23,36 @@
 				<tbody>
 					<tr>
 						<th>아이디</th>
-						<td>${Request.loginedMember.loginId }</td>
+						<td>${Request.loginedMember.loginId}</td>
 					</tr>
 					<tr>
 						<th>생성일자</th>
-						<td>${regDate }</td>
+						<td>${regDate}</td>
 					</tr>
 					<tr>
 						<th>회원등급</th>
 						<td>
 							<c:choose>
-								<c:when test="${Request.loginedMember.authLevel == 7 }">관리자</c:when>
+								<c:when test="${Request.loginedMember.authLevel == 7}">관리자</c:when>
 								<c:otherwise>일반회원</c:otherwise>
 							</c:choose>
 						</td>
 					</tr>
 					<tr>
 						<th>이름</th>
-						<td>${Request.loginedMember.name }</td>
+						<td>${Request.loginedMember.name}</td>
 					</tr>
 					<tr>
 						<th>닉네임</th>
-						<td>${Request.loginedMember.nickname }</td>
+						<td>${Request.loginedMember.nickname}</td>
 					</tr>
 					<tr>
 						<th>이메일</th>
-						<td>${Request.loginedMember.email.replaceAll("^([0-9a-zA-Z])([-_\\.]?[0-9a-zA-Z])*(@[0-9a-zA-Z])([-_\\.]?[0-9a-zA-Z])*(\\.[a-zA-Z]{2,3})$", "$1*****$3*****$5") }</td>
+						<td>${Request.loginedMember.email.replaceAll("^([0-9a-zA-Z])([-_\\.]?[0-9a-zA-Z])*(@[0-9a-zA-Z])([-_\\.]?[0-9a-zA-Z])*(\\.[a-zA-Z]{2,3})$", "$1*****$3*****$5")}</td>
 					</tr>
 					<tr>
 						<th>휴대전화 번호</th>
-						<td>${Request.loginedMember.cellphoneNum.replaceAll("^(010)([0-9])([0-9]{2,3})([0-9])([0-9]{3})$", "$1-$2***-$4***") }</td>
+						<td>${Request.loginedMember.cellphoneNum.replaceAll("^(010)([0-9])([0-9]{2,3})([0-9])([0-9]{3})$", "$1-$2***-$4***")}</td>
 					</tr>
 				</tbody>
 			</table>

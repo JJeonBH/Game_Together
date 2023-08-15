@@ -13,9 +13,7 @@
 				, nickname = #{nickname}
 				, birthday = #{birthday}
 				, gender = #{gender}
-				<if test = "email != null and email != ''">
-					, email = #{email}
-				</if>
+				, email = #{email}
 				, cellphoneNum = #{cellphoneNum}
 	</insert>
 	
@@ -52,5 +50,14 @@
 			FROM `member`
 			WHERE cellphoneNum = #{cellphoneNum}
 	</select>
+	
+	<update id="doModify">
+		UPDATE `member`
+			SET updateDate = NOW()
+				, nickname = #{nickname}
+				, email = #{email}
+				, cellphoneNum = #{cellphoneNum}
+			WHERE id = #{loginedMemberId}
+	</update>
 
 </mapper>

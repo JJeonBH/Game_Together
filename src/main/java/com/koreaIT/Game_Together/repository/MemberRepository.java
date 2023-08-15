@@ -21,4 +21,6 @@ public interface MemberRepository {
 
 	public Member getMemberByCellphoneNum(String cellphoneNum);
 
+	public void doModify(int loginedMemberId, String nickname, String email, String cellphoneNum);
+
 }

@@ -45,5 +45,9 @@ public class MemberService {
 	public Member getMemberByCellphoneNum(String cellphoneNum) {
 		return memberRepository.getMemberByCellphoneNum(cellphoneNum);
 	}
+
+	public void doModify(int loginedMemberId, String nickname, String email, String cellphoneNum) {
+		memberRepository.doModify(loginedMemberId, nickname, email, cellphoneNum);
+	}
 	
 }

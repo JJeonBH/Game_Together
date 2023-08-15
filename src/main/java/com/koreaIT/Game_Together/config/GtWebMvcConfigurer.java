@@ -40,7 +40,10 @@ public class GtWebMvcConfigurer implements WebMvcConfigurer {
 		ir.addPathPatterns("/usr/member/passwordCheck");
 		ir.addPathPatterns("/usr/member/doPasswordCheck");
 		ir.addPathPatterns("/usr/member/modify");
+		ir.addPathPatterns("/usr/member/doModify");
 		ir.addPathPatterns("/usr/member/nicknameDupCheckForChange");
+		ir.addPathPatterns("/usr/member/emailDupCheckForChange");
+		ir.addPathPatterns("/usr/member/cellphoneNumDupCheckForChange");
 		ir.addPathPatterns("/usr/article/write");
 		ir.addPathPatterns("/usr/article/doWrite");
 		ir.addPathPatterns("/usr/article/modify");

@@ -117,6 +117,16 @@ public class UsrMemberController {
 		
 	}
 	
+	@RequestMapping("/usr/member/doModify")
+	@ResponseBody
+	public String doModify(String nickname, String email, String cellphoneNum) {
+
+		memberService.doModify(rq.getLoginedMemberId(), nickname, email, cellphoneNum);
+
+		return Util.jsAlertReplace("회원정보가 수정되었습니다", "profile");
+		
+	}
+	
 	@RequestMapping("/usr/member/nicknameDupCheckForChange")
 	@ResponseBody
 	public ResultData<String> nicknameDupCheckForChange(String nickname) {
@@ -128,6 +138,34 @@ public class UsrMemberController {
 		}
 		
 		return ResultData.resultFrom("S-1", "사용 가능한 닉네임입니다.", "nickname", nickname);
+		
+	}
+	
+	@RequestMapping("/usr/member/emailDupCheckForChange")
+	@ResponseBody
+	public ResultData<String> emailDupCheckForChange(String email) {
+		
+		Member member = memberService.getMemberByEmail(email);
+		
+		if (member != null) {
+			return ResultData.resultFrom("F-1", "이미 사용중인 이메일입니다.", "email", email);
+		}
+		
+		return ResultData.resultFrom("S-1", "사용 가능한 이메일입니다.", "email", email);
+		
+	}
+	
+	@RequestMapping("/usr/member/cellphoneNumDupCheckForChange")
+	@ResponseBody
+	public ResultData<String> cellphoneNumDupCheckForChange(String cellphoneNum) {
+		
+		Member member = memberService.getMemberByCellphoneNum(cellphoneNum);
+		
+		if (member != null) {
+			return ResultData.resultFrom("F-1", "이미 사용중인 휴대전화 번호입니다.", "cellphoneNum", cellphoneNum);
+		}
+		
+		return ResultData.resultFrom("S-1", "사용 가능한 휴대전화 번호입니다.", "cellphoneNum", cellphoneNum);
 		
 	}
 	

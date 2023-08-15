@@ -22,27 +22,109 @@
 				return;
 			}
 			
-			let nicknameDupCheckForChangeResult;
+			if (form.nickname.value != `${Request.loginedMember.nickname}`) {
+				
+				let nicknameDupCheckForChangeResultData;
+				
+				$.ajax({
+			        type: 'POST',
+			        url: '/usr/member/nicknameDupCheckForChange',
+			        async: false,
+			        data: {
+			            'nickname': form.nickname.value
+			        },
+			        success: function (data) {
+			        	nicknameDupCheckForChangeResultData = data;
+			        }
+			    })
+			    
+				if (nicknameDupCheckForChangeResultData.fail) {
+					alert(nicknameDupCheckForChangeResultData.data1 + '(은)는 ' + nicknameDupCheckForChangeResultData.msg);
+					form.nickname.focus();
+					return;
+				}
+				
+			}
 			
-			$.ajax({
-		        type: 'POST',
-		        url: '/usr/member/nicknameDupCheckForChange',
-		        async: false,
-		        data: {
-		            'nickname': form.nickname.value
-		        },
-		        success: function (data) {
-		        	nicknameDupCheckForChangeResult = data;
-		        }
-		    })
-		    
-			if (nicknameDupCheckForChangeResult.fail) {
-				alert(nicknameDupCheckForChangeResult.data1 + '(은)는 ' + nicknameDupCheckForChangeResult.msg);
-				form.nickname.focus();
+			form.email.value = form.email.value.trim();
+			
+			if (form.email.value.length > 0) {
+				
+				const emailRegex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+
+				if (!emailRegex.test(form.email.value)) {
+					alert('이메일 주소를 다시 확인해 주세요.');
+					form.email.focus();
+					return;
+				}
+				
+				if (form.email.value != `${Request.loginedMember.email}`) {
+					
+					let emailDupCheckForChangeResultData;
+					
+					$.ajax({
+				        type: 'POST',
+				        url: '/usr/member/emailDupCheckForChange',
+				        async: false,
+				        data: {
+				            'email': form.email.value
+				        },
+				        success: function (data) {
+				        	emailDupCheckForChangeResultData = data;
+				        }
+				    })
+				    
+					if (emailDupCheckForChangeResultData.fail) {
+						alert(emailDupCheckForChangeResultData.data1 + '(은)는 ' + emailDupCheckForChangeResultData.msg);
+						form.email.focus();
+						return;
+					}
+					
+				}
+				
+			}
+			
+			form.cellphoneNum.value = form.cellphoneNum.value.trim();
+			
+			if (form.cellphoneNum.value.length == 0) {
+				alert('휴대전화 번호를 입력해 주세요. (-없이 숫자만)');
+				form.cellphoneNum.focus();
 				return;
 			}
 			
-			return;
+			const cellphoneNumRegex = /^(010)[0-9]{3,4}[0-9]{4}$/;
+			
+			if(!cellphoneNumRegex.test(form.cellphoneNum.value)) {
+				alert('형식에 맞지 않는 번호입니다. ( -, 공백 없이 숫자만 )');
+				form.cellphoneNum.focus();
+				return;
+			}
+			
+			if (form.cellphoneNum.value != `${Request.loginedMember.cellphoneNum}`) {
+				
+				let cellphoneNumDupCheckForChangeResultData;
+				
+				$.ajax({
+			        type: 'POST',
+			        url: '/usr/member/cellphoneNumDupCheckForChange',
+			        async: false,
+			        data: {
+			            'cellphoneNum': form.cellphoneNum.value
+			        },
+			        success: function (data) {
+			        	cellphoneNumDupCheckForChangeResultData = data;
+			        }
+			    })
+			    
+				if (cellphoneNumDupCheckForChangeResultData.fail) {
+					alert(cellphoneNumDupCheckForChangeResultData.data1 + '(은)는 ' + cellphoneNumDupCheckForChangeResultData.msg);
+					form.cellphoneNum.focus();
+					return;
+				}
+				
+			}
+			
+			form.submit();
 			
 		}
 	</script>

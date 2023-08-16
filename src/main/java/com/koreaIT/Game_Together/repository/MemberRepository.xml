@@ -59,5 +59,12 @@
 				, cellphoneNum = #{cellphoneNum}
 			WHERE id = #{loginedMemberId}
 	</update>
+	
+	<update id="doPasswordModify">
+		UPDATE `member`
+			SET updateDate = NOW()
+				, loginPw = #{newLoginPw}
+			WHERE id = #{loginedMemberId}
+	</update>
 
 </mapper>

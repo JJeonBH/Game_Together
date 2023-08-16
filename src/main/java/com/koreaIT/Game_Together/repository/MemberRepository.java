@@ -23,4 +23,6 @@ public interface MemberRepository {
 
 	public void doModify(int loginedMemberId, String nickname, String email, String cellphoneNum);
 
+	public void doPasswordModify(int loginedMemberId, String newLoginPw);
+
 }

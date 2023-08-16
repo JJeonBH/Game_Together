@@ -49,5 +49,9 @@ public class MemberService {
 	public void doModify(int loginedMemberId, String nickname, String email, String cellphoneNum) {
 		memberRepository.doModify(loginedMemberId, nickname, email, cellphoneNum);
 	}
+
+	public void doPasswordModify(int loginedMemberId, String newLoginPw) {
+		memberRepository.doPasswordModify(loginedMemberId, newLoginPw);
+	}
 	
 }

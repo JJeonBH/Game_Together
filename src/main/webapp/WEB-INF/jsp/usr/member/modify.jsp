@@ -176,6 +176,7 @@
 				<div class="flex justify-center">
 					<div class="w-2/3 flex justify-end mt-4">
 						<button class="btn-text-color btn btn-info">수정</button>
+						<a href="passwordModify" class="btn-text-color btn btn-info ml-1"><span>비밀번호 변경</span></a>
 					</div>
 				</div>
 			</form>

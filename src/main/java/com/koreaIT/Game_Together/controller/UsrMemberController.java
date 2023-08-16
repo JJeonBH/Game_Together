@@ -109,6 +109,10 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/modify")
 	public String modify(Model model) {
 		
+		if (rq.getLoginedMember() == null) {
+			return rq.jsReplace("세션이 만료되었습니다. 다시 로그인 해주세요.", "/");
+		}
+		
 		String regDate = Util.formatDate(rq.getLoginedMember().getRegDate());
 		
 		model.addAttribute("regDate", regDate);
@@ -124,6 +128,27 @@ public class UsrMemberController {
 		memberService.doModify(rq.getLoginedMemberId(), nickname, email, cellphoneNum);
 
 		return Util.jsAlertReplace("회원정보가 수정되었습니다", "profile");
+		
+	}
+	
+	@RequestMapping("/usr/member/passwordModify")
+	public String passwordModify() {
+		
+		if (rq.getLoginedMember() == null) {
+			return rq.jsReplace("세션이 만료되었습니다. 다시 로그인 해주세요.", "/");
+		}
+		
+		return "usr/member/passwordModify";
+		
+	}
+	
+	@RequestMapping("/usr/member/doPasswordModify")
+	@ResponseBody
+	public String doPasswordModify(String newLoginPw) {
+		
+		memberService.doPasswordModify(rq.getLoginedMemberId(), Util.sha256(newLoginPw));
+
+		return Util.jsAlertReplace("비밀번호가 변경되었습니다", "profile");
 		
 	}
 	

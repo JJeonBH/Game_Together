@@ -269,4 +269,53 @@ public class UsrMemberController {
 		
 	}
 	
+	@RequestMapping("/usr/member/findLoginId")
+	public String findLoginId() {
+		return "usr/member/findLoginId";
+	}
+	
+	@RequestMapping("/usr/member/doFindLoginId")
+	@ResponseBody
+	public String doFindLoginId(String name, String email) {
+
+		Member member = memberService.getMemberByNameAndEmail(name, email);
+
+		if (member == null) {
+			return Util.jsAlertHistoryBack("입력하신 정보와 일치하는 회원이 존재하지 않습니다.");
+		}
+
+		return Util.jsAlertReplace(String.format("회원님의 아이디는 [ %s ] 입니다.", member.getLoginId()), "login");
+		
+	}
+
+	@RequestMapping("/usr/member/findLoginPw")
+	public String findLoginPw() {
+		return "usr/member/findLoginPw";
+	}
+	
+	@RequestMapping("/usr/member/doFindLoginPw")
+	@ResponseBody
+	public String doFindLoginPw(String loginId, String name, String email) {
+
+		Member member = memberService.getMemberByLoginId(loginId);
+
+		if (member == null) {
+			return Util.jsAlertHistoryBack("입력하신 아이디와 일치하는 회원이 존재하지 않습니다.");
+		}
+		
+		if (!member.getName().equals(name)) {
+			return Util.jsAlertHistoryBack("이름이 일치하지 않습니다.");
+		}
+		
+		if (!member.getEmail().equals(email)) {
+			return Util.jsAlertHistoryBack("이메일이 일치하지 않습니다.");
+		}
+		
+		@SuppressWarnings("rawtypes")
+		ResultData notifyTempLoginPwByEmailRd = memberService.notifyTempLoginPwByEmail(member);
+
+		return Util.jsAlertReplace(notifyTempLoginPwByEmailRd.getMsg(), "login");
+		
+	}
+	
 }

@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>로그인</title>
+	<title>비밀번호 찾기</title>
 	<!-- 파비콘 불러오기 -->
 	<link rel="shortcut icon" href="/resource/images/favicon.ico" />
 	<!-- 테일윈드 불러오기 -->
@@ -19,8 +19,37 @@
 	<script src="https://kit.fontawesome.com/c186b4187f.js" crossorigin="anonymous"></script>
 	<!-- CSS 파일 불러오기 -->
 	<link rel="stylesheet" href="/resource/css/common.css" />
-	<!-- JS 파일 불러오기 -->
-	<script src="/resource/js/login.js" defer="defer"></script>
+	<script type="text/javascript">
+		function submitFindLoginPwForm(form) {
+			
+			form.loginId.value = form.loginId.value.trim();
+			
+			if (form.loginId.value.length == 0) {
+				alert('아이디를 입력해 주세요.');
+				form.loginId.focus();
+				return;
+			}
+			
+			form.name.value = form.name.value.trim();
+			
+			if (form.name.value.length == 0) {
+				alert('이름을 입력해 주세요.');
+				form.name.focus();
+				return;
+			}
+			
+			form.email.value = form.email.value.trim();
+			
+			if (form.email.value.length == 0) {
+				alert('이메일을 입력해 주세요.');
+				form.email.focus();
+				return;
+			}
+			
+			form.submit();
+			
+		}
+	</script>
 </head>
 <body>
 	<header class="text-lg mt-14">
@@ -32,7 +61,7 @@
 	</header>
 	<section class="text-lg mt-10 mb-20">
 		<div class="flex justify-center">
-			<form action="doLogin" method="POST" class="border border-red-200 p-5" onsubmit="submitLoginForm(this); return false;">
+			<form action="doFindLoginPw" method="POST" class="border border-red-200 p-5" onsubmit="submitFindLoginPwForm(this); return false;">
 				<div>
 					<label class="cursor-pointer">
 						아이디
@@ -42,14 +71,20 @@
 				</div>
 				<div class="mt-5">
 					<label class="cursor-pointer">
-						비밀번호
+						이름
 						<br>
-						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="loginPw" placeholder="비밀번호를 입력해 주세요."/>
+						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="text" name="name" placeholder="이름을 입력해 주세요."/>
 					</label>
 				</div>
-				<div id="loginMsg" class="mt-2 h-5 text-xs text-red-400"></div>
+				<div class="mt-5">
+					<label class="cursor-pointer">
+						이메일
+						<br>
+						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="email" name="email" placeholder="이메일을 입력해 주세요."/>
+					</label>
+				</div>
 				<div class="mt-8">
-					<button class="btn-text-color btn btn-info w-112">로그인</button>
+					<button class="btn-text-color btn btn-info w-112">비밀번호 찾기</button>
 				</div>
 			</form>
 		</div>
@@ -58,9 +93,9 @@
 			<div class="mx-4">|</div>
 			<a href="join" class="hover:underline">회원가입</a>
 			<div class="mx-4">|</div>
-			<a href="findLoginId" class="hover:underline">아이디 찾기</a>
+			<a href="login" class="hover:underline">로그인</a>
 			<div class="mx-4">|</div>
-			<a href="findLoginPw" class="hover:underline">비밀번호 찾기</a>
+			<a href="findLoginId" class="hover:underline">아이디 찾기</a>
 		</div>
 	</section>
 </body>

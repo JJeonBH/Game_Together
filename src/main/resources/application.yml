@@ -1,6 +1,17 @@
 server:
   port: 8081
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: mailtestjbh@gmail.com
+    password: 구글 앱 비밀번호 입력
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   mvc:
     view:
       prefix: /WEB-INF/jsp/
@@ -14,8 +25,13 @@ mybatis:
   type-aliases-package: com.koreaIT.Game_Together.vo
 riot:
   api:
-    key: RGAPI-ad7cabe4-a531-4e3e-9ab2-affd22149ec3
+    key: RGAPI-e1c52327-7cf0-464b-aa1b-4c875b2e9e06
   server:
     url:
       kr: https://kr.api.riotgames.com
       asia: https://asia.api.riotgames.com
+custom:
+  siteName: Game_Together
+  siteMainUri: http://localhost:8081
+  emailFrom: no-reply@localhost
+  emailFromName: Game_Together

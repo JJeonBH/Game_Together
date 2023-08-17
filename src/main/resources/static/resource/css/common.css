@@ -154,12 +154,12 @@ a:hover > .main-image {
 	opacity: 0.5;
 }
 
-/* 프로필, 개인정보 수정 테이블 행(row) 높이 */
+/* 프로필, 개인정보 수정, 비밀번호 변경 테이블 행(row) 높이 */
 .table-box-type-1 > table tr {
 	height: 3.5rem;
 }
 
-/* 프로필, 개인정보 수정 테이블 셀 테두리, 글자 정렬, 패딩 */
+/* 프로필, 개인정보 수정, 비밀번호 변경 테이블 셀 테두리, 글자 정렬, 패딩 */
 .table-box-type-1 > table th, .table-box-type-1 > table td {
 	border-top: 1px solid rgb(134, 247, 238);
 	border-bottom: 1px solid rgb(134, 247, 238);
@@ -167,7 +167,7 @@ a:hover > .main-image {
 	text-align: left;
 }
 
-/* 프로필, 개인정보 수정 테이블 셀 테두리 */
+/* 프로필, 개인정보 수정, 비밀번호 변경 테이블 셀 테두리 */
 .table-box-type-1 > table th {
 	border-right: 1px solid rgb(134, 247, 238);
 }

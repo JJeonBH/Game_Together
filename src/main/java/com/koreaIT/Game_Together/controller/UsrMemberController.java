@@ -39,7 +39,7 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
 	public String doJoin(String loginId, String loginPw, String name, String nickname, String birthday, String gender, String email, String cellphoneNum, MultipartFile file) {
-
+		
 		@SuppressWarnings("rawtypes")
 		ResultData doJoinRd = memberService.doJoin(loginId, Util.sha256(loginPw), name, nickname, birthday, gender, email, cellphoneNum);
 		
@@ -135,7 +135,10 @@ public class UsrMemberController {
 		
 		String regDate = Util.formatDate(rq.getLoginedMember().getRegDate());
 		
+		FileVO profileImg = fileService.getFileByRelId("profile", rq.getLoginedMemberId());
+		
 		model.addAttribute("regDate", regDate);
+		model.addAttribute("profileImg", profileImg);
 		
 		return "usr/member/modify";
 		
@@ -143,10 +146,22 @@ public class UsrMemberController {
 	
 	@RequestMapping("/usr/member/doModify")
 	@ResponseBody
-	public String doModify(String nickname, String email, String cellphoneNum) {
+	public String doModify(String nickname, String email, String cellphoneNum, MultipartFile file) {
 
 		memberService.doModify(rq.getLoginedMemberId(), nickname, email, cellphoneNum);
-
+		
+		if (!file.isEmpty()) {
+			try {
+				FileVO fileVO = fileService.getFileByRelId("profile", rq.getLoginedMemberId());
+				if (fileVO != null) {
+					fileService.deleteFile("profile", rq.getLoginedMemberId());
+				}
+				fileService.saveFile(file, "profile", rq.getLoginedMemberId());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		return Util.jsAlertReplace("회원정보가 수정되었습니다", "profile");
 		
 	}

@@ -55,4 +55,8 @@ public class FileService {
 		return fileRepository.getFileById(id);
 	}
 
+	public void deleteFile(String relTypeCode, int relId) {
+		fileRepository.deleteFile(relTypeCode, relId);
+	}
+
 }

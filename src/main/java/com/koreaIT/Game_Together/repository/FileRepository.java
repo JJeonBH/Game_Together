@@ -13,4 +13,6 @@ public interface FileRepository {
 
 	public FileVO getFileById(int id);
 
+	public void deleteFile(String relTypeCode, int relId);
+
 }

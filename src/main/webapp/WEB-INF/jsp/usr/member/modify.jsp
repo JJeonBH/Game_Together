@@ -128,9 +128,9 @@
 			
 		}
 	</script>
-	<section class="text-lg min-w-900 mt-4">
+	<section class="text-lg min-w-900 my-5">
 		<div>
-			<form action="doModify" method="post" onsubmit="submitModifyForm(this); return false;">
+			<form action="doModify" method="post" enctype="multipart/form-data" onsubmit="submitModifyForm(this); return false;">
 				<div class="table-box-type-1 flex justify-center">
 					<table class="w-2/3">
 						<colgroup>
@@ -169,6 +169,20 @@
 							<tr>
 								<th>휴대전화 번호</th>
 								<td><input class="cursor-pointer input input-bordered input-info w-112" type="tel" name="cellphoneNum" value="${Request.loginedMember.cellphoneNum}" placeholder="휴대전화 번호를 입력해 주세요. (-없이 숫자만)"/></td>
+							</tr>
+							<tr>
+								<th>프로필 사진</th>
+								<td>
+									<c:choose>
+										<c:when test="${profileImg != null}">
+											<div class="ml-14 w-20 h-20"><img class="h-full w-full rounded-full" src="/usr/file/getFileUrl/${profileImg.id}" alt="profile image"/></div>
+										</c:when>
+										<c:otherwise>
+											<div class="ml-14 w-20 h-20"><img class="h-full w-full rounded-full" src="/resource/images/gt.png" alt="profile image"/></div>
+										</c:otherwise>
+									</c:choose>
+									<input class="cursor-pointer mt-2 input input-bordered input-info w-112 h-full" type="file" name="file"/>
+								</td>
 							</tr>
 						</tbody>
 					</table>

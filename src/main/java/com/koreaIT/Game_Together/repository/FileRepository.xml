@@ -26,4 +26,10 @@
 			WHERE id = #{id}
 	</select>
 	
+	<delete id="deleteFile">
+		DELETE FROM `file`
+			WHERE relTypeCode = #{relTypeCode}
+			AND relId = #{relId}
+	</delete>
+	
 </mapper>

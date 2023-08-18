@@ -3,11 +3,18 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="프로필"/>
 <%@ include file="../common/head.jsp" %>
-	<section class="h-20 text-xl min-w-900 flex justify-between items-center bg-white mt-1">
-		<div class="ml-14 bg-pink-200">이미지</div>
+	<section class="h-24 text-xl min-w-900 flex justify-between items-center bg-white mt-1">
+		<c:choose>
+			<c:when test="${profileImg != null}">
+				<div class="ml-14 w-20 h-20"><img class="h-full w-full rounded-full" src="/usr/file/getFileUrl/${profileImg.id}" alt="profile image"/></div>
+			</c:when>
+			<c:otherwise>
+				<div class="ml-14 w-20 h-20"><img class="h-full w-full rounded-full" src="/resource/images/gt.png" alt="profile image"/></div>
+			</c:otherwise>
+		</c:choose>
 		<div class="ml-2 hover:underline">
-			<span class="text-black">${Request.loginedMember.name }</span>
-			<span class="text-blue-400">(${Request.loginedMember.nickname })</span>
+			<span class="text-black">${Request.loginedMember.name}</span>
+			<span class="text-blue-400">(${Request.loginedMember.nickname})</span>
 		</div>
 		<div class="flex-grow"></div>
 		<div class="mr-14">

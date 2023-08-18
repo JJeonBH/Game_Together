@@ -33,7 +33,7 @@
 	</header>
 	<section class="text-lg mt-10 mb-20">
 		<div class="flex justify-center">
-			<form action="doJoin" method="POST" onsubmit="submitJoinForm(this); return false;">
+			<form action="doJoin" method="POST" enctype="multipart/form-data" onsubmit="submitJoinForm(this); return false;">
 				<div>
 					<label class="cursor-pointer">
 						아이디
@@ -109,6 +109,13 @@
 						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="tel" name="cellphoneNum" placeholder="휴대전화 번호를 입력해 주세요. (-없이 숫자만)" onblur="cellphoneNumCheck(this);"/>
 					</label>
 					<div id="cellphoneNumMsg" class="mt-2 h-5 text-xs text-red-400"></div>
+				</div>
+				<div class="mt-4 mb-10">
+					<label class="cursor-pointer">
+						프로필 사진
+						<br>
+						<input class="cursor-pointer mt-2 input input-bordered input-info w-112 h-full" type="file" name="file"/>
+					</label>
 				</div>
 				<div class="mt-4">
 					<button class="btn-text-color btn btn-info w-112">가입하기</button>

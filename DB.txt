@@ -99,6 +99,17 @@ CREATE TABLE chatRoomMember(
     sessionId VARCHAR(50) NOT NULL
 );
 
+# file 테이블 생성
+CREATE TABLE `file`(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    originName VARCHAR(50) NOT NULL,
+    savedName VARCHAR(100) NOT NULL,
+    savedPath VARCHAR(100) NOT NULL,
+    relTypeCode VARCHAR(20) NOT NULL COMMENT 'article(게시물), profile(프로필), ...',
+    relId INT UNSIGNED NOT NULL COMMENT '관련 데이터 번호'
+);
+
 # member 테스트 데이터
 INSERT INTO `member`
 SET regDate = NOW(),
@@ -697,6 +708,7 @@ DESC reply;
 DESC chat;
 DESC chatRoom;
 DESC chatRoomMember;
+DESC `file`;
 
 # 테이블 조회
 SELECT * FROM `member`;
@@ -707,6 +719,7 @@ SELECT * FROM reply;
 SELECT * FROM chat;
 SELECT * FROM chatRoom;
 SELECT * FROM chatRoomMember;
+SELECT * FROM `file`;
 
 SELECT LAST_INSERT_ID();
 

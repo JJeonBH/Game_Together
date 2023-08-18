@@ -35,6 +35,10 @@ public class MemberService {
 
 	}
 	
+	public int getLastInsertId() {
+		return memberRepository.getLastInsertId();
+	}
+	
 	public Member getMemberById(int id) {
 		return memberRepository.getMemberById(id);
 	}

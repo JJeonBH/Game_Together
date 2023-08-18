@@ -1,13 +1,18 @@
 package com.koreaIT.Game_Together.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.koreaIT.Game_Together.service.FileService;
 import com.koreaIT.Game_Together.service.MemberService;
 import com.koreaIT.Game_Together.util.Util;
+import com.koreaIT.Game_Together.vo.FileVO;
 import com.koreaIT.Game_Together.vo.Member;
 import com.koreaIT.Game_Together.vo.Request;
 import com.koreaIT.Game_Together.vo.ResultData;
@@ -16,11 +21,13 @@ import com.koreaIT.Game_Together.vo.ResultData;
 public class UsrMemberController {
 
 	private MemberService memberService;
+	private FileService fileService;
 	private Request rq;
 	
 	@Autowired
-	public UsrMemberController(MemberService memberService, Request rq) {
+	public UsrMemberController(MemberService memberService, FileService fileService, Request rq) {
 		this.memberService = memberService;
+		this.fileService = fileService;
 		this.rq = rq;
 	}
 
@@ -31,10 +38,20 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	public String doJoin(String loginId, String loginPw, String name, String nickname, String birthday, String gender, String email, String cellphoneNum) {
+	public String doJoin(String loginId, String loginPw, String name, String nickname, String birthday, String gender, String email, String cellphoneNum, MultipartFile file) {
 
 		@SuppressWarnings("rawtypes")
 		ResultData doJoinRd = memberService.doJoin(loginId, Util.sha256(loginPw), name, nickname, birthday, gender, email, cellphoneNum);
+		
+		int relId = memberService.getLastInsertId();
+		
+		if (!file.isEmpty()) {
+			try {
+				fileService.saveFile(file, "profile", relId);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		
 		return Util.jsAlertReplace(doJoinRd.getMsg(), "/");
 		
@@ -76,7 +93,10 @@ public class UsrMemberController {
 		
 		String regDate = Util.formatDate(rq.getLoginedMember().getRegDate());
 		
+		FileVO profileImg = fileService.getFileByRelId("profile", rq.getLoginedMemberId());
+		
 		model.addAttribute("regDate", regDate);
+		model.addAttribute("profileImg", profileImg);
 		
 		return "usr/member/profile";
 		

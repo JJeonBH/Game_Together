@@ -1,5 +1,6 @@
 package com.koreaIT.Game_Together.controller;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -154,6 +155,7 @@ public class UsrMemberController {
 			try {
 				FileVO fileVO = fileService.getFileByRelId("profile", rq.getLoginedMemberId());
 				if (fileVO != null) {
+					new File(fileVO.getSavedPath()).delete();
 					fileService.deleteFile("profile", rq.getLoginedMemberId());
 				}
 				fileService.saveFile(file, "profile", rq.getLoginedMemberId());

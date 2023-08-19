@@ -94,7 +94,7 @@
 			
 			const cellphoneNumRegex = /^(010)[0-9]{3,4}[0-9]{4}$/;
 			
-			if(!cellphoneNumRegex.test(form.cellphoneNum.value)) {
+			if (!cellphoneNumRegex.test(form.cellphoneNum.value)) {
 				alert('형식에 맞지 않는 번호입니다. ( -, 공백 없이 숫자만 )');
 				form.cellphoneNum.focus();
 				return;
@@ -127,6 +127,38 @@
 			form.submit();
 			
 		}
+		
+		function preview() {
+			
+			let fileInput = document.querySelector("input[name=file]");
+			let profileImage = document.querySelector("#profile-image");
+			let preview = document.querySelector("#preview");
+			let previewImage = document.querySelector("#preview-image");
+			
+			if (fileInput.files.length > 0) {
+				
+				profileImage.classList.add("hidden");
+				preview.classList.remove("hidden");
+				
+				let reader = new FileReader();
+				
+				reader.onload = function (data) {
+					previewImage.src = data.target.result;
+				}
+				
+				reader.readAsDataURL(fileInput.files[0]);
+				
+			} else {
+				
+				profileImage.classList.remove("hidden");
+				preview.classList.add("hidden");
+				
+				previewImage.src = "";
+				
+			}
+			
+		}
+		
 	</script>
 	<section class="text-lg min-w-900 my-5">
 		<div>
@@ -173,15 +205,20 @@
 							<tr>
 								<th>프로필 사진</th>
 								<td>
-									<c:choose>
-										<c:when test="${profileImg != null}">
-											<div class="ml-14 w-20 h-20"><img class="h-full w-full rounded-full" src="/usr/file/getFileUrl/${profileImg.id}" alt="profile image"/></div>
-										</c:when>
-										<c:otherwise>
-											<div class="ml-14 w-20 h-20"><img class="h-full w-full rounded-full" src="/resource/images/gt.png" alt="profile image"/></div>
-										</c:otherwise>
-									</c:choose>
-									<input class="cursor-pointer mt-2 input input-bordered input-info w-112 h-full" type="file" name="file"/>
+									<div id="profile-image">
+										<c:choose>
+											<c:when test="${profileImg != null}">
+												<div class="ml-14 w-20 h-20"><img class="h-full w-full rounded-full" src="/usr/file/getFileUrl/${profileImg.id}" alt="profile image"/></div>
+											</c:when>
+											<c:otherwise>
+												<div class="ml-14 w-20 h-20"><img class="h-full w-full rounded-full" src="/resource/images/gt.png" alt="profile image"/></div>
+											</c:otherwise>
+										</c:choose>
+									</div>
+									<div id="preview" class="hidden">
+										<div class="ml-14 w-20 h-20"><img id="preview-image" class="h-full w-full rounded-full" alt="preview image"/></div>
+									</div>
+									<input class="cursor-pointer mt-2 input input-bordered input-info w-112 h-full" type="file" name="file" accept="image/*" onchange="preview();"/>
 								</td>
 							</tr>
 						</tbody>

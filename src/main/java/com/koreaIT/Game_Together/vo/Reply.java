@@ -1,6 +1,6 @@
 package com.koreaIT.Game_Together.vo;
 
-	import java.time.LocalDateTime;
+import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,6 +22,7 @@ public class Reply {
 	private String writerNickname;
 	private String formatRegDate;
 	private boolean actorCanChangeData;
+	private FileVO profileImg;
 	
 	public String getForPrintBody() {
 		return this.body.replaceAll("\n", "<br>");

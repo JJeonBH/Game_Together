@@ -34,8 +34,16 @@
 	<section class="mt-6 mb-20 mx-20 min-w-1000 flex">
 		<div class="w-64 p-6 text-lg">
 			<c:if test="${Request.loginedMemberId != 0}">
-				<div class="mb-2">
-					<span>${Request.loginedMember.nickname}</span>
+				<div class="mb-2 flex items-center">
+					<c:choose>
+						<c:when test="${profileImg != null}">
+							<div class="w-20 h-20"><img class="h-full w-full rounded-full" src="/usr/file/getFileUrl/${profileImg.id}" alt="profile image"/></div>
+						</c:when>
+						<c:otherwise>
+							<div class="w-20 h-20"><img class="h-full w-full rounded-full" src="/resource/images/gt.png" alt="profile image"/></div>
+						</c:otherwise>
+					</c:choose>
+					<span class="ml-2">${Request.loginedMember.nickname}</span>
 				</div>
 				<ul>
 					<li class="mb-2">

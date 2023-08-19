@@ -95,7 +95,16 @@
 			
 			let append = `<div id="\${data.data1.id}" class="border-b border-gray-300 p-4">`;
 			append += `<div class="flex justify-between items-center">`;
-			append += `<div class="font-semibold"><span>\${data.data1.writerNickname}</span></div>`;
+			append += `<div class="font-semibold flex items-center">`;
+			
+			if (data.data1.profileImg != null) {
+				append += `<div class="w-12 h-12"><img class="h-full w-full rounded-full" src="/usr/file/getFileUrl/\${data.data1.profileImg.id}" alt="reply writer profile image"/></div>`
+			} else {
+				append += `<div class="w-12 h-12"><img class="h-full w-full rounded-full" src="/resource/images/gt.png" alt="reply writer profile image"/></div>`;
+			}
+			
+			append += `<span class="ml-2">\${data.data1.writerNickname}</span>`;
+			append += `</div>`;
 			append += `<div class="dropdown">`;
 			append += `<button class="btn btn-circle btn-ghost btn-sm mr-8">`;
 			append += `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>`;
@@ -106,7 +115,7 @@
 			append += `</ul>`;
 			append += `</div>`;
 			append += `</div>`;
-			append += `<div class="my-2"><span>\${data.data1.forPrintBody}</span></div>`;
+			append += `<div class="my-4"><span>\${data.data1.forPrintBody}</span></div>`;
 			append += `<div class="text-xs text-gray-400"><span>\${data.data1.formatRegDate}</span></div>`;
 			append += `</div>`;
 			
@@ -182,8 +191,15 @@
 				
 				let append = `<div>`;
 				append += `<div class="border border-blue-400 rounded-lg p-4">`;
-				append += `<div class="mb-2">`;
-				append += `<span class="font-semibold">\${data.data1.writerNickname}</span>`;
+				append += `<div class="font-semibold mb-2 flex items-center">`;
+				
+				if (data.data1.profileImg != null) {
+					append += `<div class="w-12 h-12"><img class="h-full w-full rounded-full" src="/usr/file/getFileUrl/\${data.data1.profileImg.id}" alt="profile image"/></div>`
+				} else {
+					append += `<div class="w-12 h-12"><img class="h-full w-full rounded-full" src="/resource/images/gt.png" alt="profile image"/></div>`;
+				}
+				
+				append += `<span class="ml-2">\${data.data1.writerNickname}</span>`;
 				append += `</div>`;
 				append += `<textarea class="textarea textarea-info w-full" name="modifyBody" placeholder="댓글을 남겨보세요.">\${data.data1.body}</textarea>`;
 				append += `<div class="flex justify-end">`;	
@@ -234,7 +250,16 @@
 				let replyContent = $('#' + replyId);
 				
 				let append = `<div class="flex justify-between items-center">`;
-				append += `<div class="font-semibold"><span>\${data.data1.writerNickname}</span></div>`;
+				append += `<div class="font-semibold flex items-center">`;
+				
+				if (data.data1.profileImg != null) {
+					append += `<div class="w-12 h-12"><img class="h-full w-full rounded-full" src="/usr/file/getFileUrl/\${data.data1.profileImg.id}" alt="reply writer profile image"/></div>`
+				} else {
+					append += `<div class="w-12 h-12"><img class="h-full w-full rounded-full" src="/resource/images/gt.png" alt="reply writer profile image"/></div>`;
+				}
+				
+				append += `<span class="ml-2">\${data.data1.writerNickname}</span>`;
+				append += `</div>`;
 				append += `<div class="dropdown">`;
 				append += `<button class="btn btn-circle btn-ghost btn-sm mr-8">`;
 				append += `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>`;
@@ -245,7 +270,7 @@
 				append += `</ul>`;
 				append += `</div>`;
 				append += `</div>`;
-				append += `<div class="my-2"><span>\${data.data1.forPrintBody}</span></div>`;
+				append += `<div class="my-4"><span>\${data.data1.forPrintBody}</span></div>`;
 				append += `<div class="text-xs text-gray-400"><span>\${data.data1.formatRegDate}</span></div>`;
 				
 				replyContent.empty();
@@ -291,8 +316,16 @@
 	<section class="mt-6 mb-20 mx-20 min-w-1000 flex">
 		<div class="w-64 p-6 text-lg">
 			<c:if test="${Request.loginedMemberId != 0}">
-				<div class="mb-2">
-					<span>${Request.loginedMember.nickname}</span>
+				<div class="mb-2 flex items-center">
+					<c:choose>
+						<c:when test="${profileImg != null}">
+							<div class="w-20 h-20"><img class="h-full w-full rounded-full" src="/usr/file/getFileUrl/${profileImg.id}" alt="profile image"/></div>
+						</c:when>
+						<c:otherwise>
+							<div class="w-20 h-20"><img class="h-full w-full rounded-full" src="/resource/images/gt.png" alt="profile image"/></div>
+						</c:otherwise>
+					</c:choose>
+					<span class="ml-2">${Request.loginedMember.nickname}</span>
 				</div>
 				<ul>
 					<li class="mb-2">
@@ -347,8 +380,15 @@
 						<h1 class="text-3xl detail-title">${article.title}</h1>
 					</div>
 					<div class="flex justify-between items-center">
-						<div class="flex">
-							<div class="flex items-center rounded-full bg-blue-200">이미지</div>
+						<div class="flex items-center">
+							<c:choose>
+								<c:when test="${writerProfileImg != null}">
+									<div class="w-16 h-16"><img class="h-full w-full rounded-full" src="/usr/file/getFileUrl/${writerProfileImg.id}" alt="article writer profile image"/></div>
+								</c:when>
+								<c:otherwise>
+									<div class="w-16 h-16"><img class="h-full w-full rounded-full" src="/resource/images/gt.png" alt="article writer profile image"/></div>
+								</c:otherwise>
+							</c:choose>
 							<div class="ml-2">
 								<div class="font-bold">${article.writerNickname}</div>
 								<div>
@@ -405,7 +445,17 @@
 								<c:forEach var="reply" items="${replies}">
 									<div id="${reply.id}" class="border-b border-gray-300 p-4">
 										<div class="flex justify-between items-center">
-											<div class="font-semibold"><span>${reply.writerNickname}</span></div>
+											<div class="font-semibold flex items-center">
+												<c:choose>
+													<c:when test="${reply.profileImg != null}">
+														<div class="w-12 h-12"><img class="h-full w-full rounded-full" src="/usr/file/getFileUrl/${reply.profileImg.id}" alt="reply writer profile image"/></div>
+													</c:when>
+													<c:otherwise>
+														<div class="w-12 h-12"><img class="h-full w-full rounded-full" src="/resource/images/gt.png" alt="reply writer profile image"/></div>
+													</c:otherwise>
+												</c:choose>
+												<span class="ml-2">${reply.writerNickname}</span>
+											</div>
 											<c:if test="${reply.actorCanChangeData}">
 												<div class="dropdown">
 													<button class="btn btn-circle btn-ghost btn-sm mr-8">
@@ -418,7 +468,7 @@
 												</div>
 											</c:if>
 										</div>
-										<div class="my-2"><span>${reply.getForPrintBody()}</span></div>
+										<div class="my-4"><span>${reply.getForPrintBody()}</span></div>
 										<div class="text-xs text-gray-400"><span>${reply.formatRegDate}</span></div>
 									</div>
 								</c:forEach>
@@ -428,8 +478,16 @@
 					<c:if test="${Request.loginedMemberId != 0}">
 						<div class="mt-4">
 							<div class="border border-blue-400 rounded-lg p-4">
-								<div class="mb-2">
-									<span>${Request.loginedMember.nickname}</span>
+								<div class="font-semibold mb-2 flex items-center">
+									<c:choose>
+										<c:when test="${profileImg != null}">
+											<div class="w-12 h-12"><img class="h-full w-full rounded-full" src="/usr/file/getFileUrl/${profileImg.id}" alt="profile image"/></div>
+										</c:when>
+										<c:otherwise>
+											<div class="w-12 h-12"><img class="h-full w-full rounded-full" src="/resource/images/gt.png" alt="profile image"/></div>
+										</c:otherwise>
+									</c:choose>
+									<span class="ml-2">${Request.loginedMember.nickname}</span>
 								</div>
 								<textarea class="textarea textarea-info w-full" name="body" placeholder="댓글을 남겨보세요."></textarea>
 								<div class="flex justify-end">

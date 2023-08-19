@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.koreaIT.Game_Together.service.ArticleService;
 import com.koreaIT.Game_Together.service.BoardService;
+import com.koreaIT.Game_Together.service.FileService;
 import com.koreaIT.Game_Together.service.ReactionPointService;
 import com.koreaIT.Game_Together.service.ReplyService;
 import com.koreaIT.Game_Together.util.Util;
 import com.koreaIT.Game_Together.vo.Article;
 import com.koreaIT.Game_Together.vo.Board;
+import com.koreaIT.Game_Together.vo.FileVO;
 import com.koreaIT.Game_Together.vo.Reply;
 import com.koreaIT.Game_Together.vo.Request;
 import com.koreaIT.Game_Together.vo.ResultData;
@@ -32,14 +34,16 @@ public class UsrArticleController {
 	private BoardService boardService;
 	private ReplyService replyService;
 	private ReactionPointService reactionPointService;
+	private FileService fileService;
 	private Request rq;
 	
 	@Autowired
-	public UsrArticleController(ArticleService articleService, BoardService boardService, ReplyService replyService, ReactionPointService reactionPointService, Request rq) {
+	public UsrArticleController(ArticleService articleService, BoardService boardService, ReplyService replyService, ReactionPointService reactionPointService, FileService fileService, Request rq) {
 		this.articleService = articleService;
 		this.boardService = boardService;
 		this.replyService = replyService;
 		this.reactionPointService = reactionPointService;
+		this.fileService = fileService;
 		this.rq = rq;
 	}
 	
@@ -48,8 +52,11 @@ public class UsrArticleController {
 		
 		List<Board> boards = boardService.getBoardsByBoardType(boardType);
 		
+		FileVO profileImg = fileService.getFileByRelId("profile", rq.getLoginedMemberId());
+		
 		model.addAttribute("boardType", boardType);
 		model.addAttribute("boards", boards);
+		model.addAttribute("profileImg", profileImg);
 		
 		return "usr/article/write";
 		
@@ -126,6 +133,8 @@ public class UsrArticleController {
 			return rq.jsHistoryBack("존재하지 않는 게시물입니다.", true);
 		}
 		
+		FileVO writerProfileImg = fileService.getFileByRelId("profile", article.getMemberId());
+		
 		article.setRepliesCnt(replyService.getRepliesCnt("article", articleId));
 		
 		article.setFormatRegDate(Util.formatRegDateVer1(article.getRegDate()));
@@ -133,6 +142,8 @@ public class UsrArticleController {
 		articleService.actorCanChangeData(rq.getLoginedMemberId(), article);
 		
 		List<Board> boards = boardService.getBoardsByBoardType(boardType);
+		
+		FileVO profileImg = fileService.getFileByRelId("profile", rq.getLoginedMemberId());
 
 		model.addAttribute("article", article);
 		model.addAttribute("boardType", boardType);
@@ -144,6 +155,8 @@ public class UsrArticleController {
 		model.addAttribute("memberId", memberId);
 		model.addAttribute("replies", replies);
 		model.addAttribute("event", event);
+		model.addAttribute("writerProfileImg", writerProfileImg);
+		model.addAttribute("profileImg", profileImg);
 
 		return "usr/article/detail";
 		
@@ -208,6 +221,8 @@ public class UsrArticleController {
 			endPage = pagesCount;
 		}
 		
+		FileVO profileImg = fileService.getFileByRelId("profile", rq.getLoginedMemberId());
+		
 		model.addAttribute("boardType", boardType);
 		model.addAttribute("boardId", boardId);
 		model.addAttribute("page", page);
@@ -221,6 +236,7 @@ public class UsrArticleController {
 		model.addAttribute("boards", boards);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
+		model.addAttribute("profileImg", profileImg);
 
 		return "usr/article/list";
 		
@@ -240,9 +256,12 @@ public class UsrArticleController {
 		
 		List<Board> boards = boardService.getBoardsByBoardType(boardType);
 		
+		FileVO profileImg = fileService.getFileByRelId("profile", rq.getLoginedMemberId());
+		
 		model.addAttribute("article", article);
 		model.addAttribute("boardType", boardType);
 		model.addAttribute("boards", boards);
+		model.addAttribute("profileImg", profileImg);
 		
 		return "usr/article/modify";
 		

@@ -14,10 +14,12 @@ import com.koreaIT.Game_Together.vo.ResultData;
 public class ReplyService {
 
 	private ReplyRepository replyRepository;
+	private FileService fileService;
 	
 	@Autowired
-	public ReplyService(ReplyRepository replyRepository) {
+	public ReplyService(ReplyRepository replyRepository, FileService fileService) {
 		this.replyRepository = replyRepository;
+		this.fileService = fileService;
 	}
 
 	public Reply writeReply(int loginedMemberId, String relTypeCode, int relId, String body) {
@@ -31,6 +33,7 @@ public class ReplyService {
 		actorCanChangeData(loginedMemberId, reply);
 		
 		reply.setFormatRegDate(Util.formatRegDateVer1(reply.getRegDate()));
+		reply.setProfileImg(fileService.getFileByRelId("profile", reply.getMemberId()));
 		
 		return reply;
 		
@@ -70,6 +73,7 @@ public class ReplyService {
 		for (Reply reply : replies) {
 			actorCanChangeData(loginedMemberId, reply);
 			reply.setFormatRegDate(Util.formatRegDateVer1(reply.getRegDate()));
+			reply.setProfileImg(fileService.getFileByRelId("profile", reply.getMemberId()));
 		}
 		
 		return replies;

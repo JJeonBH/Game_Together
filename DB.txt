@@ -737,3 +737,22 @@ INSERT INTO article
 )
 SELECT NOW(), NOW(), 1, 5, CONCAT('배그 제목_', RAND()), CONCAT('내용_', RAND())
 FROM article;
+
+# 이벤트 스케줄러
+SHOW VARIABLES LIKE 'event%';
+
+SET GLOBAL event_scheduler = ON;
+
+SELECT * FROM information_schema.events;
+
+CREATE EVENT IF NOT EXISTS del_member_over30days
+    ON SCHEDULE
+        EVERY 1 DAY STARTS '2023-08-20 18:00:00'
+    ON COMPLETION NOT PRESERVE ENABLE
+    COMMENT '회원 탈퇴 30일 초과 후 데이터 삭제'
+    DO
+    DELETE FROM `member`
+        WHERE delStatus = 1
+        AND TIMESTAMPDIFF(DAY, delDate, NOW()) > 30;
+  
+DROP EVENT del_member_over30days;

@@ -43,6 +43,8 @@ public class GtWebMvcConfigurer implements WebMvcConfigurer {
 		ir.addPathPatterns("/usr/member/doModify");
 		ir.addPathPatterns("/usr/member/passwordModify");
 		ir.addPathPatterns("/usr/member/doPasswordModify");
+		ir.addPathPatterns("/usr/member/withdraw");
+		ir.addPathPatterns("/usr/member/doWithdraw");
 		ir.addPathPatterns("/usr/member/nicknameDupCheckForChange");
 		ir.addPathPatterns("/usr/member/emailDupCheckForChange");
 		ir.addPathPatterns("/usr/member/cellphoneNumDupCheckForChange");
@@ -91,6 +93,7 @@ public class GtWebMvcConfigurer implements WebMvcConfigurer {
 		ir.addPathPatterns("/usr/member/doFindLoginId");
 		ir.addPathPatterns("/usr/member/findLoginPw");
 		ir.addPathPatterns("/usr/member/doFindLoginPw");
+		ir.addPathPatterns("/usr/member/restore");
 		
 	}
 

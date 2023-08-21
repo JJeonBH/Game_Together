@@ -94,5 +94,13 @@ public class MemberService {
 	private void setTempPassword(Member member, String tempPassword) {
 		memberRepository.doPasswordModify(member.getId(), Util.sha256(tempPassword));
 	}
+
+	public void doWithdraw(int loginedMemberId) {
+		memberRepository.doWithdraw(loginedMemberId);
+	}
+
+	public void restore(String loginId, String loginPw) {
+		memberRepository.restore(loginId, loginPw);
+	}
 	
 }

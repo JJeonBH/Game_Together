@@ -278,3 +278,58 @@ a:hover > .main-image {
 	z-index: 9999;
 	cursor: pointer;
  }
+
+/* 회원 탈퇴 모달창 배경, 모달창 숨기기 */
+.layer-bg, .layer {
+	display: none;
+}
+
+/* 회원 탈퇴 모달창 배경 위치 고정 */
+.layer-bg {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, .6);
+}
+
+/* 회원 탈퇴 모달창 가운데 위치시키기 */
+.layer {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	background-color: white;
+	color: black;
+	width: 500px;
+	height: 500px;
+	border: 3px solid black;
+	border-radius: 10px;
+}
+
+/* 회원 탈퇴 모달창 제목 패딩, 글자 크기 */
+.layer > h1 {
+	padding: 20px;
+	font-size: 1.5rem;
+	color: #ff1966;
+}
+
+/* 회원 탈퇴 모달창 본문 패딩 */
+.layer > div {
+	padding: 20px;
+}
+
+/* 회원 탈퇴 모달창 X 버튼 위치 지정 */
+.layer > .close-x-btn {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+/* 회원 탈퇴 모달창 계속 진행 버튼 위치 지정 */
+.layer > .submit-btn {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+}

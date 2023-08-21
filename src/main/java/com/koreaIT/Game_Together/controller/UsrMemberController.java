@@ -189,6 +189,29 @@ public class UsrMemberController {
 		
 	}
 	
+	@RequestMapping("/usr/member/withdraw")
+	public String withdraw() {
+		
+		if (rq.getLoginedMember() == null) {
+			return rq.jsReplace("세션이 만료되었습니다. 다시 로그인 해주세요.", "/");
+		}
+		
+		return "usr/member/withdraw";
+		
+	}
+	
+	@RequestMapping("/usr/member/doWithdraw")
+	@ResponseBody
+	public String doWithdraw() {
+		
+		memberService.doWithdraw(rq.getLoginedMemberId());
+
+		rq.logout();
+		
+		return Util.jsAlertReplace("회원탈퇴가 완료되었습니다.", "/");
+		
+	}
+	
 	@RequestMapping("/usr/member/nicknameDupCheckForChange")
 	@ResponseBody
 	public ResultData<String> nicknameDupCheckForChange(String nickname) {
@@ -244,6 +267,10 @@ public class UsrMemberController {
 		
 		if (!member.getLoginPw().equals(Util.sha256(loginPw))) {
 			return ResultData.resultFrom("F-2", "아이디 또는 비밀번호를 잘못 입력했습니다.<br>입력하신 내용을 다시 확인해 주세요.");
+		}
+		
+		if (member.getDelStatus() == 1) {
+			return ResultData.resultFrom("F-3", "회원 탈퇴한 계정입니다. 복구하시겠습니까?");
 		}
 		
 		return ResultData.resultFrom("S-1", "로그인 성공");
@@ -352,6 +379,17 @@ public class UsrMemberController {
 		ResultData notifyTempLoginPwByEmailRd = memberService.notifyTempLoginPwByEmail(member);
 
 		return Util.jsAlertReplace(notifyTempLoginPwByEmailRd.getMsg(), "login");
+		
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@RequestMapping("/usr/member/restore")
+	@ResponseBody
+	public ResultData restore(String loginId, String loginPw) {
+		
+		memberService.restore(loginId, Util.sha256(loginPw));
+		
+		return ResultData.resultFrom("S-1", "계정이 복구되었습니다.");
 		
 	}
 	

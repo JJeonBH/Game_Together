@@ -27,4 +27,8 @@ public interface MemberRepository {
 
 	public Member getMemberByNameAndEmail(String name, String email);
 
+	public void doWithdraw(int loginedMemberId);
+
+	public void restore(String loginId, String loginPw);
+
 }

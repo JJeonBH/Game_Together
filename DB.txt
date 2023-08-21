@@ -747,12 +747,12 @@ SELECT * FROM information_schema.events;
 
 CREATE EVENT IF NOT EXISTS del_member_over30days
     ON SCHEDULE
-        EVERY 1 DAY STARTS '2023-08-20 18:00:00'
+        EVERY 1 MINUTE STARTS '2023-08-21 15:00:00'
     ON COMPLETION NOT PRESERVE ENABLE
     COMMENT '회원 탈퇴 30일 초과 후 데이터 삭제'
     DO
     DELETE FROM `member`
         WHERE delStatus = 1
         AND TIMESTAMPDIFF(DAY, delDate, NOW()) > 30;
-  
+
 DROP EVENT del_member_over30days;

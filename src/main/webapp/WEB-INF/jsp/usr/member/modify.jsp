@@ -159,6 +159,22 @@
 			
 		}
 		
+		function modal() {
+			
+			$('.layer-bg').show();
+			$('.layer').show();
+			
+			$('.close-x-btn').click(function() {
+				$('.layer-bg').hide();
+				$('.layer').hide();
+			})
+			
+			$('.submit-btn').click(function() {
+				location.href = "/usr/member/withdraw";
+			})
+			
+		}
+		
 	</script>
 	<section class="text-lg min-w-900 my-5">
 		<div>
@@ -221,6 +237,10 @@
 									<input class="cursor-pointer mt-2 input input-bordered input-info w-112 h-full" type="file" name="file" accept="image/*" onchange="preview();"/>
 								</td>
 							</tr>
+							<tr>
+								<th>회원 탈퇴</th>
+								<td><a href="javascript:modal();" class="btn-text-color btn btn-info"><span>탈퇴 진행</span></a></td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -231,6 +251,15 @@
 					</div>
 				</div>
 			</form>
+		</div>
+		<div class="layer-bg"></div>
+		<div class="layer">
+			<h1>회원 탈퇴 시 주의사항 안내</h1>
+			<button class="close-x-btn btn btn-square btn-outline">
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+			</button>
+			<div>회원 탈퇴 시 홈페이지 이용(글쓰기, 채팅방 등)이 제한되며, 회원 탈퇴 후 30일이 지나면 회원 정보가 완전히 삭제됩니다.<br>30일이 지나기 전에는 언제든지 계정을 복구하실 수 있습니다.<br>다시 로그인을 하시면 복구가 가능합니다.</div>
+			<button class="submit-btn btn-text-color btn btn-info">계속 진행</button>
 		</div>
 	</section>
 <%@ include file="../common/foot.jsp" %>

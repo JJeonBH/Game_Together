@@ -124,7 +124,8 @@
 				</div>
 				<div class="flex justify-center">
 					<div class="w-1/2 flex justify-end mt-4">
-						<button class="btn-text-color btn btn-info">변경</button>
+						<a href="javascript:history.back();" class="btn-text-color btn btn-info">뒤로가기</a>
+						<button class="btn-text-color btn btn-info ml-1">변경</button>
 					</div>
 				</div>
 			</form>

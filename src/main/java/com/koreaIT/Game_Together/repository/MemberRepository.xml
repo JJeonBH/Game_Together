@@ -73,5 +73,22 @@
 			WHERE `name` = #{name}
 			AND email = #{email}
 	</select>
+	
+	<update id="doWithdraw">
+		UPDATE `member`
+			SET updateDate = NOW()
+				, delStatus = 1
+				, delDate = NOW()
+			WHERE id = #{loginedMemberId}
+	</update>
+	
+	<update id="restore">
+		UPDATE `member`
+			SET updateDate = NOW()
+				, delStatus = 0
+				, delDate = NULL
+			WHERE loginId = #{loginId}
+			AND loginPw = #{loginPw}
+	</update>
 
 </mapper>

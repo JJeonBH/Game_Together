@@ -25,7 +25,12 @@ public class Member {
 	private String cellphoneNum;
 	private int delStatus;
 	private LocalDateTime delDate;
+	private int banStatus;
+	private LocalDateTime banDate;
 	
 	private String sessionId;
+	private String formatRegDate;
+	private String formatDelDate;
+	private String formatBanDate;
 	
 }

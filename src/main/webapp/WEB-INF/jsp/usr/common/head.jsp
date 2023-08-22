@@ -5,7 +5,7 @@
 <html data-theme="light">
 <head>
 	<meta charset="UTF-8">
-	<title>${pageTitle }</title>
+	<title>${pageTitle}</title>
 	<!-- 파비콘 불러오기 -->
 	<link rel="shortcut icon" href="/resource/images/favicon.ico" />
 	<!-- 테일윈드 불러오기 -->
@@ -26,7 +26,7 @@
 </head>
 <body>
 	<header class="h-10">
-		<div class="top-bar flex w-screen min-w-900 bg-indigo-100 text-2xl">
+		<div class="top-bar flex w-screen min-w-1000 bg-indigo-100 text-2xl">
 			<h1 class="logo ml-4">
 				<a href="/">
 					<img src="/resource/images/logo.png" alt="같이 할래?" width="150px">
@@ -67,6 +67,11 @@
 						<li>
 							<div class="topbar-text-link h-full flex items-center px-3 mx-1" onclick="ShowChatRoomList();">채팅방 목록</div>
 						</li>
+						<c:if test="${Request.loginedMember.authLevel == 7}">
+							<li>
+								<a href="/adm/member/main" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>관리자 페이지</span></a>
+							</li>
+						</c:if>
 						<li>
 							<a href="/usr/member/profile" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>프로필</span></a>
 						</li>

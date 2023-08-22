@@ -1,5 +1,7 @@
 package com.koreaIT.Game_Together.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.koreaIT.Game_Together.vo.Member;
@@ -30,5 +32,11 @@ public interface MemberRepository {
 	public void doWithdraw(int loginedMemberId);
 
 	public void restore(String loginId, String loginPw);
+
+	public int getMembersCnt(String authLevel, String searchKeywordType, String searchKeyword);
+
+	public List<Member> getMembers(String authLevel, String searchKeywordType, String searchKeyword, int itemsInAPage, int limitStart);
+
+	public void deleteMember(int id);
 
 }

@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="${pageTitle}" />
 <%@ include file="../common/head.jsp" %>
-	<section class="mt-6 mb-20 mx-20 min-w-1000 flex">
+	<section class="my-10 mx-20 min-w-1000 flex">
 		<div class="w-64 p-6 text-lg">
 			<c:if test="${Request.loginedMemberId != 0}">
 				<div class="mb-2 flex items-center">

@@ -18,7 +18,9 @@ CREATE TABLE `member`(
 	email VARCHAR(50) NOT NULL,
 	cellphoneNum VARCHAR(20) NOT NULL,
 	delStatus TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴여부 (탈퇴 전 = 0, 탈퇴 후 = 1)',
-	delDate DATETIME COMMENT '탈퇴 날짜'
+	delDate DATETIME COMMENT '탈퇴 날짜',
+	banStatus TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '강퇴여부 (강퇴 전 = 0, 강퇴 후 = 1)',
+	banDate DATETIME COMMENT '강퇴 날짜'
 );
 
 # article 테이블 생성

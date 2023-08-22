@@ -237,10 +237,12 @@
 									<input class="cursor-pointer mt-2 input input-bordered input-info w-112 h-full" type="file" name="file" accept="image/*" onchange="preview();"/>
 								</td>
 							</tr>
-							<tr>
-								<th>회원 탈퇴</th>
-								<td><a href="javascript:modal();" class="btn-text-color btn btn-info"><span>탈퇴 진행</span></a></td>
-							</tr>
+							<c:if test="${Request.loginedMember.authLevel != 7}">
+								<tr>
+									<th>회원 탈퇴</th>
+									<td><a href="javascript:modal();" class="btn-text-color btn btn-info"><span>탈퇴 진행</span></a></td>
+								</tr>
+							</c:if>
 						</tbody>
 					</table>
 				</div>

@@ -69,6 +69,10 @@ public class UsrMemberController {
 		
 		Member member = memberService.getMemberByLoginId(loginId);
 		
+		if (member.getBanStatus() == 1) {
+			return Util.jsAlertHistoryBack("이 계정은 사용이 정지되었습니다.");
+		}
+		
 		rq.login(member);
 		
 		return Util.jsAlertReplace("", "/");

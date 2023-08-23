@@ -24,7 +24,7 @@ public class NeedLogoutInterceptor implements HandlerInterceptor {
 			throws Exception {
 		
 		if (rq.getLoginedMemberId() != 0) {
-			rq.doJsAlertHistoryBack("로그아웃 후 이용해주세요");
+			rq.doJsAlertHistoryBack("로그아웃 후 이용해 주세요.");
 			return false;
 		}
 		

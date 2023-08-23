@@ -10,12 +10,12 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import com.koreaIT.Game_Together.vo.Request;
 
 @Component
-public class NeedLoginInterceptor implements HandlerInterceptor {
+public class NeedManagerInterceptor implements HandlerInterceptor {
 
 	private Request rq;
 	
 	@Autowired
-	public NeedLoginInterceptor(Request rq) {
+	public NeedManagerInterceptor(Request rq) {
 		this.rq = rq;
 	}
 
@@ -25,6 +25,11 @@ public class NeedLoginInterceptor implements HandlerInterceptor {
 		
 		if (rq.getLoginedMemberId() == 0) {
 			rq.doJsAlertHistoryBack("로그인 후 이용해 주세요.");
+			return false;
+		}
+		
+		if (rq.getLoginedMember().getAuthLevel() != 7) {
+			rq.doJsAlertHistoryBack("관리자 계정으로 로그인해 주세요.");
 			return false;
 		}
 		

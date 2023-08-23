@@ -9,6 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.koreaIT.Game_Together.interceptor.BeforeActionInterceptor;
 import com.koreaIT.Game_Together.interceptor.NeedLoginInterceptor;
 import com.koreaIT.Game_Together.interceptor.NeedLogoutInterceptor;
+import com.koreaIT.Game_Together.interceptor.NeedManagerInterceptor;
 
 @Configuration
 public class GtWebMvcConfigurer implements WebMvcConfigurer {
@@ -16,12 +17,14 @@ public class GtWebMvcConfigurer implements WebMvcConfigurer {
 	private BeforeActionInterceptor beforeActionInterceptor;
 	private NeedLoginInterceptor needLoginInterceptor;
 	private NeedLogoutInterceptor needLogoutInterceptor;
+	private NeedManagerInterceptor needManagerInterceptor;
 	
 	@Autowired
-	public GtWebMvcConfigurer(BeforeActionInterceptor beforeActionInterceptor, NeedLoginInterceptor needLoginInterceptor, NeedLogoutInterceptor needLogoutInterceptor) {
+	public GtWebMvcConfigurer(BeforeActionInterceptor beforeActionInterceptor, NeedLoginInterceptor needLoginInterceptor, NeedLogoutInterceptor needLogoutInterceptor, NeedManagerInterceptor needManagerInterceptor) {
 		this.beforeActionInterceptor = beforeActionInterceptor;
 		this.needLoginInterceptor = needLoginInterceptor;
 		this.needLogoutInterceptor = needLogoutInterceptor;
+		this.needManagerInterceptor = needManagerInterceptor;
 	}
 
 	@Override
@@ -94,6 +97,11 @@ public class GtWebMvcConfigurer implements WebMvcConfigurer {
 		ir.addPathPatterns("/usr/member/findLoginPw");
 		ir.addPathPatterns("/usr/member/doFindLoginPw");
 		ir.addPathPatterns("/usr/member/restore");
+		
+		ir = registry.addInterceptor(needManagerInterceptor);
+		ir.addPathPatterns("/adm/member/main");
+		ir.addPathPatterns("/adm/member/list");
+		ir.addPathPatterns("/adm/member/doDeleteMembers");
 		
 	}
 

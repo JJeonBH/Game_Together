@@ -69,7 +69,7 @@
 						</li>
 						<c:if test="${Request.loginedMember.authLevel == 7}">
 							<li>
-								<a href="/adm/member/main" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>관리자 페이지</span></a>
+								<a href="/adm/home/main" class="topbar-text-link h-full flex items-center px-3 mx-1"><span>관리자 페이지</span></a>
 							</li>
 						</c:if>
 						<li>

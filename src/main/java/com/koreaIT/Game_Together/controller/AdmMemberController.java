@@ -23,11 +23,6 @@ public class AdmMemberController {
 	public AdmMemberController(MemberService memberService) {
 		this.memberService = memberService;
 	}
-
-	@RequestMapping("/adm/member/main")
-	public String showMain() {
-		return "adm/member/main";
-	}
 	
 	@RequestMapping("/adm/member/list")
 	public String showList(Model model, @RequestParam(defaultValue = "0") String authLevel,

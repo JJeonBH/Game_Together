@@ -12,12 +12,12 @@ import com.koreaIT.Game_Together.util.Util;
 import com.koreaIT.Game_Together.vo.Article;
 
 @Controller
-public class HomeController {
+public class UsrHomeController {
 	
 	private ArticleService articleService;
 	
 	@Autowired
-	public HomeController(ArticleService articleService) {
+	public UsrHomeController(ArticleService articleService) {
 		this.articleService = articleService;
 	}
 

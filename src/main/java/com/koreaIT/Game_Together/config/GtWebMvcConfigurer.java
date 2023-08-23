@@ -99,7 +99,7 @@ public class GtWebMvcConfigurer implements WebMvcConfigurer {
 		ir.addPathPatterns("/usr/member/restore");
 		
 		ir = registry.addInterceptor(needManagerInterceptor);
-		ir.addPathPatterns("/adm/member/main");
+		ir.addPathPatterns("/adm/home/main");
 		ir.addPathPatterns("/adm/member/list");
 		ir.addPathPatterns("/adm/member/doDeleteMembers");
 		ir.addPathPatterns("/adm/member/doReleaseMembers");

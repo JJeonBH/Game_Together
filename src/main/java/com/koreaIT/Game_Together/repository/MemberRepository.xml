@@ -118,6 +118,9 @@
 					</otherwise>
     			</choose>
     		</if>
+    		<if test="banStatus != 0">
+    			AND banStatus = #{banStatus}
+    		</if>
 	</select>
 	
 	<select id="getMembers" resultType="Member">
@@ -147,6 +150,9 @@
 					</otherwise>
     			</choose>
     		</if>
+    		<if test="banStatus != 0">
+    			AND banStatus = #{banStatus}
+    		</if>
     		ORDER BY id DESC
     		LIMIT #{limitStart}, #{itemsInAPage}
 	</select>
@@ -156,6 +162,14 @@
 			SET updateDate = NOW()
 				, banStatus = 1
 				, banDate = NOW()
+			WHERE id = #{id}
+	</update>
+	
+	<update id="releaseMember">
+		UPDATE `member`
+			SET updateDate = NOW()
+				, banStatus = 0
+				, banDate = NULL
 			WHERE id = #{id}
 	</update>
 

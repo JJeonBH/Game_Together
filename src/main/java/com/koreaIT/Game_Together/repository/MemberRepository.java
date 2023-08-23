@@ -33,10 +33,12 @@ public interface MemberRepository {
 
 	public void restore(String loginId, String loginPw);
 
-	public int getMembersCnt(String authLevel, String searchKeywordType, String searchKeyword);
+	public int getMembersCnt(String authLevel, String searchKeywordType, String searchKeyword, int banStatus);
 
-	public List<Member> getMembers(String authLevel, String searchKeywordType, String searchKeyword, int itemsInAPage, int limitStart);
+	public List<Member> getMembers(String authLevel, String searchKeywordType, String searchKeyword, int banStatus, int itemsInAPage, int limitStart);
 
 	public void deleteMember(int id);
+
+	public void releaseMember(int id);
 
 }

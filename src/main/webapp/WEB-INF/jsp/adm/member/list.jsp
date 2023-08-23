@@ -7,12 +7,18 @@
 		<div class="mb-3">
 			<span class="text-3xl font-medium text-pink-400">관리자 페이지 - 회원 관리</span>
 		</div>
+		<div class="mb-3 flex">
+			<a href="list" class="hover:text-blue-500 ${banStatus == 0 ? 'text-blue-500' : ''}">전체 회원 관리</a>
+			<span class="text-gray-300 mx-6">|</span>
+			<a href="list?banStatus=1" class="hover:text-blue-500 ${banStatus == 1 ? 'text-blue-500' : ''}">강퇴 회원 관리</a>
+		</div>
 		<div class="mb-3 flex justify-between items-center">
 			<div>
 				<span class="text-lg">회원수 : ${membersCnt}</span>
 			</div>
 			<div>
 				<form>
+					<input type="hidden" name="banStatus" value="${banStatus}"/>
 					<select data-value="${authLevel}" class="select select-primary" name="authLevel">
 						<option value="0">전체</option>
 						<option value="3">일반</option>
@@ -37,7 +43,7 @@
 					<col width="80"/>
 				</colgroup>
 				<thead class="text-base text-center">
-					<tr class="bg-green-50">
+					<tr class="bg-green-100">
 						<th><input type="checkbox" class="checkbox-all-member-id cursor-pointer"/></th>
 						<th>번호</th>
 						<th>등급</th>
@@ -62,11 +68,18 @@
 							<c:forEach var="member" items="${members}">
 								<tr class="${member.delStatus != 1 && member.banStatus != 1 ? 'bg-blue-50' : (member.delStatus == 1 ? 'bg-red-100' : 'bg-purple-200')}">
 									<c:choose>
-										<c:when test="${member.delStatus != 1 && member.banStatus != 1}">
-											<td><input type="checkbox" class="checkbox-member-id cursor-pointer" value="${member.id}"/></td>
+										<c:when test="${banStatus == 0}">
+											<c:choose>
+												<c:when test="${member.delStatus != 1 && member.banStatus != 1}">
+													<td><input type="checkbox" class="checkbox-member-id cursor-pointer" value="${member.id}"/></td>
+												</c:when>
+												<c:otherwise>
+													<td><input type="checkbox" class="checkbox-member-id" value="${member.id}" disabled/></td>
+												</c:otherwise>
+											</c:choose>
 										</c:when>
 										<c:otherwise>
-											<td><input type="checkbox" class="checkbox-member-id" value="${member.id}" disabled/></td>
+											<td><input type="checkbox" class="checkbox-member-id cursor-pointer" value="${member.id}"/></td>
 										</c:otherwise>
 									</c:choose>
 									<td>${member.id}</td>
@@ -128,11 +141,23 @@
 		</script>
 		
 		<div class="flex justify-end mb-3">
-			<button class="btn-text-color btn btn-info btn-sm btn-delete-selected-members">회원 강퇴</button>
+			<c:choose>
+				<c:when test="${banStatus == 0}">
+					<button class="btn-text-color btn btn-info btn-sm btn-delete-selected-members">회원 강퇴</button>
+				</c:when>
+				<c:otherwise>
+					<button class="btn-text-color btn btn-info btn-sm btn-release-selected-members">강퇴 해제</button>
+				</c:otherwise>
+			</c:choose>
 		</div>
 		<div>
 			<form action="doDeleteMembers" method="POST" name="do-delete-members-form">
-				<input type="hidden" name="ids" value=""/>
+				<input type="hidden" name="deleteIds" value=""/>
+			</form>
+		</div>
+		<div>
+			<form action="doReleaseMembers" method="POST" name="do-release-members-form">
+				<input type="hidden" name="releaseIds" value=""/>
 			</form>
 		</div>
 		
@@ -147,15 +172,28 @@
 				if (confirm('선택한 회원을 강퇴하시겠습니까?') == false) {						
 					return;
 				}
-				$('input[name=ids]').val(values.join(','));
+				$('input[name=deleteIds]').val(values.join(','));
 				$('form[name=do-delete-members-form]').submit();
+			})
+			
+			$('.btn-release-selected-members').click(function() {
+				const values = $('.checkbox-member-id:checked').map((index, el) => el.value).toArray();
+				if (values.length == 0) {
+					alert('선택한 회원이 없습니다.');
+					return;
+				}
+				if (confirm('선택한 회원을 강퇴 해제하시겠습니까?') == false) {						
+					return;
+				}
+				$('input[name=releaseIds]').val(values.join(','));
+				$('form[name=do-release-members-form]').submit();
 			})
 			
 		</script>
 		
 		<div class="flex justify-center">
 			<div>
-				<c:set var="pageBaseUri" value="list?authLevel=${authLevel}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}"/>
+				<c:set var="pageBaseUri" value="list?authLevel=${authLevel}&searchKeywordType=${searchKeywordType}&searchKeyword=${searchKeyword}&banStatus=${banStatus}"/>
 				<c:if test="${membersCnt != 0}">
 					<c:if test="${page > 1}">
 						<a href="${pageBaseUri}&page=1" class="hover:text-blue-600 mx-1">«</a>

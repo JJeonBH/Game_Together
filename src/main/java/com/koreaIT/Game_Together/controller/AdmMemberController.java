@@ -33,16 +33,17 @@ public class AdmMemberController {
 	public String showList(Model model, @RequestParam(defaultValue = "0") String authLevel,
 			@RequestParam(defaultValue = "1") int page, 
 			@RequestParam(defaultValue = "loginId,name,nickname") String searchKeywordType,
-			@RequestParam(defaultValue = "") String searchKeyword) {
+			@RequestParam(defaultValue = "") String searchKeyword,
+			@RequestParam(defaultValue = "0") int banStatus) {
 
 		if (page <= 0) {
 			page = 1;
 		}
 		
-		int membersCnt = memberService.getMembersCnt(authLevel, searchKeywordType, searchKeyword);
+		int membersCnt = memberService.getMembersCnt(authLevel, searchKeywordType, searchKeyword, banStatus);
 		int itemsInAPage = 10;
 		int pagesCount = (int) Math.ceil((double) membersCnt / itemsInAPage);
-		List<Member> members = memberService.getMembers(authLevel, searchKeywordType, searchKeyword, itemsInAPage, page);
+		List<Member> members = memberService.getMembers(authLevel, searchKeywordType, searchKeyword, banStatus, itemsInAPage, page);
 		
 		if (page > pagesCount) {
 			page = pagesCount;
@@ -74,6 +75,7 @@ public class AdmMemberController {
 		model.addAttribute("page", page);
 		model.addAttribute("searchKeywordType", searchKeywordType);
 		model.addAttribute("searchKeyword", searchKeyword);
+		model.addAttribute("banStatus", banStatus);
 		model.addAttribute("membersCnt", membersCnt);
 		model.addAttribute("pagesCount", pagesCount);
 		model.addAttribute("members", members);
@@ -86,15 +88,15 @@ public class AdmMemberController {
 	
 	@RequestMapping("/adm/member/doDeleteMembers")
 	@ResponseBody
-	public String doDeleteMembers(@RequestParam(defaultValue = "") String ids) {
+	public String doDeleteMembers(@RequestParam(defaultValue = "") String deleteIds) {
 
-		if (Util.isEmpty(ids)) {
+		if (Util.isEmpty(deleteIds)) {
 			return Util.jsAlertHistoryBack("선택한 회원이 없습니다.");
 		}
 
 		List<Integer> memberIds = new ArrayList<>();
 
-		for (String idStr : ids.split(",")) {
+		for (String idStr : deleteIds.split(",")) {
 			memberIds.add(Integer.parseInt(idStr));
 		}
 		
@@ -105,6 +107,26 @@ public class AdmMemberController {
 		memberService.deleteMembers(memberIds);
 
 		return Util.jsAlertReplace("선택한 회원이 강퇴되었습니다.", "list");
+		
+	}
+	
+	@RequestMapping("/adm/member/doReleaseMembers")
+	@ResponseBody
+	public String doReleaseMembers(@RequestParam(defaultValue = "") String releaseIds) {
+		
+		if (Util.isEmpty(releaseIds)) {
+			return Util.jsAlertHistoryBack("선택한 회원이 없습니다.");
+		}
+		
+		List<Integer> memberIds = new ArrayList<>();
+		
+		for (String idStr : releaseIds.split(",")) {
+			memberIds.add(Integer.parseInt(idStr));
+		}
+		
+		memberService.releaseMembers(memberIds);
+		
+		return Util.jsAlertReplace("선택한 회원이 강퇴 해제되었습니다.", "list");
 		
 	}
 	

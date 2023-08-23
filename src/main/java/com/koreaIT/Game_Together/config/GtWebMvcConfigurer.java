@@ -102,6 +102,7 @@ public class GtWebMvcConfigurer implements WebMvcConfigurer {
 		ir.addPathPatterns("/adm/member/main");
 		ir.addPathPatterns("/adm/member/list");
 		ir.addPathPatterns("/adm/member/doDeleteMembers");
+		ir.addPathPatterns("/adm/member/doReleaseMembers");
 		
 	}
 

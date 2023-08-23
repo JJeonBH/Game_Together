@@ -105,15 +105,15 @@ public class MemberService {
 		memberRepository.restore(loginId, loginPw);
 	}
 	
-	public int getMembersCnt(String authLevel, String searchKeywordType, String searchKeyword) {
-		return memberRepository.getMembersCnt(authLevel, searchKeywordType, searchKeyword);
+	public int getMembersCnt(String authLevel, String searchKeywordType, String searchKeyword, int banStatus) {
+		return memberRepository.getMembersCnt(authLevel, searchKeywordType, searchKeyword, banStatus);
 	}
 	
-	public List<Member> getMembers(String authLevel, String searchKeywordType, String searchKeyword, int itemsInAPage, int page) {
+	public List<Member> getMembers(String authLevel, String searchKeywordType, String searchKeyword, int banStatus, int itemsInAPage, int page) {
 
 		int limitStart = (page - 1) * itemsInAPage;
 
-		return memberRepository.getMembers(authLevel, searchKeywordType, searchKeyword, itemsInAPage, limitStart);
+		return memberRepository.getMembers(authLevel, searchKeywordType, searchKeyword, banStatus, itemsInAPage, limitStart);
 		
 	}
 	
@@ -133,6 +133,24 @@ public class MemberService {
 	
 	private void deleteMember(Member member) {
 		memberRepository.deleteMember(member.getId());
+	}
+
+	public void releaseMembers(List<Integer> memberIds) {
+		
+		for (int memberId : memberIds) {
+			
+			Member member = getMemberById(memberId);
+
+			if (member != null) {
+				releaseMember(member);
+			}
+			
+		}
+		
+	}
+	
+	private void releaseMember(Member member) {
+		memberRepository.releaseMember(member.getId());
 	}
 	
 }

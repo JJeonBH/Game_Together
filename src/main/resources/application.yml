@@ -29,7 +29,7 @@ mybatis:
   type-aliases-package: com.koreaIT.Game_Together.vo
 riot:
   api:
-    key: RGAPI-84d55796-a282-4db3-8ca3-2097bca6b1ad
+    key: RGAPI-188b681b-2544-4680-b080-be6afb9704ad
   server:
     url:
       kr: https://kr.api.riotgames.com
@@ -41,3 +41,7 @@ custom:
   emailFromName: Game_Together
 file:
   dir: C:/devJBH/sts-4.18.1.RELEASE-workspace/upload
+coolsms:
+  api:
+    key: coolsms API Key 입력
+    secret: coolsms API Secret 입력

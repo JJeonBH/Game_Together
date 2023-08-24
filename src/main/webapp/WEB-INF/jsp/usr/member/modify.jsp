@@ -4,6 +4,10 @@
 <c:set var="pageTitle" value="개인정보 수정"/>
 <%@ include file="../common/head.jsp" %>
 	<script type="text/javascript">
+		
+		//	본인 인증 여부
+		let personalAuthentication = false;
+	
 		function submitModifyForm(form) {
 			
 			form.nickname.value = form.nickname.value.trim();
@@ -122,6 +126,12 @@
 					return;
 				}
 				
+				if (personalAuthentication == false) {
+					alert('휴대전화 번호를 변경하기 위해서는 본인 인증이 필요합니다.');
+					$('input[name=certificationNumber]').focus();
+					return;
+				}
+				
 			}
 			
 			form.submit();
@@ -175,6 +185,52 @@
 			
 		}
 		
+		let certificationNumber = '';
+		
+		function sendCertificationNumber() {
+			
+			let cellphoneNum = $('input[name=cellphoneNum]').val();
+			
+			$.ajax({
+				type: 'POST',
+		    	url: '/usr/member/sendCertificationNumber',
+		        dataType: 'json',
+		        data: {
+					'cellphoneNum' : cellphoneNum
+		        },
+		        cache: false,
+		        success: function (data) {
+					alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호를 확인해 주세요.");
+					$('input[name=certificationNumber]').focus();
+					certificationNumber = data;
+		        }
+			})
+			
+		}
+		
+		function checkCertificationNumber() {
+			
+			let usrCertificationNumber = $('input[name=certificationNumber]').val();
+			
+			if (certificationNumber == '') {
+				alert('먼저 인증번호를 받아주세요.');
+				return;
+			}
+			
+			if (certificationNumber != usrCertificationNumber) {
+				alert('인증번호가 일치하지 않습니다. 다시 확인해 주세요.');
+				$('input[name=certificationNumber]').focus();
+			} else {
+				alert('인증이 완료되었습니다. 수정 버튼을 누르면 휴대전화 번호가 변경됩니다.');
+				$('input[name=cellphoneNum]').attr("readonly", true);
+				$('input[name=certificationNumber]').attr("readonly", true);
+				$('.btn-send-certification-number').remove();
+				$('.btn-check-certification-number').remove();
+				personalAuthentication = true;
+			}
+			
+		}
+		
 	</script>
 	<section class="text-lg min-w-900 my-5">
 		<div>
@@ -216,7 +272,17 @@
 							</tr>
 							<tr>
 								<th>휴대전화 번호</th>
-								<td><input class="cursor-pointer input input-bordered input-info w-112" type="tel" name="cellphoneNum" value="${Request.loginedMember.cellphoneNum}" placeholder="휴대전화 번호를 입력해 주세요. (-없이 숫자만)"/></td>
+								<td>
+									<div>
+										<input class="cursor-pointer input input-bordered input-info w-112" type="tel" name="cellphoneNum" value="${Request.loginedMember.cellphoneNum}" placeholder="휴대전화 번호를 입력해 주세요. (-없이 숫자만)"/>
+										<a class="btn-send-certification-number btn-text-color btn btn-info btn-sm" onclick="sendCertificationNumber();">인증번호 보내기</a>
+									</div>
+									<div class="mt-2">
+										<input class="cursor-pointer input input-bordered input-info" type="text" name="certificationNumber" placeholder="인증번호를 입력해 주세요." maxlength="4"/>
+										<a class="btn-check-certification-number btn-text-color btn btn-info btn-sm ml-1" onclick="checkCertificationNumber();">인증번호 확인</a>
+									</div>
+									<div class="mt-2 text-green-500 text-sm">휴대전화 번호를 변경하기 위해서는 본인 인증이 필요합니다.</div>
+								</td>
 							</tr>
 							<tr>
 								<th>프로필 사진</th>

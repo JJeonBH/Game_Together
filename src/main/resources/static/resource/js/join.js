@@ -361,6 +361,7 @@ function cellphoneNumCheck(input) {
 	let value = input.value;
 	let cellphoneNumMsg = $('#cellphoneNumMsg');
 	
+	$('.certification').addClass( 'hidden' );
 	cellphoneNumMsg.empty();
 	
 	if (value.length == 0) {
@@ -375,14 +376,92 @@ function cellphoneNumCheck(input) {
 		return;
 	}
 	
-	$.get('cellphoneNumDupCheck', {
-		cellphoneNum : value
-	}, function(data) {
-		if(data.success) {
-			validCellphoneNum = 1;
+	new Promise((resolve, reject) => {
+		
+		$.ajax({
+	        type: 'POST',
+	        url: '/usr/member/cellphoneNumDupCheck',
+	        dataType: 'json',
+	        data: {
+				'cellphoneNum' : value
+	        },
+	        success: function (data) {
+	        	resolve(data);
+	        },
+	        fail: function (error) {
+	        	reject(error);
+	        }
+	    })
+		
+	})
+	.then((resultData) => {
+		
+		if (resultData.fail) {
+			cellphoneNumMsg.html(`<span>${resultData.data1}(은)는 ${resultData.msg}</span>`);
 		} else {
-			cellphoneNumMsg.html(`<span>${data.data1}(은)는 ${data.msg}</span>`);
+			cellphoneNumMsg.html(`<span>본인 인증을 완료해 주세요.</span>`);
+			$('.certification').removeClass( 'hidden' );
 		}
-	}, 'json');
+		
+	})
+	.catch((error) => {
+		
+		alert(error);
+		
+	})
 	
 }
+
+let certificationNumber = '';
+
+$('.btn-send-certification-number').click(function() {
+	
+	let cellphoneNum = $('input[name=cellphoneNum]').val();
+	let cellphoneNumMsg = $('#cellphoneNumMsg');
+	
+	cellphoneNumMsg.empty();
+	
+	$.ajax({
+		type: 'POST',
+    	url: '/usr/member/sendCertificationNumber',
+        dataType: 'json',
+        data: {
+			'cellphoneNum' : cellphoneNum
+        },
+        cache: false,
+        success: function (data) {
+			alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호를 확인해 주세요.");
+			cellphoneNumMsg.html(`<span>인증번호를 입력한 뒤 인증번호 확인을 눌러주세요.</span>`);
+			$('input[name=certificationNumber]').focus();
+			certificationNumber = data;
+        }
+	})
+	
+})
+
+$('.btn-check-certification-number').click(function() {
+	
+	let usrCertificationNumber = $('input[name=certificationNumber]').val();
+	let cellphoneNumMsg = $('#cellphoneNumMsg');
+	
+	cellphoneNumMsg.empty();
+	
+	if (certificationNumber == '') {
+		cellphoneNumMsg.html(`<span>먼저 인증번호를 받아주세요.</span>`);
+		return;
+	}
+	
+	if (certificationNumber != usrCertificationNumber) {
+		cellphoneNumMsg.html(`<span>인증번호가 일치하지 않습니다. 다시 확인해 주세요.</span>`);
+		$('input[name=certificationNumber]').focus();
+	} else {
+		cellphoneNumMsg.html(`<span class="text-green-400">인증이 완료되었습니다.</span>`);
+		$('input[name=cellphoneNum]').removeAttr('onblur');
+		$('input[name=cellphoneNum]').attr("readonly", true);
+		$('input[name=certificationNumber]').attr("readonly", true);
+		$('.btn-send-certification-number').remove();
+		$('.btn-check-certification-number').remove();
+		validCellphoneNum = 1;
+	}
+	
+})

@@ -108,6 +108,15 @@
 						<br>
 						<input class="cursor-pointer mt-2 input input-bordered input-info w-112" type="tel" name="cellphoneNum" placeholder="휴대전화 번호를 입력해 주세요. (-없이 숫자만)" onblur="cellphoneNumCheck(this);"/>
 					</label>
+					<div class="certification mt-2 hidden">
+						<div>
+							<a class="btn-send-certification-number btn-text-color btn btn-info btn-sm">인증번호 보내기</a>
+						</div>
+						<div class="mt-2 flex items-center">
+							<input class="cursor-pointer input input-bordered input-info" type="text" name="certificationNumber" placeholder="인증번호를 입력해 주세요." maxlength="4"/>
+							<a class="btn-check-certification-number btn-text-color btn btn-info btn-sm ml-1">인증번호 확인</a>
+						</div>
+					</div>
 					<div id="cellphoneNumMsg" class="mt-2 h-5 text-xs text-red-400"></div>
 				</div>
 				<div class="mt-4 mb-10">

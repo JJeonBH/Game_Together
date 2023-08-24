@@ -18,6 +18,8 @@ import com.koreaIT.Game_Together.vo.Member;
 import com.koreaIT.Game_Together.vo.Request;
 import com.koreaIT.Game_Together.vo.ResultData;
 
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
+
 @Controller
 public class UsrMemberController {
 
@@ -395,6 +397,12 @@ public class UsrMemberController {
 		
 		return ResultData.resultFrom("S-1", "계정이 복구되었습니다.");
 		
+	}
+	
+	@RequestMapping("/usr/member/sendCertificationNumber")
+	@ResponseBody
+	public String sendCertificationNumber(String cellphoneNum) throws CoolsmsException {
+		return memberService.sendCertificationNumber(cellphoneNum);
 	}
 	
 }

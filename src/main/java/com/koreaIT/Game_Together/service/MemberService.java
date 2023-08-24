@@ -1,6 +1,8 @@
 package com.koreaIT.Game_Together.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +13,9 @@ import com.koreaIT.Game_Together.util.Util;
 import com.koreaIT.Game_Together.vo.Member;
 import com.koreaIT.Game_Together.vo.ResultData;
 
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
+
 @Service
 public class MemberService {
 	
@@ -18,6 +23,10 @@ public class MemberService {
 	private String siteName;
 	@Value("${custom.siteMainUri}")
 	private String siteMainUri;
+	@Value("${coolsms.api.key}")
+	private String api_key;
+	@Value("${coolsms.api.secret}")
+	private String api_secret;
 	
 	private MemberRepository memberRepository;
 	private MailService mailService;
@@ -151,6 +160,32 @@ public class MemberService {
 	
 	private void releaseMember(Member member) {
 		memberRepository.releaseMember(member.getId());
+	}
+
+	public String sendCertificationNumber(String cellphoneNum) throws CoolsmsException {
+		
+	    Message coolsms = new Message(api_key, api_secret);
+	    
+	    Random rand  = new Random();
+	    
+	    String numStr = "";
+	    
+	    for (int i = 0; i < 4; i++) {
+	    	numStr += Integer.toString(rand.nextInt(10));
+	    }    
+	    
+	    HashMap<String, String> params = new HashMap<String, String>();
+	    //	받는 사람 번호
+	    params.put("to", cellphoneNum);
+	    //	보내는 사람 번호
+	    params.put("from", "자신의 번호 (-없이 숫자만)");
+	    params.put("type", "SMS");
+	    params.put("text", "[Game_Together] 인증번호는" + "[" + numStr + "]" + "입니다.");
+	    
+	    coolsms.send(params);
+		
+		return numStr;
+		
 	}
 	
 }

@@ -315,7 +315,7 @@ function showMatches(matches, summoner) {
 				//	class="ml-3 w-40" ul 시작
 				append += `<ul class="ml-3 w-40">`;
 				
-				for (let index = 5; index < 10; index++) {
+				for (let index = 5; index < match.info.participants.length; index++) {
 					append += `<li class="flex">`;
 					append += `<div class="my-1px">`;
 					append += `<img class="${match.info.participants[index].puuid == summoner.puuid ? 'rounded-full' : 'rounded'}" src="http://ddragon.leagueoflegends.com/cdn/${summoner.dataDragonVer[0]}/img/champion/${match.info.participants[index].championName}.png" width="20" alt="champion icon image"/>`;

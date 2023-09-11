@@ -29,7 +29,7 @@ mybatis:
   type-aliases-package: com.koreaIT.Game_Together.vo
 riot:
   api:
-    key: RGAPI-4e23c233-37cb-4828-80cc-ae86586b6f45
+    key: RGAPI-309596f8-1bcb-48c4-95ad-8be7e57151cb
   server:
     url:
       kr: https://kr.api.riotgames.com

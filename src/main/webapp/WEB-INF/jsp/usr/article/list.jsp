@@ -42,7 +42,7 @@
 		<div class="w-3/4 ml-6 p-6">
 			<div class="mb-3">
 				<a href="list?boardType=${boardType}&boardId=${boardId}&memberId=${memberId}">
-					<span class="text-3xl flex items-center"><img src="/resource/images/${boardType}.jpg" alt="게임 로고" width="100"> ${pageTitle}</span>
+					<span class="text-3xl flex items-center"><img src="/resource/images/게임로고.png" alt="게임 로고" width="100"> ${pageTitle}</span>
 				</a>
 			</div>
 			<div class="mb-3 flex justify-between items-center">

@@ -372,7 +372,7 @@
 					<div class="my-4">
 						<div>
 							<a href="list?boardType=${boardType}&boardId=${article.boardId}" class="text-green-500" >
-								<span class="flex items-center"><img src="/resource/images/${boardType}.jpg" alt="게임 로고" width="50"> ${article.boardName}</span>
+								<span class="flex items-center"><img src="/resource/images/게임로고.png" alt="게임 로고" width="50"> ${article.boardName}</span>
 							</a>
 						</div>
 					</div>
